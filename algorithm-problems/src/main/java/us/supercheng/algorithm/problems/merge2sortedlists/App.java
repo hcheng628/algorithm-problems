@@ -45,4 +45,49 @@ public class App {
         node.next = createLinkedList(ints.subList(1, ints.size()));
         return node;
     }
+
+    private ListNode mergeTwoSortedLists(ListNode l1, ListNode l2) {
+        if(l1 == null) {
+            return l2;
+        }
+        if(l2 == null) {
+            return l1;
+        }
+        ListNode returnNode = new ListNode(13);
+        ListNode backup = returnNode;
+        boolean go = true;
+        while((l1 != null || l2 != null) && go) {
+            if(l1.val < l2.val) {
+                ListNode newNode = new ListNode(l1.val);
+                returnNode.next = newNode;
+                l1 = l1.next;
+                if(l1 == null) {
+                    go = false;
+                }
+            } else {
+                ListNode newNode = new ListNode(l2.val);
+                returnNode.next = newNode;
+                l2 = l2.next;
+                if(l2 == null) {
+                    go = false;
+                }
+            }
+            returnNode = returnNode.next;
+        }
+
+        while (l1 != null){
+            ListNode newNode = new ListNode(l1.val);
+            returnNode.next = newNode;
+            l1 = l1.next;
+            returnNode = returnNode.next;
+        }
+
+        while ((l2 != null)) {
+            ListNode newNode = new ListNode(l2.val);
+            returnNode.next = newNode;
+            l2 = l2.next;
+            returnNode = returnNode.next;
+        }
+        return backup.next;
+    }
 }
