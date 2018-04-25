@@ -32,7 +32,7 @@ public class IntNode {
                 '}';
     }
 
-    public void printList(IntNode node){
+    public static void printList(IntNode node){
         while (node != null) {
             System.out.print(node + " ");
             node = node.getNode();
