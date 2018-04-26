@@ -9,6 +9,11 @@ public class IntNode {
         this.node = null;
     }
 
+    public IntNode(Integer val) {
+        this.val = val;
+        this.node = null;
+    }
+
     public Integer getVal() {
         return val;
     }

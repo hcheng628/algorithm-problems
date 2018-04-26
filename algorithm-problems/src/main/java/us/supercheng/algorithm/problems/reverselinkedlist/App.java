@@ -2,10 +2,6 @@ package us.supercheng.algorithm.problems.reverselinkedlist;
 
 import us.supercheng.algorithm.common.entity.IntNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class App {
 
     public static void main(String[]  args) {
@@ -32,7 +28,6 @@ public class App {
         if(head == null || head.getNode() == null) {
             return head;
         }
-        IntNode.printList(head);
         IntNode newHead = reverseLinkedListRec(head.getNode());
         head.getNode().setNode(head);
         head.setNode(null);
