@@ -1,38 +1,39 @@
 package us.supercheng.algorithm.problems.plusone;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
 
     public static void main(String[]  args) {
         App app = new App();
-        int [] arr = {5,2,3,4,3,2,2,1};
-        int [] returnArr = app.plusOne(arr);
-
-        for (int i=0;i<returnArr.length;i++) {
-            System.out.print(returnArr[i]);
+        List<List<Integer>> list =  app.generate(13);
+        for(List<Integer> eachList : list ) {
+            for(Integer each : eachList) {
+                System.out.print(each + " ");
+            }
+            System.out.println();
         }
     }
 
-    public int[] plusOne(int[] digits) {
-        int overflow = 0;
-        for (int i=digits.length-1;i>=0;i--) {
-            int sum = 0;
-            if (i == digits.length - 1) {
-                sum = digits[i] + 1;
-            } else {
-                sum = digits[i] + overflow;
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> returnList = new ArrayList<>();
+        for(int i=1; i <= numRows; i++) {
+            List<Integer> newIntList = new ArrayList<>();
+            for(int j=1; j<=i;j++) {
+                if(j == 1 || j == i) {
+                    newIntList.add(1);
+                } else {
+                    if(i>=3) {
+                        int a = returnList.get(i-2).get(j-2);
+                        int b = returnList.get(i-2).get(j-1);
+                        int res = a + b;
+                        newIntList.add(res);
+                    }
+                }
             }
-            digits[i] = sum % 10;
-            overflow = sum / 10;
+            returnList.add(newIntList);
         }
-        if(overflow == 1) {
-            int [] arr = new int [digits.length + 1];
-            arr[0] = overflow;
-            for(int i=1; i<digits.length;i++) {
-                arr[i] = digits[i-1];
-            }
-            return arr;
-        } else {
-            return digits;
-        }
+        return returnList;
     }
 }
