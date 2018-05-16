@@ -4,7 +4,7 @@ public class App {
 
     public static void main(String[]  args) {
         App app = new App();
-        int [] arr = {7,6,4,3,1};
+        int [] arr = {7,6,4,4,5,5,3,1};
         System.out.println(app.maxProfit(arr));
     }
 
