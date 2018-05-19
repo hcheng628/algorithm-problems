@@ -7,8 +7,8 @@ import java.util.Set;
 public class App {
     public static void main(String[] args) {
         App app = new App();
-        int [] arr = {2,1,3,4,3,1,2,4,5,6};
-        int a = app.singleNumber2(arr);
+        int [] arr = {4,1,2,1,2};
+        int a = app.singleNumber3(arr);
         System.out.println("Final Result: " + a);
     }
 
@@ -33,5 +33,15 @@ public class App {
             }
         }
         return set.iterator().next();
+    }
+
+    public int singleNumber3(int[] nums) {
+        int each = 0;
+        for(int i=0;i<nums.length;i++) {
+            System.out.println("Before: " + each + " i: " + nums[i]);
+            each ^= nums[i];
+            System.out.println("After: " + each + " i: " + nums[i]);
+        }
+        return each;
     }
 }
