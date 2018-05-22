@@ -9,6 +9,11 @@ public class App {
         for(int i=0;i<arr.length;i++) {
             System.out.print(i < arr.length -1 ? arr[i] + ",": arr[i]);
         }
+        System.out.println();
+        app.rotate2(arr, 3);
+        for(int i=0;i<arr.length;i++) {
+            System.out.print(i < arr.length -1 ? arr[i] + ",": arr[i]);
+        }
     }
 
     public void rotate(int[] nums, int k) {
@@ -23,6 +28,25 @@ public class App {
                 nums[j+1] = nums[j];
             }
             nums[0] = lastVal;
+        }
+    }
+
+    public void rotate2(int[] nums, int k) {
+        int size = nums.length;
+        if(size <2 || k < 1) {
+            return;
+        }
+        int [] arr = new int[size];
+        k = k % size;
+        int counter = 0;
+        for(int i=k;i<size;i++) {
+            arr[i] = nums[counter++];
+        }
+        for(int i=0;i<k;i++) {
+            arr[i] = nums[counter++];
+        }
+        for(int i=0;i<size;i++) {
+            nums[i] = arr[i];
         }
     }
 }
