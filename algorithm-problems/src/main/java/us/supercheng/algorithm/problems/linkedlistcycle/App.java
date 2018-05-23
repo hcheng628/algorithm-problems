@@ -1,15 +1,8 @@
 package us.supercheng.algorithm.problems.linkedlistcycle;
 
-public class App {
-    class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-            next = null;
-        }
-    }
+import us.supercheng.algorithm.common.entity.ListNode;
 
+public class App {
     public static void main(String[] args) {
         App app = new App();
         app.hasCycle(null);

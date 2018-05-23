@@ -1,16 +1,11 @@
 package us.supercheng.algorithm.problems.merge2sortedlists;
 
+import us.supercheng.algorithm.common.entity.ListNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class App {
-
-    public class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
-    }
 
     public static void main(String[]  args) {
         App app = new App();

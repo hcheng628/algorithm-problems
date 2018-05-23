@@ -1,11 +1,8 @@
 package us.supercheng.algorithm.problems.addTwoNumbers;
 
+import us.supercheng.algorithm.common.entity.ListNode;
+
 public class App {
-      public class ListNode {
-          int val;
-          ListNode next;
-          ListNode(int x) { val = x; }
-    }
 
     public static void main(String[]  args) {
         App app = new App();
