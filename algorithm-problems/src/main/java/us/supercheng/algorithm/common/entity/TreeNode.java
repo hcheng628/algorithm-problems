@@ -2,9 +2,9 @@ package us.supercheng.algorithm.common.entity;
 
 public class TreeNode {
 
-    private final String val;
-    private TreeNode left;
-    private TreeNode right;
+    public String val;
+    public TreeNode left;
+    public TreeNode right;
 
     public TreeNode(String val) {
         this.val = val;

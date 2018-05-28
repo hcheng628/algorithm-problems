@@ -1,17 +1,12 @@
 package us.supercheng.algorithm.problems.binarytreelevelordertraversalii;
 
+import us.supercheng.algorithm.common.entity.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class App {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-     }
 
     public static void main(String[]  args) {
         App app = new App();

@@ -1,12 +1,8 @@
 package us.supercheng.algorithm.problems.symmetrictree;
 
+import us.supercheng.algorithm.common.entity.TreeNode;
+
 public class App {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
 
     public static void main(String[]  args) {
         App app = new App();

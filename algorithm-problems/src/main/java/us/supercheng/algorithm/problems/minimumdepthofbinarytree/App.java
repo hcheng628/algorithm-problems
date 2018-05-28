@@ -1,17 +1,12 @@
 package us.supercheng.algorithm.problems.minimumdepthofbinarytree;
 
+import us.supercheng.algorithm.common.entity.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class App {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-     }
 
     public static void main(String[]  args) {
         App app = new App();
