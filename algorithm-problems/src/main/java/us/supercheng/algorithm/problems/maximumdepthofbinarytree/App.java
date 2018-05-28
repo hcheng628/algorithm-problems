@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.problems.maximumdepthofbinarytree;
 
+import us.supercheng.algorithm.common.entity.TreeNode;
+
 public class App {
 
     public static void main(String[]  args) {

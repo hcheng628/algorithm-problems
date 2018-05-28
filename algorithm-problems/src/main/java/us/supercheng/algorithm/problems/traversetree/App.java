@@ -31,13 +31,13 @@ public class App {
     }
 
     private TreeNode createTree() {
-        TreeNode a = new TreeNode("A");
-        TreeNode b = new TreeNode("B");
-        TreeNode c = new TreeNode("C");
-        TreeNode d = new TreeNode("D");
-        TreeNode e = new TreeNode("E");
-        TreeNode f = new TreeNode("F");
-        TreeNode g = new TreeNode("G");
+        TreeNode a = new TreeNode(1);
+        TreeNode b = new TreeNode(2);
+        TreeNode c = new TreeNode(3);
+        TreeNode d = new TreeNode(4);
+        TreeNode e = new TreeNode(5);
+        TreeNode f = new TreeNode(6);
+        TreeNode g = new TreeNode(7);
         a.setLeft(b);
         a.setRight(c);
         b.setLeft(d);
@@ -52,7 +52,7 @@ public class App {
     private void printPreOrder(TreeNode rootNode) {
         if (rootNode == null)
             return;
-        echo(rootNode.getVal());
+        echo(rootNode.getVal()+"");
         printPreOrder(rootNode.getLeft());
         printPreOrder(rootNode.getRight());
     }
@@ -63,7 +63,7 @@ public class App {
         if (rootNode == null)
             return;
         printInOrder(rootNode.getLeft());
-        echo(rootNode.getVal());
+        echo(rootNode.getVal()+"");
         printInOrder(rootNode.getRight());
     }
 
@@ -75,7 +75,7 @@ public class App {
         }
         printPostOrder(rootNode.getLeft());
         printPostOrder(rootNode.getRight());
-        echo(rootNode.getVal());
+        echo(rootNode.getVal()+"");
     }
     // Pre: A B D E G C F    In: D B G E A C F
     public TreeNode createTree(String preOrder, String inOrder) {
@@ -84,7 +84,7 @@ public class App {
         }
         char currentRoot = preOrder.charAt(0);
         int rootIndex = inOrder.indexOf(currentRoot);
-        TreeNode root = new TreeNode(currentRoot + "");
+        TreeNode root = new TreeNode(Integer.parseInt(currentRoot+""));
         root.setLeft(createTree(preOrder.substring(1,rootIndex + 1), inOrder.substring(0, rootIndex)));
         root.setRight(createTree(preOrder.substring(rootIndex+1),inOrder.substring(rootIndex + 1)));
         return root;
