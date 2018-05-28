@@ -2,17 +2,17 @@ package us.supercheng.algorithm.common.entity;
 
 public class TreeNode {
 
-    public String val;
+    public Integer val;
     public TreeNode left;
     public TreeNode right;
 
-    public TreeNode(String val) {
+    public TreeNode(Integer val) {
         this.val = val;
         this.left = null;
         this.right = null;
     }
 
-    public String getVal() {
+    public Integer getVal() {
         return val;
     }
 
