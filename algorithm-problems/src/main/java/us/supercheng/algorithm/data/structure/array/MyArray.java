@@ -28,7 +28,7 @@ public class MyArray<E> {
 
     public void add(int index, E newE) {
         if (index > this.data.length - 1 || index < 0)
-            throw new IllegalArgumentException("Invalid Insert Index Position");
+            throw new IllegalArgumentException("Invalid Insert Index Position at " + index);
         if (size + 1 == this.getCapacity())
             this.resize(this.getCapacity() * 2);
         for (int i = size + 1; i > index; i--)
@@ -39,12 +39,14 @@ public class MyArray<E> {
 
     public E remove(int index) {
         if (index > this.data.length - 1 || index < 0)
-            throw new IllegalArgumentException("Invalid Insert Index Position");
+            throw new IllegalArgumentException("Invalid Remove Index Position at " + index);
         E ret = this.data[index];
         for (int i = index; i < size; i++)
             this.data[i] = this.data[i + 1];
-        this.size--;
+        if(size != 0)
+            this.size--;
         int capacity = this.getCapacity();
+        //System.out.println("Capacity: " + capacity);
         if (size * 4 == capacity && capacity / 2 != 0)
             this.resize(capacity / 2);
         return ret;
