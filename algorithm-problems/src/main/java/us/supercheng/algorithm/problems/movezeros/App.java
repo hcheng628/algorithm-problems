@@ -1,5 +1,8 @@
 package us.supercheng.algorithm.problems.movezeros;
 
+import us.supercheng.algorithm.common.helper.ArrayHelper;
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 public class App {
 
     /**
@@ -10,15 +13,21 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         int [] arr = {0,1,0,3,12,17,0,8,4,2,0,5,2,13};
+        int [] arr2 = {1,0,2,0,0,3};
 
-        for(int i=0;i<arr.length;i++)
-            System.out.print(i==arr.length-1 ? arr[i] : arr[i] + ",");
-        System.out.println();
-
+        PrintHelper.echoLn("Shifting Approach");
+        ArrayHelper.echo(arr);
+        PrintHelper.echoLn(" - Before");
         app.moveZeroes(arr);
+        ArrayHelper.echo(arr);
+        PrintHelper.echoLn(" - After");
 
-        for(int i=0;i<arr.length;i++)
-            System.out.print(i==arr.length-1 ? arr[i] : arr[i] + ",");
+        PrintHelper.echoLn("Swapping Approach");
+        ArrayHelper.echo(arr2);
+        PrintHelper.echoLn(" - Before");
+        app.moveZeroes2(arr2);
+        ArrayHelper.echo(arr2);
+        PrintHelper.echoLn(" - After");
     }
 
     public void moveZeroes(int[] nums) {
@@ -33,6 +42,25 @@ public class App {
             } else {
                 i++;
             }
+        }
+    }
+
+    public void moveZeroes2(int[] nums) {
+        int firstZeroIndex = 0;
+        int swapTempVal;
+        for(int i=0;i<nums.length;i++){
+            //ArrayHelper.echo(nums);
+            //PrintHelper.echo(" Before\n");
+            if(nums[i]!= 0) {
+                if(i!=firstZeroIndex) {
+                    swapTempVal = nums[i];
+                    nums[i] = nums[firstZeroIndex];
+                    nums[firstZeroIndex] = swapTempVal;
+                }
+                firstZeroIndex++;
+            }
+            //ArrayHelper.echo(nums);
+            //PrintHelper.echo(" After\n");
         }
     }
 }
