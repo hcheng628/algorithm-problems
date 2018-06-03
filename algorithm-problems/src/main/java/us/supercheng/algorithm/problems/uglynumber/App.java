@@ -5,6 +5,9 @@ public class App {
     public static void main(String [] args) {
         App app = new App();
         System.out.println(app.isUgly(100));
+
+        String a = "hello";
+        System.out.println(a.substring(1,a.length()) + a.charAt(0));
     }
 
     public boolean isUgly(int num) {
