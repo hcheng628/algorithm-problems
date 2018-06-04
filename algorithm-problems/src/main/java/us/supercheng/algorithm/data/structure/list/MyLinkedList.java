@@ -1,6 +1,6 @@
 package us.supercheng.algorithm.data.structure.list;
 
-//import us.supercheng.algorithm.common.helper.PrintHelper;
+import us.supercheng.algorithm.common.helper.PrintHelper;
 
 public class MyLinkedList<E> {
 
@@ -21,14 +21,18 @@ public class MyLinkedList<E> {
     }
 
     public void add(int index, E e) {
+        //PrintHelper.echoLn("Add Index: " + index);
         if(index < 0 || index > size)
-            throw new IllegalArgumentException("Invalid Insert Position at: " + index);
+            throw new IllegalArgumentException("Invalid Insert Position at: " + index + " Current Size: " + this.size);
         MyNode<E> node = this.dummyHead;
-        for(int i=0;i<size;i++)
+        for(int i=0;i<index;i++)
             node = node.next;
+        /*
         MyNode<E> currNext = node.next;
         node.next = new MyNode<>(e);
         node.next.next = currNext;
+        */
+        node.next = new MyNode<>(e, node.next);
         this.size++;
     }
 
@@ -41,11 +45,12 @@ public class MyLinkedList<E> {
     }
 
     public E get(int index) {
-        //PrintHelper.echoLn("Get Index: " + index);
-        MyNode<E> ret = this.dummyHead;
+        if(index < 0 || index > size)
+            throw new IllegalArgumentException("Invalid Get Position at: " + index + " Current Size: " + this.size);
+        MyNode<E> ret = this.dummyHead.next;
         for(int i=0;i<index;i++)
             ret = ret.next;
-        return ret.next.val;
+        return ret.val;
     }
 
     public E getFirst() {
@@ -53,14 +58,16 @@ public class MyLinkedList<E> {
     }
 
     public E getLast() {
-        return this.get(this.size - 1);
+        return this.get(this.size-1);
     }
 
     public void set(int index, E e) {
-        MyNode<E> node = this.dummyHead;
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Invalid Set Operation at: " + index + " Current Size: " + this.size);
+        MyNode<E> node = this.dummyHead.next;
         for(int i=0;i<index;i++)
             node = node.next;
-        node.next.val = e;
+        node.val = e;
     }
 
     public boolean contains(E e) {
@@ -76,6 +83,8 @@ public class MyLinkedList<E> {
     }
 
     public E remove(int index) {
+        if(index < 0 || index > this.size)
+            throw new IllegalArgumentException("Invalid Remove Position at: " + index + " Current Size: " + this.size);
         //PrintHelper.echoLn("Remove Index: " + index);
         MyNode<E> node = this.dummyHead;
         for(int i=1;i<index;i++)
@@ -97,22 +106,25 @@ public class MyLinkedList<E> {
 
     public void removeElement(E e) {
         MyNode<E> node = this.dummyHead;
-        int count = 0;
         while (node.next != null){
-            node = node.next;
-            count++;
-            if(node.val.equals(e)) {
+            if(node.next.val.equals(e))
                 break;
-            }
+            node = node.next;
         }
-        this.remove(count);
+        // This is very important not only to ensure Null Pointer Exception but List Size
+        if(node.next!=null) {
+            MyNode delNode = node.next;
+            node.next = delNode.next;
+            delNode.next = null;
+            this.size--;
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         MyNode<E> node = this.dummyHead;
-        sb.append("MyLinkedList: [");
+        sb.append("[");
         while(node.next != null) {
             node = node.next;
             sb.append(node.val + " -> ");

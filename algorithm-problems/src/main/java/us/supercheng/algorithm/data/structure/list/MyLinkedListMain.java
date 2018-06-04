@@ -44,7 +44,7 @@ public class MyLinkedListMain {
         ThreadHelper.sleep(5);
 
         PrintHelper.echoLn("Insert (6) at Index 2 in MyLinkedList");
-        linkedList.addFirst(6);
+        linkedList.add(1,6);
         PrintHelper.echoLn(linkedList + "\n");
         ThreadHelper.sleep(5);
 
