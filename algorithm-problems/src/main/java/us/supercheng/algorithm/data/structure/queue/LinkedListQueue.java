@@ -31,9 +31,8 @@ public class LinkedListQueue<E> implements Queue<E> {
             this.dummyHead.next = this.dummyTail.next;
         } else {
             MyNode<E> oldTail = this.dummyTail.next;
-            MyNode<E> newNode = new MyNode<>(e);
-            this.dummyTail.next = newNode;
-            oldTail.next = newNode;
+            this.dummyTail.next = new MyNode<>(e);;
+            oldTail.next = this.dummyTail.next;
         }
         this.size++;
     }
