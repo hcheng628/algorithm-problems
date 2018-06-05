@@ -2,13 +2,13 @@ package us.supercheng.algorithm.data.structure.queue;
 
 import us.supercheng.algorithm.data.structure.list.MyNode;
 
-public class LinkedListQueue<E> implements Queue<E> {
+public class MyLinkedListQueue<E> implements Queue<E> {
 
     private MyNode<E> dummyHead;
     private MyNode<E> dummyTail;
     private int size;
 
-    public LinkedListQueue() {
+    public MyLinkedListQueue() {
         this.dummyHead = new MyNode<>(null);
         this.dummyTail = new MyNode<>(null);
         this.size = 0;
@@ -44,7 +44,7 @@ public class LinkedListQueue<E> implements Queue<E> {
         MyNode<E> delNode = this.dummyHead.next;
         this.dummyHead.next = this.dummyHead.next.next;
         if(this.dummyHead.next == null)
-            this.dummyTail.next = null; // To Reset LinkedListQueue
+            this.dummyTail.next = null; // To Reset MyLinkedListQueue
         delNode.next = null;
         this.size--;
         return delNode.val;
@@ -58,7 +58,7 @@ public class LinkedListQueue<E> implements Queue<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("LinkedListQueue [");
+        sb.append("MyLinkedListQueue [");
         MyNode<E> head = this.dummyHead.next;
         E headVal = null;
         E tailVal = null;
