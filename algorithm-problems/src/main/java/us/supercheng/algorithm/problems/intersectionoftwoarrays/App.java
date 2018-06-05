@@ -1,7 +1,6 @@
 package us.supercheng.algorithm.problems.intersectionoftwoarrays;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
-
 import java.util.*;
 
 public class App {
@@ -10,6 +9,12 @@ public class App {
         int [] arr1 = {2,3,4,5};
         int [] arr2 = {2,2};
         App app = new App();
+
+        for(Integer each : app.intersection(arr1, arr2))
+            PrintHelper.echo(each + " ");
+
+        PrintHelper.echoLn("");
+
         for(Integer each : app.intersection2(arr1, arr2))
             PrintHelper.echo(each + " ");
     }
