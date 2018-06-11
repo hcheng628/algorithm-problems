@@ -6,7 +6,7 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        PrintHelper.echoLn(app.findNthDigit(1000000));
+        PrintHelper.echoLn(app.findNthDigit(20));
     }
 
     public int findNthDigit(int n) {
@@ -32,7 +32,9 @@ public class App {
             count *=10;
         }
         /* Get the Num */
+        PrintHelper.echoLn("n: " + n + " start: " + start);
         start += (n-1)/len;
+
         PrintHelper.echoLn("Num: " + start);
         /* Get the Digit */
         int ret = String.valueOf(start).charAt((n-1)%len) - '0';
