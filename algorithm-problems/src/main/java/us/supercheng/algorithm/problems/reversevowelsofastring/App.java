@@ -9,7 +9,10 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         String s = "Steve Nash";
-        PrintHelper.echoLn(app.reverseVowels(s));
+        PrintHelper.echoLn("Original String: \n" + s);
+        String revS = app.reverseVowels(s);
+        PrintHelper.echoLn("Reverse Vowel(s): \n" + revS);
+        PrintHelper.echoLn("Reverse Vowel(s) Again: \n" + app.reverseVowels2(revS));
     }
 
     public String reverseVowels(String s) {
@@ -44,6 +47,35 @@ public class App {
                 arr[right--] = temp;
                 swapA = -1;
                 swapB = -1;
+            }
+        }
+        return String.valueOf(arr);
+    }
+
+    public String reverseVowels2(String s) {
+        boolean [] vowels = new boolean[128];
+        vowels['a'] = true;
+        vowels['e'] = true;
+        vowels['i'] = true;
+        vowels['o'] = true;
+        vowels['u'] = true;
+        vowels['A'] = true;
+        vowels['E'] = true;
+        vowels['I'] = true;
+        vowels['O'] = true;
+        vowels['U'] = true;
+        char[] arr = s.toCharArray();
+        int left = 0;
+        int right = arr.length-1;
+        while(left < right) {
+            while(left<right && !vowels[arr[left]])
+                left++;
+            while(left<right && !vowels[arr[right]])
+                right--;
+            if(left < right) {
+                char temp = arr[left];
+                arr[left++] = arr[right];
+                arr[right--] = temp;
             }
         }
         return String.valueOf(arr);

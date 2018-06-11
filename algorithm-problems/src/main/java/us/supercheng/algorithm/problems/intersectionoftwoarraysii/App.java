@@ -13,6 +13,10 @@ public class App {
         for(Integer each : app.intersect(arr1, arr2))
             PrintHelper.echo(each + " ");
         PrintHelper.echoLn("");
+
+        for(Integer each : app.intersect2(arr1, arr2))
+            PrintHelper.echo(each + " ");
+        PrintHelper.echoLn("");
     }
 
     public int[] intersect(int[] nums1, int[] nums2) {
@@ -40,6 +44,27 @@ public class App {
                     list.add(key);
                 }
             }
+        }
+        int [] arr = new int [list.size()];
+        for(int i=0;i<list.size();i++)
+            arr[i] = list.get(i);
+        return arr;
+    }
+
+    public int[] intersect2(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        List<Integer> list = new ArrayList<>();
+        int index1 = 0;
+        int index2 = 0;
+        while(index1 < nums1.length && index2 < nums2.length){
+            if(nums1[index1] == nums2[index2]) {
+                list.add(nums1[index1++]);
+                index2++;
+            } else if (nums1[index1] > nums2[index2])
+                index2++;
+            else
+                index1++;
         }
         int [] arr = new int [list.size()];
         for(int i=0;i<list.size();i++)
