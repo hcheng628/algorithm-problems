@@ -5,10 +5,6 @@ public class MyTreeNode<E> {
     public E val;
     public MyTreeNode left, right;
 
-    public MyTreeNode() {
-        this(null);
-    }
-
     public MyTreeNode(E e) {
         this.val = e;
         this.left = null;

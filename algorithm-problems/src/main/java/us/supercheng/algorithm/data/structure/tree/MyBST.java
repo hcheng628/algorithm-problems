@@ -29,11 +29,12 @@ public class MyBST<E extends Comparable<E>> {
             this.size++;
             return new MyTreeNode<>(e);
         }
-        if (node.val.compareTo(e
-        ) > 0)
+        if (node.val.compareTo(e) > 0)
             node.left = this.add(node.left, e);
         else if (node.val.compareTo(e) < 0)
             node.right = this.add(node.right, e);
+
+        PrintHelper.echoLn("Return Node: " + node.val);
         return node;
     }
 
@@ -52,10 +53,17 @@ public class MyBST<E extends Comparable<E>> {
             return this.contains(node.right, e);
     }
 
-    public void test() {
-        PrintHelper.echoLn("Root: " + this.root.val);
-        PrintHelper.echoLn("Left: " + this.root.left.val);
-        PrintHelper.echoLn("Right: " + this.root.right.val);
+    @Override
+    public String toString() {
+        return this.traverseNodes(this.root, "");
+    }
 
+    private String traverseNodes(MyTreeNode node, String s) {
+        if(node == null)
+            return "";
+        String sS = node.val.toString();
+        this.traverseNodes(node.left, s + "\n" + sS);
+        this.traverseNodes(node.right, s+ "\n" + sS);
+        return sS;
     }
 }
