@@ -66,4 +66,51 @@ public class MyBST<E extends Comparable<E>> {
         this.traverseNodes(node.right, s+ "\n" + sS);
         return sS;
     }
+
+    public String echoInOrder() {
+        return this.echoInOrder(this.root, new StringBuilder());
+    }
+
+    public String echoInOrder(MyTreeNode node, StringBuilder sb) {
+        if(node==null)
+            return "";
+        this.echoInOrder(node.left, sb);
+        sb.append(node.val);
+        this.echoInOrder(node.right, sb);
+        return sb.toString();
+    }
+
+    public String echoPreOrder() {
+        return this.echoPreOrder(this.root, new StringBuilder());
+    }
+
+    private String echoPreOrder(MyTreeNode node, StringBuilder sb) {
+        if(node == null)
+            return "";
+        sb.append(node.val);
+        this.echoPreOrder(node.left, sb);
+        this.echoPreOrder(node.right, sb);
+        return sb.toString();
+    }
+
+    public String echoPostOrder() {
+        return this.echoPostOrder(this.root, new StringBuilder());
+    }
+
+    private String echoPostOrder(MyTreeNode node, StringBuilder sb) {
+        if(node == null)
+            return "";
+        this.echoPostOrder(node.left, sb);
+        this.echoPostOrder(node.right, sb);
+        sb.append(node.val);
+        return sb.toString();
+    }
+
+    public String echoOrderLevel() {
+        return null;
+    }
+
+    public String echoPreOrderNR() {
+        return null;
+    }
 }
