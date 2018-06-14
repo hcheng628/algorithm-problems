@@ -28,5 +28,8 @@ public class MyBSTMain {
         PrintHelper.echoLn("InOrder: " + tree.echoInOrder());
         PrintHelper.echoLn("PostOrder: " + tree.echoPostOrder());
         PrintHelper.echoLn("OrderLevel: " + tree.echoOrderLevel());
+
+        PrintHelper.echoLn("Get Min: " + tree.getMin());
+        PrintHelper.echoLn("Get Max: " + tree.getMax());
     }
 }

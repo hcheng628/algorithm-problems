@@ -140,4 +140,26 @@ public class MyBST<E extends Comparable<E>> {
         }
         return sb.toString();
     }
+
+    public E getMin() {
+        MyTreeNode<E> node = this.root;
+        if(node == null)
+            return null;
+
+        while(node.left != null) {
+            node = node.left;
+        }
+        return node.val;
+    }
+
+    public E getMax() {
+        MyTreeNode<E> node = this.root;
+        if(node == null)
+            return null;
+
+        while(node.right != null) {
+            node = node.right;
+        }
+        return node.val;
+    }
 }
