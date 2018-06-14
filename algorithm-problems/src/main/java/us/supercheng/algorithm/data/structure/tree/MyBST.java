@@ -1,6 +1,9 @@
 package us.supercheng.algorithm.data.structure.tree;
 
+import us.supercheng.algorithm.common.entity.TreeNode;
 import us.supercheng.algorithm.common.helper.PrintHelper;
+import us.supercheng.algorithm.data.structure.queue.MyLinkedListQueue;
+import us.supercheng.algorithm.data.structure.stack.MyLinkedListStack;
 
 public class MyBST<E extends Comparable<E>> {
 
@@ -33,8 +36,6 @@ public class MyBST<E extends Comparable<E>> {
             node.left = this.add(node.left, e);
         else if (node.val.compareTo(e) < 0)
             node.right = this.add(node.right, e);
-
-        PrintHelper.echoLn("Return Node: " + node.val);
         return node;
     }
 
@@ -107,10 +108,36 @@ public class MyBST<E extends Comparable<E>> {
     }
 
     public String echoOrderLevel() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        MyLinkedListQueue<MyTreeNode> queue = new MyLinkedListQueue<>();
+        if(this.root != null)
+            queue.enqueue(this.root);
+        while (!queue.isEmpty()) {
+            MyTreeNode node = queue.dequeue();
+            if(node != null)
+                sb.append(node.val);
+            if(node.left != null)
+                queue.enqueue(node.left);
+            if(node.right != null)
+                queue.enqueue(node.right);
+        }
+        return sb.toString();
     }
 
     public String echoPreOrderNR() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        MyLinkedListStack<MyTreeNode> stack = new MyLinkedListStack<>();
+        if(this.root != null)
+            stack.push(this.root);
+        while (!stack.isEmpty()) {
+            MyTreeNode node = stack.pop();
+            if(node != null)
+                sb.append(node.val);
+            if(node.right != null)
+                stack.push(node.right);
+            if(node.left != null)
+                stack.push(node.left);
+        }
+        return sb.toString();
     }
 }

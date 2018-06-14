@@ -24,7 +24,9 @@ public class MyBSTMain {
         PrintHelper.echoLn("Contains 5: " + tree.contains(5));
 
         PrintHelper.echoLn("PreOrder: " + tree.echoPreOrder());
+        PrintHelper.echoLn("PreOrderNR: " + tree.echoPreOrderNR());
         PrintHelper.echoLn("InOrder: " + tree.echoInOrder());
         PrintHelper.echoLn("PostOrder: " + tree.echoPostOrder());
+        PrintHelper.echoLn("OrderLevel: " + tree.echoOrderLevel());
     }
 }
