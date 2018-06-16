@@ -1,6 +1,5 @@
 package us.supercheng.algorithm.data.structure.tree;
 
-import us.supercheng.algorithm.common.entity.TreeNode;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 import us.supercheng.algorithm.data.structure.queue.MyLinkedListQueue;
 import us.supercheng.algorithm.data.structure.stack.MyLinkedListStack;
@@ -223,5 +222,49 @@ public class MyBST<E extends Comparable<E>> {
         }
         node.right = this.delMaxElement(node.right);
         return node;
+    }
+
+    public void delElement(E e) {
+        if(e == null)
+            throw new IllegalArgumentException("Cannot Delete Element null");
+        if(isEmpty())
+            throw new IllegalArgumentException("Cannot Delete Element in Empty Tree");
+        this.root = this.delElement(this.root, e);
+    }
+
+    private MyTreeNode<E> delElement(MyTreeNode<E> head, E e) {
+        if(head == null)
+            return null;
+        if(e.compareTo(head.val) > 0) {
+            head.right = this.delElement(head.right, e);
+            return head;
+        } else if(e.compareTo(head.val) < 0) {
+            head.left = this.delElement(head.left, e);
+            return head;
+        } else {
+            if(head.left == null && head.right == null) {
+                return null;
+            } else if (head.left == null && head.right != null) {
+                MyTreeNode<E> ret = head.right;
+                head.right = null;
+                this.size--;
+                return ret;
+            } else if (head.left != null && head.right == null) {
+                MyTreeNode<E> ret = head.left;
+                head.left = null;
+                this.size--;
+                return ret;
+            } else {
+                MyTreeNode<E> subMin = new MyTreeNode(this.getMax(head.left).val);
+
+                this.size++;
+                subMin.left = this.delMaxElement(head.left);
+                subMin.right = head.right;
+                head.left =
+                        head.right = null;
+                this.size++;
+                return subMin;
+            }
+        }
     }
 }
