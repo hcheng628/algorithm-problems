@@ -142,6 +142,18 @@ public class MyBST<E extends Comparable<E>> {
     }
 
     public E getMin() {
+        return this.getMin(this.root).val;
+    }
+
+    private MyTreeNode<E> getMin(MyTreeNode<E> node) {
+        if(this.isEmpty())
+            throw new IllegalArgumentException("Empty Tree No Min Element Exists");
+        if(node.left == null)
+            return node;
+        return this.getMin(node.left);
+    }
+
+    public E getMinNR() {
         MyTreeNode<E> node = this.root;
         if(node == null)
             return null;
@@ -152,7 +164,7 @@ public class MyBST<E extends Comparable<E>> {
         return node.val;
     }
 
-    public E getMax() {
+    public E getMaxNR() {
         MyTreeNode<E> node = this.root;
         if(node == null)
             return null;
@@ -161,5 +173,55 @@ public class MyBST<E extends Comparable<E>> {
             node = node.right;
         }
         return node.val;
+    }
+
+    public E getMax() {
+        return this.getMax(this.root).val;
+    }
+
+    private MyTreeNode<E> getMax(MyTreeNode node) {
+        if(this.isEmpty())
+            throw new IllegalArgumentException("Empty Tree No Max Element Exists");
+        if(node.right == null)
+            return node;
+        return this.getMax(node.right);
+    }
+
+    public E delMinElement() {
+        E ret = this.getMin();
+        this.delMinElement(this.root);
+        return ret;
+    }
+
+    private MyTreeNode<E> delMinElement(MyTreeNode<E> node) {
+        if(isEmpty())
+            throw new IllegalArgumentException("Empty Tree Cannot Delete Min Element");
+        if(node.left == null) {
+            MyTreeNode rightChild = node.right;
+            this.size--;
+            node.right = null;
+            return rightChild;
+        }
+        node.left = this.delMinElement(node.left);
+        return node;
+    }
+
+    public E delMaxElement() {
+        E ret = this.getMax();
+        this.delMaxElement(this.root);
+        return ret;
+    }
+
+    private MyTreeNode<E> delMaxElement(MyTreeNode<E> node) {
+        if(isEmpty())
+            throw new IllegalArgumentException("Empty Tree Cannot Delete Max Element");
+        if(node.right == null) {
+            MyTreeNode leftChild = node.left;
+            node.left = null;
+            size--;
+            return leftChild;
+        }
+        node.right = this.delMaxElement(node.right);
+        return node;
     }
 }

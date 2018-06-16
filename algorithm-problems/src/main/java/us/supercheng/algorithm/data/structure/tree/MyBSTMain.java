@@ -15,6 +15,8 @@ public class MyBSTMain {
         tree.add(5);
         PrintHelper.echoLn("Tree Size: " + tree.size());
         tree.add(1);
+        tree.add(0);
+        tree.add(2);
         PrintHelper.echoLn("Tree Size: " + tree.size());
         tree.add(6);
         PrintHelper.echoLn("Tree Size: " + tree.size());
@@ -30,6 +32,16 @@ public class MyBSTMain {
         PrintHelper.echoLn("OrderLevel: " + tree.echoOrderLevel());
 
         PrintHelper.echoLn("Get Min: " + tree.getMin());
+        PrintHelper.echoLn("Get Max: " + tree.getMax());
+
+        PrintHelper.echoLn("Before Delete Min PreOrder: " + tree.echoPreOrder());
+        PrintHelper.echoLn("Del Min: " + tree.delMinElement());
+        PrintHelper.echoLn("After Delete Min PreOrder: " + tree.echoPreOrder());
+        PrintHelper.echoLn("Get Min: " + tree.getMin());
+
+        PrintHelper.echoLn("Before Delete Max PreOrder: " + tree.echoPreOrder());
+        PrintHelper.echoLn("Del Max: " + tree.delMaxElement());
+        PrintHelper.echoLn("After Delete Max PreOrder: " + tree.echoPreOrder());
         PrintHelper.echoLn("Get Max: " + tree.getMax());
     }
 }
