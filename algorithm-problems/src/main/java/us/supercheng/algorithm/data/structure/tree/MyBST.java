@@ -256,13 +256,11 @@ public class MyBST<E extends Comparable<E>> {
                 return ret;
             } else {
                 MyTreeNode<E> subMin = new MyTreeNode(this.getMax(head.left).val);
-
                 this.size++;
                 subMin.left = this.delMaxElement(head.left);
                 subMin.right = head.right;
-                head.left =
-                        head.right = null;
-                this.size++;
+                head.left = head.right = null;
+                this.size--;
                 return subMin;
             }
         }

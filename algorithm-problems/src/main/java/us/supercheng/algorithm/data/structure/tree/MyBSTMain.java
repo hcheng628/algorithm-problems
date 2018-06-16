@@ -51,9 +51,11 @@ public class MyBSTMain {
         tree.delElement(4);
         PrintHelper.echoLn("After Delete 4 PreOrder: " + tree.echoPreOrderNR());
 
-//        PrintHelper.echoLn("Before Delete 5 PreOrder: " + tree.echoPreOrder());
-//        tree.delElement(5);
-//        PrintHelper.echoLn("After Delete 5 PreOrder: " + tree.echoPreOrder());
+        tree.delElement(2);
+
+        PrintHelper.echoLn("Before Delete 1 PreOrder: " + tree.echoPreOrder());
+        tree.delElement(1);
+        PrintHelper.echoLn("After Delete 1 PreOrder: " + tree.echoPreOrder());
 
         /*
         PrintHelper.echoLn("Before Delete 4 PreOrder: " + tree.echoPreOrder());
