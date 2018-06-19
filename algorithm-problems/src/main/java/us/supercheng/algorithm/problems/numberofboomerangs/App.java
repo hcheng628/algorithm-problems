@@ -13,8 +13,8 @@ public class App {
 
     public int numberOfBoomerangs(int[][] ps) {
         int ret = 0;
-        Map<Long, Integer> map = new HashMap();
         for (int i=0; i<ps.length;i++) {
+            Map<Long, Integer> map = new HashMap();
             for(int j=0;j<ps.length;j++) {
                 if(i != j) {
                     long dis = (ps[i][0] - ps[j][0]) * (ps[i][0] - ps[j][0]) + (ps[i][1] - ps[j][1]) * (ps[i][1] - ps[j][1]);
@@ -29,7 +29,6 @@ public class App {
                 if(val> 1)
                     ret += val * (val -1);
             }
-            map.clear();
         }
         return ret;
     }

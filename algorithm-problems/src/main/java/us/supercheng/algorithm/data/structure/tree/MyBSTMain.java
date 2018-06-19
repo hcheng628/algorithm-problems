@@ -1,6 +1,7 @@
 package us.supercheng.algorithm.data.structure.tree;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
+import us.supercheng.algorithm.common.helper.ThreadHelper;
 
 public class MyBSTMain {
 
@@ -43,5 +44,23 @@ public class MyBSTMain {
         PrintHelper.echoLn("Del Max: " + tree.delMaxElement());
         PrintHelper.echoLn("After Delete Max PreOrder: " + tree.echoPreOrder());
         PrintHelper.echoLn("Get Max: " + tree.getMax());
+
+        ThreadHelper.sleep(3);
+
+        PrintHelper.echoLn("Before Delete 4 PreOrder: " + tree.echoPreOrder());
+        tree.delElement(4);
+        PrintHelper.echoLn("After Delete 4 PreOrder: " + tree.echoPreOrderNR());
+
+        tree.delElement(2);
+
+        PrintHelper.echoLn("Before Delete 1 PreOrder: " + tree.echoPreOrder());
+        tree.delElement(1);
+        PrintHelper.echoLn("After Delete 1 PreOrder: " + tree.echoPreOrder());
+
+        /*
+        PrintHelper.echoLn("Before Delete 4 PreOrder: " + tree.echoPreOrder());
+        tree.delElement(4);
+        PrintHelper.echoLn("After Delete 4 PreOrder: " + tree.echoPreOrder());
+        */
     }
 }
