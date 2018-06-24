@@ -11,6 +11,7 @@ public class App {
     public static void main(String[] args) {
         String [] arr = {"Hello", "Alaska", "Dad", "Peace"};
         PrintHelper.echoLn(Arrays.toString(new App().findWords(arr)));
+        PrintHelper.echoLn(Arrays.toString(new App().findWords2(arr)));
     }
 
     public String[] findWords(String[] words) {
@@ -63,5 +64,33 @@ public class App {
                 list.add(each);
         }
         return list.toArray(new String[list.size()]);
+    }
+
+    public String[] findWords2(String[] words) {
+        ArrayList<String> list = new ArrayList<>();
+        for(int i=0;i<words.length;i++) {
+            char[] chars = words[i].toCharArray();
+            boolean isToAdd = true;
+            int rowIndex = this.getRowNum(chars[0]);
+            for(int j=1;j<chars.length && chars.length > 1;j++) {
+                if(rowIndex != this.getRowNum(chars[j])) {
+                    isToAdd = false;
+                    break;
+                }
+            }
+            if(isToAdd)
+                list.add(words[i]);
+        }
+        return list.toArray(new String[list.size()]);
+    }
+
+    private int getRowNum(char ch) {
+        String row2 = "asdfghjklASDFGHJKL";
+        String row3 = "zxcvbnmZXCVBNM";
+        if(row2.indexOf(ch) >=0)
+            return 2;
+        if(row3.indexOf(ch) >=0)
+            return 3;
+        return 1;
     }
 }

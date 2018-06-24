@@ -7,7 +7,25 @@ public class App {
     public static void main(String[] args) {
         int a = 91 * 44;
         PrintHelper.echoLn(new App().isPalindrome2(a));
-        PrintHelper.echoLn(new App().largestPalindrome(2));
+        PrintHelper.echoLn(new App().largestPalindrome(3));
+        PrintHelper.echoLn(new App().largestPalindrome2(3));
+    }
+
+    public int largestPalindrome2(int n) {
+        if(n == 1)
+            return 9;
+        int upper = (int)Math.pow(10, n) - 1;
+        int lower = upper / 10 + 1;
+        for(int i= upper; i>lower;i--) {
+            long palindrome = Long.parseLong(i + new StringBuilder().append(i).reverse().toString());
+            for(int j=upper; j>lower;j--) {
+                if(upper < palindrome / j)
+                    break;
+                if(palindrome % j == 0)
+                    return (int) (palindrome % 1337);
+            }
+        }
+        return -1;
     }
 
     public int largestPalindrome(int n) {

@@ -8,6 +8,24 @@ public class App {
         String s = "5F3Z-2e-9-w";
         int k = 3;
         PrintHelper.echoLn(new App().licenseKeyFormatting(s, k));
+        PrintHelper.echoLn(new App().licenseKeyFormatting2(s, k));
+    }
+
+    public String licenseKeyFormatting2(String S, int K) {
+        int addDashIndex = K;
+        char [] chars = S.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(int i=chars.length-1;i>=0;i--) {
+            if(chars[i] == '-')
+                continue;
+            if(addDashIndex == 0) {
+                sb.append('-');
+                addDashIndex = K;
+            }
+            sb.append(chars[i]);
+            addDashIndex--;
+        }
+        return sb.reverse().toString().toUpperCase();
     }
 
     public String licenseKeyFormatting(String S, int K) {
