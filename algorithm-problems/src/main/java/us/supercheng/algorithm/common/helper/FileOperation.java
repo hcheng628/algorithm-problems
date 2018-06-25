@@ -20,8 +20,6 @@ public class FileOperation {
         Scanner scanner;
         try {
             File file = new File(filename);
-            System.out.println(file.getAbsoluteFile());
-
             if(file.exists()){
                 FileInputStream fis = new FileInputStream(file);
                 scanner = new Scanner(new BufferedInputStream(fis), "UTF-8");

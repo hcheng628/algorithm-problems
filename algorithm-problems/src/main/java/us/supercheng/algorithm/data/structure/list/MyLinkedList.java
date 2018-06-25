@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.data.structure.list;
 
-import us.supercheng.algorithm.common.helper.PrintHelper;
-
 public class MyLinkedList<E> {
 
     private MyNode<E> dummyHead;

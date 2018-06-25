@@ -17,22 +17,20 @@ public class SetTimeComplexityMain {
         ArrayList<String> words1 = new ArrayList<>();
         ArrayList<String> words2 = new ArrayList<>();
         if (FileOperation.readFile((filePathPP), words1) && FileOperation.readFile((filePathTTC), words2)) {
-            double bstTime = SetTimeComplexityMain.execute(new MyBSTSet<Integer>(), words1, words2);
-            double linkedListTime = SetTimeComplexityMain.execute(new MyLinkedListSet<Integer>(), words1, words2);
+            double bstTime = SetTimeComplexityMain.execute(new MyBSTSet<String>(), words1, words2);
+            double linkedListTime = SetTimeComplexityMain.execute(new MyLinkedListSet<String>(), words1, words2);
             PrintHelper.echoLn("BST Time: " + bstTime);
             PrintHelper.echoLn("LinkedList Time: " + linkedListTime);
         }
     }
 
-    public static double execute(Set<Integer> set, List<String> words1, List<String> words2) {
+    public static double execute(Set<String> set, List<String> words1, List<String> words2) {
         long start = System.nanoTime();
-        MyBSTSet<String> set1 = new MyBSTSet<>();
         for (String word : words1)
-            set1.add(word);
+            set.add(word);
         //System.out.println("Total different words: " + set1.getSize());
-        MyBSTSet<String> set2 = new MyBSTSet<>();
         for (String word : words2)
-            set2.add(word);
+            set.add(word);
         //System.out.println("Total different words: " + set2.getSize());
         long end = System.nanoTime();
         return (end - start) / 1000000000.0;
