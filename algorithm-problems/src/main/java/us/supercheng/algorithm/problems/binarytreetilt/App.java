@@ -2,7 +2,6 @@ package us.supercheng.algorithm.problems.binarytreetilt;
 
 import us.supercheng.algorithm.common.entity.TreeNode;
 import us.supercheng.algorithm.common.helper.PrintHelper;
-
 import java.util.Stack;
 
 public class App {

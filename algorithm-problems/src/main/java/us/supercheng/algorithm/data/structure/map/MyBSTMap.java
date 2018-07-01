@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.data.structure.map;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
 
     private MyBSTMapNode<K, V> root;
@@ -38,7 +40,87 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
 
     @Override
     public V remove(K key) {
-        return null;
+        MyBSTMapNode<K, V> ret = this.removeElement(this.root, key);
+        PrintHelper.echoLn(ret.val);
+        return ret != null ? ret.val : null;
+    }
+
+    private MyBSTMapNode<K, V> removeElement(MyBSTMapNode<K, V> node, K delKey) {
+        if(node == null)
+            return null;
+
+        if(node.key.compareTo(delKey) > 0) {
+            node.left = this.removeElement(node.left, delKey);
+        } else if(node.key.compareTo(delKey) < 0) {
+            node.right = this.removeElement(node.right, delKey);
+        } else {
+            if(node.right == null && node.left == null) {
+                return null;
+            } else if (node.right != null && node.left == null) {
+                return node.right;
+            } else if (node.right == null && node.left != null) {
+                return node.left;
+            } else {
+                MyBSTMapNode<K, V> minNode = this.removeMinElement(node.left, this.getMin(node.left).key);
+                minNode.left = node.left;
+                minNode.right = node.right;
+                this.size--;
+                return node;
+            }
+        }
+        return node;
+    }
+
+    public V removeMinElement() {
+        MyBSTMapNode<K, V> retNode = this.getMin(this.root);
+        this.removeMinElement(this.root, retNode.key);
+        return retNode.val;
+    }
+
+    public V removeMaxElement() {
+        MyBSTMapNode<K, V> retNode = this.getMax(this.root);
+        this.removeMaxElement(this.root, retNode.key);
+        return retNode.val;
+    }
+
+    private MyBSTMapNode<K, V> removeMinElement(MyBSTMapNode<K, V> currNode, K delKey) {
+        PrintHelper.echoLn("In CurrNode: " + currNode.val + " key: " + delKey);
+        MyBSTMapNode<K, V> parentDelNode = currNode;
+        while(parentDelNode.left != null) {
+            if(parentDelNode.key.equals(delKey))
+                break;
+            parentDelNode = parentDelNode.left;
+        }
+        MyBSTMapNode delNode = parentDelNode.left;
+        PrintHelper.echoLn("parentDelNode: " + parentDelNode.val);
+        PrintHelper.echoLn("parentDelNode Left: " + parentDelNode.left);
+        PrintHelper.echoLn("parentDelNode Right: " + parentDelNode.right);
+
+        if(delNode.right != null)
+            parentDelNode.left = delNode.right;
+        else
+            parentDelNode.left = null;
+        this.size--;
+        /**/
+
+        return delNode;
+    }
+
+
+    private MyBSTMapNode<K, V> removeMaxElement(MyBSTMapNode<K, V> currNode, K delKey) {
+        MyBSTMapNode<K, V> parentDelNode = currNode;
+        while(parentDelNode.right != null) {
+            if(parentDelNode.key.equals(delKey))
+                break;
+            parentDelNode = parentDelNode.right;
+        }
+        MyBSTMapNode delNode = parentDelNode.right;
+        if(delNode.left != null)
+            parentDelNode.right = delNode.left;
+        else
+            parentDelNode.right = null;
+        this.size--;
+        return delNode;
     }
 
     @Override
@@ -61,6 +143,30 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
             return this.get(node.right, k);
         else
             return this.get(node.left, k);
+    }
+
+    private MyBSTMapNode<K, V> getMax(MyBSTMapNode<K, V> node) {
+        while (node.right != null)
+            node = node.right;
+        return node;
+    }
+
+    public V getMax() {
+        if(this.isEmpty())
+            return null;
+        return this.getMax(this.root).val;
+    }
+
+    private MyBSTMapNode<K,V> getMin(MyBSTMapNode<K, V> node) {
+        while(node.left != null)
+            node = node.left;
+        return node;
+    }
+
+    public V getMin() {
+        if(this.isEmpty())
+            return null;
+        return this.getMin(this.root).val;
     }
 
     @Override
