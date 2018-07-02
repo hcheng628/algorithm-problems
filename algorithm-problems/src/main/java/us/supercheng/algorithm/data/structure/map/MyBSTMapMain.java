@@ -25,8 +25,7 @@ public class MyBSTMapMain {
         PrintHelper.echoLn("Get " + key + " After Del: " + myBSTMap.get(key));
         PrintHelper.echoLn("Contains " + key + " ? " + myBSTMap.contains(key));
 
-
-        /*
+        /* */
         myBSTMap.add(13, "Nash");
         myBSTMap.add(28, "Cheng");
 
@@ -36,15 +35,15 @@ public class MyBSTMapMain {
         PrintHelper.echoLn("Get 15 [This is not in the Map]: " + myBSTMap.get(15));
         PrintHelper.echoLn("Get 16 [16]: " + myBSTMap.get(16));
 
-        PrintHelper.echoLn("Add 15[Carter] ");
+        PrintHelper.echoLn("Add 15 [Carter] ");
         myBSTMap.add(15, "Carter");
         PrintHelper.echoLn("Get 15 [Carter]: " + myBSTMap.get(15));
         PrintHelper.echoLn("Change 15[Carter] to 15[Messi]");
         myBSTMap.set(15, "Messi");
         PrintHelper.echoLn("Get 15 [Messi]: " + myBSTMap.get(15));
 
-        //PrintHelper.echoLn("Del 15: " + myBSTMap.remove(15));
-        //PrintHelper.echoLn("Get 15 [null]: " + myBSTMap.get(15));
+        PrintHelper.echoLn("Del 15: " + myBSTMap.remove(15));
+        PrintHelper.echoLn("Get 15 [null]: " + myBSTMap.get(15));
 
         PrintHelper.echoLn("Get Max: " + myBSTMap.getMax());
         PrintHelper.echoLn("Get Min: " + myBSTMap.getMin());
@@ -52,12 +51,12 @@ public class MyBSTMapMain {
         PrintHelper.echoLn("Add some more data .....");
         myBSTMap.add(6, "Moka");
         myBSTMap.add(3, "Sambuca");
-        //PrintHelper.echoLn("Del 13: " + myBSTMap.remove(13));
-        //PrintHelper.echoLn("Get 13 [null]: " + myBSTMap.get(13));
-        //PrintHelper.echoLn("Del 3: " + myBSTMap.remove(3));
-        //PrintHelper.echoLn("Get 3 [null]: " + myBSTMap.get(3));
+        PrintHelper.echoLn("Del 13: " + myBSTMap.remove(13));
+        PrintHelper.echoLn("Get 13 [null]: " + myBSTMap.get(13));
+        PrintHelper.echoLn("Del 3: " + myBSTMap.remove(3));
+        PrintHelper.echoLn("Get 3 [null]: " + myBSTMap.get(3));
         PrintHelper.echoLn("Get 100 [null]: " + myBSTMap.get(100));
         PrintHelper.echoLn("Map Size: " + myBSTMap.getSize());
-        */
+
     }
 }

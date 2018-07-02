@@ -14,8 +14,7 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
 
     @Override
     public void add(K key, V value) {
-        if(this.root.key == null && this.root.key == null &&
-                this.root.left == null && this.root.right == null) {
+        if(this.root.key == null) {
             this.root.key = key;
             this.root.val = value;
             this.size++;
@@ -23,7 +22,7 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
             if(this.contains(key))
                 this.set(key, value);
             else {
-                this.add(this.root, new MyBSTMapNode<K, V>(key, value));
+                this.add(this.root, new MyBSTMapNode<>(key, value));
                 this.size++;
             }
         }
@@ -32,17 +31,25 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
     private MyBSTMapNode add(MyBSTMapNode<K, V> node, MyBSTMapNode<K,V> newNode) {
         if(node == null)
             return newNode;
-        if(newNode.key.compareTo(node.key) > 0)
-            return node.right = this.add(node.right, newNode);
-        else
-            return node.left = this.add(node.left, newNode);
+        if(newNode.key.compareTo(node.key) > 0) {
+            node.right = this.add(node.right, newNode);
+            return node;
+        }
+        else {
+            node.left = this.add(node.left, newNode);
+            return node;
+        }
+
     }
 
     @Override
     public V remove(K key) {
-        MyBSTMapNode<K, V> ret = this.removeElement(this.root, key);
-        PrintHelper.echoLn(ret.val);
-        return ret != null ? ret.val : null;
+        MyBSTMapNode<K, V> node = this.get(this.root, key);
+        if(node!= null) {
+            this.root = this.removeElement(this.root, key); //???
+            return node.val;
+        }
+        return null;
     }
 
     private MyBSTMapNode<K, V> removeElement(MyBSTMapNode<K, V> node, K delKey) {
@@ -51,81 +58,56 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
 
         if(node.key.compareTo(delKey) > 0) {
             node.left = this.removeElement(node.left, delKey);
+            return node;
         } else if(node.key.compareTo(delKey) < 0) {
             node.right = this.removeElement(node.right, delKey);
+            return node;
         } else {
-            if(node.right == null && node.left == null) {
-                return null;
-            } else if (node.right != null && node.left == null) {
-                return node.right;
-            } else if (node.right == null && node.left != null) {
-                return node.left;
-            } else {
-                MyBSTMapNode<K, V> minNode = this.removeMinElement(node.left, this.getMin(node.left).key);
-                minNode.left = node.left;
-                minNode.right = node.right;
+            if(node.right == null) {
+                MyBSTMapNode<K, V> leftC = node.left;
+                node.left = null;   // ???
                 this.size--;
-                return node;
+                return leftC;
             }
+
+            if(node.left == null) {
+                MyBSTMapNode<K, V> rightC = node.right;
+                node.right = null;  // ???
+                this.size--;
+                return rightC;
+            }
+
+            MyBSTMapNode<K, V> rightSubTreeMin = this.getMin(node.right);
+
+            //MyBSTMapNode<K, V> rightSubTreeMin = this.removeMinElement(node.right);
+            //rightSubTreeMin.right = node.right;
+            rightSubTreeMin.right = this.removeMinElement(node.right);
+            rightSubTreeMin.left = node.left;
+            node.right = node.left = null;
+            return rightSubTreeMin;
         }
-        return node;
     }
 
-    public V removeMinElement() {
-        MyBSTMapNode<K, V> retNode = this.getMin(this.root);
-        this.removeMinElement(this.root, retNode.key);
-        return retNode.val;
-    }
-
-    public V removeMaxElement() {
-        MyBSTMapNode<K, V> retNode = this.getMax(this.root);
-        this.removeMaxElement(this.root, retNode.key);
-        return retNode.val;
-    }
-
-    private MyBSTMapNode<K, V> removeMinElement(MyBSTMapNode<K, V> currNode, K delKey) {
-        PrintHelper.echoLn("In CurrNode: " + currNode.val + " key: " + delKey);
-        MyBSTMapNode<K, V> parentDelNode = currNode;
-        while(parentDelNode.left != null) {
-            if(parentDelNode.key.equals(delKey))
-                break;
-            parentDelNode = parentDelNode.left;
+    private MyBSTMapNode<K, V> removeMinElement(MyBSTMapNode<K, V> currNode) {
+        if(currNode.left == null) {
+            this.size--;
+            if(currNode.right == null)
+                return null;
+            else
+                return currNode.right;
         }
-        MyBSTMapNode delNode = parentDelNode.left;
-        PrintHelper.echoLn("parentDelNode: " + parentDelNode.val);
-        PrintHelper.echoLn("parentDelNode Left: " + parentDelNode.left);
-        PrintHelper.echoLn("parentDelNode Right: " + parentDelNode.right);
-
-        if(delNode.right != null)
-            parentDelNode.left = delNode.right;
-        else
-            parentDelNode.left = null;
-        this.size--;
-        /**/
-
-        return delNode;
-    }
-
-
-    private MyBSTMapNode<K, V> removeMaxElement(MyBSTMapNode<K, V> currNode, K delKey) {
-        MyBSTMapNode<K, V> parentDelNode = currNode;
-        while(parentDelNode.right != null) {
-            if(parentDelNode.key.equals(delKey))
-                break;
-            parentDelNode = parentDelNode.right;
-        }
-        MyBSTMapNode delNode = parentDelNode.right;
-        if(delNode.left != null)
-            parentDelNode.right = delNode.left;
-        else
-            parentDelNode.right = null;
-        this.size--;
-        return delNode;
+        currNode.left = this.removeMinElement(currNode.left);
+        return currNode;    // ???
     }
 
     @Override
     public boolean contains(K key) {
-        return this.get(key) == null ? false : true;
+        MyBSTMapNode node = this.get(this.root, key);
+
+        if(node == null)
+            return false;
+
+        return true;
     }
 
     @Override
@@ -145,11 +127,7 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
             return this.get(node.left, k);
     }
 
-    private MyBSTMapNode<K, V> getMax(MyBSTMapNode<K, V> node) {
-        while (node.right != null)
-            node = node.right;
-        return node;
-    }
+
 
     public V getMax() {
         if(this.isEmpty())
@@ -157,16 +135,23 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
         return this.getMax(this.root).val;
     }
 
-    private MyBSTMapNode<K,V> getMin(MyBSTMapNode<K, V> node) {
-        while(node.left != null)
-            node = node.left;
+    private MyBSTMapNode<K, V> getMax(MyBSTMapNode<K, V> node) {
+        while (node.right != null)
+            node = node.right;
         return node;
     }
+
 
     public V getMin() {
         if(this.isEmpty())
             return null;
         return this.getMin(this.root).val;
+    }
+
+    private MyBSTMapNode<K,V> getMin(MyBSTMapNode<K, V> node) {
+        while(node.left != null)
+            node = node.left;
+        return node;
     }
 
     @Override
