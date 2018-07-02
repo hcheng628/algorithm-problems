@@ -102,8 +102,10 @@ public class MyBSTMap<K extends Comparable<K>, V> implements Map<K, V> {
 
     @Override
     public boolean contains(K key) {
-        MyBSTMapNode node = this.get(this.root, key);
+        if(this.isEmpty())
+            return false;
 
+        MyBSTMapNode node = this.get(this.root, key);
         if(node == null)
             return false;
 

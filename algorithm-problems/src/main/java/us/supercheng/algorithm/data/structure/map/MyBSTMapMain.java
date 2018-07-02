@@ -1,6 +1,10 @@
 package us.supercheng.algorithm.data.structure.map;
 
+import us.supercheng.algorithm.common.helper.FileOperation;
 import us.supercheng.algorithm.common.helper.PrintHelper;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyBSTMapMain {
 
@@ -58,5 +62,36 @@ public class MyBSTMapMain {
         PrintHelper.echoLn("Get 100 [null]: " + myBSTMap.get(100));
         PrintHelper.echoLn("Map Size: " + myBSTMap.getSize());
 
+        String book_Pride_and_Prejudice = "books/pride-and-prejudice.txt";
+        String book_A_Tale_of_Two_Cities = "books/a-tale-of-two-cities.txt";
+        String filePathPP = new File(MyBSTMapMain.class.getClassLoader().getResource(book_Pride_and_Prejudice).getFile()).getAbsolutePath();
+        String filePathTTC = new File(MyBSTMapMain.class.getClassLoader().getResource(book_A_Tale_of_Two_Cities).getFile()).getAbsolutePath();
+        ArrayList<String> words1 = new ArrayList<>();
+        ArrayList<String> words2 = new ArrayList<>();
+        if (FileOperation.readFile((filePathPP), words1) && FileOperation.readFile((filePathTTC), words2)) {
+            double bstMapTime = MyLinkedListMapMain.execute(new MyBSTMap<String, Integer>(), words1, words2);
+            PrintHelper.echoLn("MSTMap Time: " + bstMapTime);
+        }
+    }
+
+    public static double execute(Map<String, Integer> map, List<String> words1, List<String> words2) {
+        long start = System.nanoTime();
+        for (String word : words1) {
+            if (map.contains(word))
+                map.set(word, map.get(word) + 1);
+            else
+                map.add(word, 1);
+        }
+        for (String word : words2) {
+            if (map.contains(word))
+                map.set(word, map.get(word) + 1);
+            else
+                map.add(word, 1);
+        }
+        PrintHelper.echoLn("Total different words: " + map.getSize() +
+                "\nFrequency of PRIDE: " + map.get("pride") +
+                "\nFrequency of PREJUDICE: " + map.get("prejudice"));
+        long end = System.nanoTime();
+        return (end - start) / 1000000000.0;
     }
 }
