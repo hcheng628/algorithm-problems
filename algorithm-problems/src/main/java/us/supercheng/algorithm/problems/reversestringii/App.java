@@ -40,4 +40,13 @@ public class App {
             chars[right--] = temp;
         }
     }
+
+    public String reverseStr2(String s, int k) {
+        if(s == null || k < 2 || s.length() < 2)
+            return s;
+        char [] chars = s.toCharArray();
+        for(int i=0; i<chars.length;i+=2*k)
+            this.reverseChars(chars,i, i+k-1 > chars.length - 1 ? chars.length -1 : i+k-1);
+        return String.valueOf(chars);
+    }
 }
