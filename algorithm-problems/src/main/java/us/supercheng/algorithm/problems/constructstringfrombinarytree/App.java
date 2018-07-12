@@ -19,4 +19,33 @@ public class App {
             return t.val + "(" + this.helper(t.left, "") + ")";
         return  t.val + "(" + this.helper(t.left, t.val + "") + ")" + "(" + this.helper(t.right, t.val + "") + ")";
     }
+
+    public String tree2str2(TreeNode t) {
+        StringBuilder sb = new StringBuilder();
+        this.helper2(t, sb);
+        return sb.toString();
+
+    }
+
+    private void helper2(TreeNode t, StringBuilder sb) {
+        if(t == null)
+            return;
+        if(t.left != null && t.right != null) {
+            sb.append(t.val + "(");
+            this.helper2(t.left, sb);
+            sb.append(")(");
+            this.helper2(t.right, sb);
+            sb.append(")");
+        } else if (t.left == null && t.right != null) {
+            sb.append(t.val + "()(");
+            this.helper2(t.right, sb);
+            sb.append(")");
+        } else if (t.left != null && t.right == null) {
+            sb.append(t.val + "(");
+            this.helper2(t.left, sb);
+            sb.append(")");
+        } else {
+            sb.append(t.val);
+        }
+    }
 }

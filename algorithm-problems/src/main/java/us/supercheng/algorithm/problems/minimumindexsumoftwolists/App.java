@@ -22,7 +22,7 @@ public class App {
             map.put(list1[i], i);
         int totalIndexVal = -1;
         for(int i=0;i<list2.length;i++) {
-            if(map.containsKey(list2[i])) {
+            //if(map.containsKey(list2[i])) {
                 int tempIndex = map.get(list2[i]) + i;
                 if(totalIndexVal == -1) {
                     totalIndexVal = tempIndex;
@@ -34,7 +34,7 @@ public class App {
                     list.removeAll(list);
                     list.add(list2[i]);
                 }
-            }
+            //}
         }
         return list.toArray(new String[0]);
     }
