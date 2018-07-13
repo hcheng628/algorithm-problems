@@ -13,6 +13,7 @@ public class App {
         PrintHelper.echoLn(new App().distributeCandies2(arr));
         PrintHelper.echoLn(new App().distributeCandies3(arr));
         PrintHelper.echoLn(new App().distributeCandies4(arr));
+        PrintHelper.echoLn(new App().distributeCandies5(arr));
     }
 
     public int distributeCandies(int[] candies) {
@@ -53,5 +54,19 @@ public class App {
             if(i==0 || candies[i] != candies[i-1])
                 count ++;
         return count > candies.length / 2 ? candies.length / 2 : count;
+    }
+
+    public int distributeCandies5(int[] candies) {
+        boolean [] bucket = new boolean[20001];
+        int count = 0;
+        for(int i=0;i<candies.length;i++) {
+            if(!bucket[candies[i]]) {
+                count++;
+                bucket[candies[i]] = true;
+            }
+            if(count >= candies.length / 2)
+                return candies.length / 2;
+        }
+        return count;
     }
 }
