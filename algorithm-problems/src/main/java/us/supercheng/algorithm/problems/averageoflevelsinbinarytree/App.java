@@ -35,4 +35,27 @@ public class App {
         this.helper(root.left, level + 1, map);
         this.helper(root.right, level + 1, map);
     }
+
+    public List<Double> averageOfLevels2(TreeNode root) {
+        LinkedList<Integer> count = new LinkedList<>();
+        LinkedList<Double> ret = new LinkedList<>();
+        this.helper2(root, 1, ret, count);
+        for(int i=0;i<ret.size();i++)
+            ret.set(i, ret.get(i)/count.get(i));
+        return ret;
+    }
+
+    private void helper2(TreeNode root, int level, List<Double> list, List<Integer> count) {
+        if(root == null)
+            return;
+        if(list.size() < level || list.get(level-1) == null) {
+            list.add((double) root.val);
+            count.add(1);
+        }else {
+            list.set(level-1, list.get(level-1) + root.val);
+            count.set(level-1, count.get(level-1) + 1);
+        }
+        this.helper2(root.left, level + 1, list, count);
+        this.helper2(root.right, level + 1, list, count);
+    }
 }
