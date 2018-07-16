@@ -37,43 +37,69 @@ public class MyMaxHeap<E extends Comparable<E>> {
     }
 
     // Max or Min
-    public E getNext() {
+    public E getTop() {
         return this.isEmpty() ? null : this.array.get(0);
     }
 
-    public E extractNext() {
+    public E extractTop() {
         if(this.isEmpty())
             throw new IllegalArgumentException("Empty Priority Queue");
-        E ret = this.getNext();
+        E ret = this.getTop();
         this.array.set(0, this.array.remove(this.size() - 1));
-        this.array.set(this.size() - 1, null);
         this.siftDown(0);
         return ret;
     }
 
     public E replace(E e) {
-        E ret = this.getNext();
+        E ret = this.getTop();
         this.array.set(0, e);
         this.siftDown(0);
         return ret;
     }
-
 
     private void siftDown(int index) {
         E left = this.array.get(this.getLeftChildIndex(index));
         E right = this.array.get(this.getRightChildIndex(index));
         E curr = this.array.get(index);
 
-        while(curr.compareTo(left) > 0 || curr.compareTo(right) > 0 && index < this.size()) {
-            if(left.compareTo(right) < 0) {
-                this.array.set(index, right);
-                this.array.set(this.getRightChildIndex(index), curr);
-                index = this.getRightChildIndex(index);
+        while(this.getLeftChildIndex(index) < this.size()) {
+//            PrintHelper.echoLn("\nBefore\ncurr: " + curr + " with index: " + index + " size: " + this.size());
+//            PrintHelper.echoLn("left: " + left);
+//            PrintHelper.echoLn("right: " + right);
+//            PrintHelper.echoLn("\n>>>>>");
+//            this.print();
+//            PrintHelper.echoLn("<<<<<\n");
+
+            if(right == null) {
+                if(curr.compareTo(left) < 0) {
+                    this.array.set(index, left);
+                    this.array.set(this.getLeftChildIndex(index), curr);
+                    index = this.getLeftChildIndex(index);
+                } else
+                    break;
             } else {
-                this.array.set(index, left);
-                this.array.set(this.getLeftChildIndex(index), curr);
-                index = this.getLeftChildIndex(index);
+                if(curr.compareTo(left) >= 0 && curr.compareTo(right) >= 0)
+                    break;
+                if(left.compareTo(right) <= 0) {
+                    this.array.set(index, right);
+                    this.array.set(this.getRightChildIndex(index), curr);
+                    index = this.getRightChildIndex(index);
+                } else {
+                    this.array.set(index, left);
+                    this.array.set(this.getLeftChildIndex(index), curr);
+                    index = this.getLeftChildIndex(index);
+                }
             }
+            curr = this.array.get(index);
+            left = this.getLeftChildIndex(index) < this.size() ? this.array.get(this.getLeftChildIndex(index)) : null;
+            right = this.getRightChildIndex(index) < this.size() ? this.array.get(this.getRightChildIndex(index)) : null;
+//            PrintHelper.echoLn("\nAfter\ncurr: " + curr + " with index: " + index + " size: " + this.size());
+//            PrintHelper.echoLn("left: " + left);
+//            PrintHelper.echoLn("right: " + right);
+//            PrintHelper.echoLn(this.getLeftChildIndex(index) < this.size());
+//            PrintHelper.echoLn("\n>>>>>");
+//            this.print();
+//            PrintHelper.echoLn("<<<<<\n");
         }
     }
 
@@ -85,7 +111,6 @@ public class MyMaxHeap<E extends Comparable<E>> {
             index = this.getParentIndex(index);
         }
     }
-
 
     private int getParentIndex(int childIndex) {
         return (childIndex - 1) / 2;

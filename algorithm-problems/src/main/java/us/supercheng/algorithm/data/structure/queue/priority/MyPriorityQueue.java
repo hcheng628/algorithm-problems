@@ -4,28 +4,34 @@ import us.supercheng.algorithm.data.structure.queue.Queue;
 
 public class MyPriorityQueue<E extends Comparable<E>> implements Queue<E>{
 
+    MyMaxHeap<E> heap;
+
+    public MyPriorityQueue() {
+        this.heap = new MyMaxHeap<>();
+    }
+
     @Override
     public int getSize() {
-        return 0;
+        return this.heap.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.heap.isEmpty();
     }
 
     @Override
     public void enqueue(E e) {
-
+        this.heap.add(e);
     }
 
     @Override
     public E dequeue() {
-        return null;
+        return this.heap.extractTop();
     }
 
     @Override
     public E getFront() {
-        return null;
+        return this.heap.getTop();
     }
 }

@@ -46,7 +46,6 @@ public class MyArray<E> {
         if(size != 0)
             this.size--;
         int capacity = this.getCapacity();
-        //System.out.println("Capacity: " + capacity);
         if (size * 4 == capacity && capacity / 2 != 0)
             this.resize(capacity / 2);
         return ret;
@@ -54,13 +53,13 @@ public class MyArray<E> {
 
     public E get(int index) {
         if (index > this.data.length - 1 || index < 0)
-            throw new IllegalArgumentException("Invalid Insert Index Position");
+            throw new IllegalArgumentException("Invalid Get --- Index Position at " + index);
         return this.data[index];
     }
 
     public void set(int index, E newE) {
         if (index > this.data.length - 1 || index < 0)
-            throw new IllegalArgumentException("Invalid Insert Index Position");
+            throw new IllegalArgumentException("Invalid Insert --- Index Position");
         this.data[index] = newE;
     }
 
