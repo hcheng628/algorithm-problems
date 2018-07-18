@@ -4,6 +4,7 @@ import us.supercheng.algorithm.common.entity.TreeNode;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class App {
 
@@ -57,5 +58,25 @@ public class App {
         }
         this.helper2(root.left, level + 1, list, count);
         this.helper2(root.right, level + 1, list, count);
+    }
+
+    public List<Double> averageOfLevels3(TreeNode root) {
+        LinkedList<Double> ret = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            double eachSum = 0;
+            for(int i=0;i<size;i++) {
+                TreeNode node = queue.remove();
+                eachSum += node.val;
+                if(node.left != null)
+                    queue.add(node.left);
+                if(node.right != null)
+                    queue.add(node.right);
+            }
+            ret.add(eachSum / size);
+        }
+        return ret;
     }
 }
