@@ -54,4 +54,25 @@ public class App {
         }
         return ret;
     }
+
+    public int[][] imageSmoother2(int[][] M) {
+        int[][] ret = new int [M.length][M[0].length];
+        for(int i=0;i<M.length; i++)
+            for(int j=0;j<M[i].length;j++)
+                ret[i][j] = helper(M, i, j);
+        return ret;
+    }
+
+    private int helper(int[][] M, int i, int j) {
+        int sum = 0, count = 0;
+        for(int row=-1;row<=1;row++) {
+            for(int col=-1;col<=1;col++) {
+                if(i+row <= M.length - 1 && i+row >= 0 && j+col <=M[0].length -1 && j+col >=0) {
+                    count++;
+                    sum += M[i+row][j+col];
+                }
+            }
+        }
+        return sum/count;
+    }
 }
