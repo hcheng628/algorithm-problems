@@ -33,4 +33,24 @@ public class App {
         return Math.max(leftVal, rightVal);
     }
 
+    public int longestUnivaluePath2(TreeNode root) {
+        if(root == null)
+            return 0;
+        diffDis2(root, root.val);
+        return this.max;
+    }
+
+    private int diffDis2(TreeNode root, int val) {
+        if(root == null)
+            return 0;
+        int left = diffDis2(root.left, root.val);
+        int right = diffDis2(root.right, root.val);
+
+        if(left + right > max)
+            max = left + right;
+
+        if(root.val == val)
+            return left > right ? left + 1 : right + 1;
+        return 0;
+    }
 }
