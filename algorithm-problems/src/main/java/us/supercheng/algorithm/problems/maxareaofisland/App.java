@@ -6,16 +6,16 @@ public class App {
 
     private int max = 0;
 
-    public int maxAreaOfIsland3(int[][] grid) {
+    public int maxAreaOfIsland4(int[][] grid) {
         Set<String> set = new HashSet<>();
         for(int i=0;i<grid.length;i++)
             for(int j=0;j<grid[i].length;j++)
                 if(grid[i][j] == 1 && !set.contains(i+":" + j))
-                    helper3(grid, i, j, set);
+                    helper4(grid, i, j, set);
         return max;
     }
 
-    private void helper3(int[][] grid, int i, int j, Set<String> set) {
+    private void helper4(int[][] grid, int i, int j, Set<String> set) {
         Stack<String> stack = new Stack<>();
         stack.push(i+":"+j);
         set.add(i+":"+j);
@@ -51,9 +51,6 @@ public class App {
             max = count;
     }
 
-
-
-
     class Pos{
         public int row;
         public int col;
@@ -64,15 +61,15 @@ public class App {
         }
     }
 
-    public int maxAreaOfIsland2(int[][] grid) {
+    public int maxAreaOfIsland3(int[][] grid) {
         for(int i=0;i<grid.length;i++)
             for(int j=0;j<grid[i].length;j++)
                 if(grid[i][j] == 1)
-                    helper2(grid, i, j);
+                    helper3(grid, i, j);
         return max;
     }
 
-    private void helper2(int[][] grid, int i, int j) {
+    private void helper3(int[][] grid, int i, int j) {
         Stack<Pos> stack = new Stack<>();
         stack.push(new Pos(i, j));
         grid[i][j] = 0;
@@ -104,17 +101,16 @@ public class App {
             max = count;
     }
 
-
-    public int maxAreaOfIsland(int[][] grid) {
+    public int maxAreaOfIsland2(int[][] grid) {
         List<Integer> rowList = new ArrayList<>(), colList = new ArrayList<>();
         for(int i=0;i<grid.length;i++)
             for(int j=0;j<grid[i].length;j++)
                 if(grid[i][j] == 1)
-                    helper(grid, i, j, rowList, colList);
+                    helper2(grid, i, j, rowList, colList);
         return max;
     }
 
-    private void helper(int[][] grid, int i, int j, List<Integer> rowList, List<Integer> colList) {
+    private void helper2(int[][] grid, int i, int j, List<Integer> rowList, List<Integer> colList) {
         rowList.add(i);
         colList.add(j);
         grid[i][j] = 0;
@@ -152,5 +148,33 @@ public class App {
         }
         if(count > max)
             max = count;
+    }
+
+    public int maxAreaOfIsland(int[][] grid) {
+        int ret = 0;
+        for(int i=0;i<grid.length;i++) {
+            for(int j=0;j<grid[i].length;j++) {
+                if(grid[i][j] == 1) {
+                    int temp = helper(grid, i, j);
+                    if(temp > ret)
+                        ret = temp;
+                }
+            }
+        }
+        return ret;
+    }
+
+    private int helper(int[][] grid, int row, int col) {
+        int ret = 1;
+
+        if(row < 0 || row > grid.length -1 || col < 0 || col > grid[0].length -1 || grid[row][col] == 0)
+            return 0;
+
+        grid[row][col] = 0;
+        ret += helper(grid, row+1, col);
+        ret += helper(grid, row-1, col);
+        ret += helper(grid, row, col+1);
+        ret += helper(grid, row, col-1);
+        return ret;
     }
 }

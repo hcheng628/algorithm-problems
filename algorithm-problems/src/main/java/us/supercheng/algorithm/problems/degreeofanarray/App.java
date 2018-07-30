@@ -7,10 +7,11 @@ public class App {
 
     public static void main(String[] args) {
         int [] nums = {1,2,2,3,1,4,2};
+        PrintHelper.echoLn(new App().findShortestSubArray2(nums));
         PrintHelper.echoLn(new App().findShortestSubArray(nums));
     }
 
-    public int findShortestSubArray(int[] nums) {
+    public int findShortestSubArray2(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>(), indexMap = new HashMap<>();
         int max = 0;
         for(int i=0;i<nums.length;i++) {
@@ -44,5 +45,32 @@ public class App {
             }
         }
         return minDistance + 1;
+    }
+
+    public int findShortestSubArray(int[] nums) {
+        if(nums.length < 2)
+            return 1;
+        HashMap<Integer, int []> map = new HashMap<>();
+        int maxOcc = 1;
+        for(int i=0;i<nums.length;i++) {
+            if(!map.containsKey(nums[i]))
+                map.put(nums[i], new int [] {1, i, i});
+            else {
+                int [] num = map.get(nums[i]);
+                num[0]++;
+                if(num[0] > maxOcc)
+                    maxOcc = num[0];
+                num[2] = i;
+            }
+        }
+
+        int ret = Integer.MAX_VALUE;
+        for(int key : map.keySet()) {
+            if(map.get(key)[0] == maxOcc) {
+                if(map.get(key)[2] - map.get(key)[1] + 1 < ret)
+                    ret = map.get(key)[2] - map.get(key)[1] + 1;
+            }
+        }
+        return ret;
     }
 }
