@@ -10,7 +10,7 @@ public class App {
         PrintHelper.echoLn(new App().longestWord(arr));
     }
 
-    public String longestWord(String[] words) {
+    public String longestWord1(String[] words) {
         String ret = null;
 
         HashSet<String> set = new HashSet<>();
@@ -45,6 +45,20 @@ public class App {
                 ret = each;
             else if (ret != null && max > index)
                 break;
+        }
+        return ret;
+    }
+
+    public String longestWord(String[] words) {
+        Arrays.sort(words);
+        String ret = "";
+        HashSet<String> set = new HashSet<>();
+        for(String word : words) {
+            if(word.length() == 1 || set.contains(word.substring(0, word.length()-1))) {
+                if(word.length() > ret.length())
+                    ret = word;
+                set.add(word);
+            }
         }
         return ret;
     }
