@@ -27,8 +27,7 @@ public class App {
     }
 
 
-    Integer prev = null;
-    int ret = Integer.MAX_VALUE;
+    Integer prev = null, ret = Integer.MAX_VALUE;
 
     public int minDiffInBST(TreeNode root) {
         this.helper(root);
