@@ -23,7 +23,7 @@ public class App {
 
         sb.append(A);
         if(sb.toString().contains(B))
-            return counter + 1;
+            return ++counter;
         return -1;
     }
 }
