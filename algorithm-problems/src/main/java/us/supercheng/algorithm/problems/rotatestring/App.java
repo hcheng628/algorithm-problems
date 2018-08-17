@@ -7,9 +7,18 @@ public class App {
     public static void main(String[] args) {
         String A = "abcde", B = "cdeab";
         PrintHelper.echoLn(new App().rotateString(A, B));
+        PrintHelper.echoLn(new App().rotateString1(A, B));
     }
 
     public boolean rotateString(String A, String B) {
+        if(A == null && B == null)
+            return true;
+        if(A == null || B == null || A.length() != B.length())
+            return false;
+        return (A+A).contains(B);
+    }
+
+    public boolean rotateString1(String A, String B) {
         if(A == null && B == null || A.length() == 0 && B.length() == 0)
             return true;
         if(A.length() != B.length() || A == null || B == null)
