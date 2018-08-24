@@ -7,9 +7,22 @@ public class App {
     public static void main(String[] args) {
         int[] seats = {1,0,0,0,1,0,1};
         PrintHelper.echoLn(new App().maxDistToClosest(seats));
+        PrintHelper.echoLn(new App().maxDistToClosest1(seats));
     }
 
     public int maxDistToClosest(int[] seats) {
+        int ret = Integer.MIN_VALUE, curr = Integer.MIN_VALUE;
+        for (int i=0;i<seats.length;i++) {
+            if(seats[i] == 1) {
+                ret = Math.max(ret, curr == Integer.MIN_VALUE ? i : (i - curr) / 2);
+                curr = i;
+            }
+        }
+        int res = seats.length - 1 - curr;
+        return res > ret ? res : ret;
+    }
+
+    public int maxDistToClosest1(int[] seats) {
         int ret = Integer.MIN_VALUE;
         for(int i=0;i<seats.length;i++) {
             if(seats[i] != 1) {
@@ -42,5 +55,4 @@ public class App {
                 return ret;
         return ret;
     }
-
 }
