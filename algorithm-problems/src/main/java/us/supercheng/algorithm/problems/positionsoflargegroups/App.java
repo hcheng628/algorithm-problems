@@ -15,10 +15,17 @@ public class App {
             PrintHelper.echoLn("");
         }
 
+        res = new App().largeGroupPositions1(S);
+        for(List<Integer> each : res) {
+            for(int eachVal : each)
+                PrintHelper.echo(eachVal + " ");
+            PrintHelper.echoLn("");
+        }
+
     }
 
-    public List<List<Integer>> largeGroupPositions(String S) {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+    public List<List<Integer>> largeGroupPositions1(String S) {
+        List<List<Integer>> ret = new ArrayList<>();
         char [] chars = S.toCharArray();
         int count = 1;
         for(int i=0;i<chars.length;i++) {
@@ -42,6 +49,32 @@ public class App {
                     }
                 }
             }
+        }
+        return ret;
+    }
+
+    public List<List<Integer>> largeGroupPositions(String S) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        int prev=0, count=0, i=0;
+        for(;i<S.length();i++) {
+            if(S.charAt(i) == S.charAt(prev))
+                count++;
+            else {
+                if(count>2) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(prev);
+                    list.add(i-1);
+                    ret.add(list);
+                }
+                prev=i;
+                count=1;
+            }
+        }
+        if(count>2) {
+            List<Integer> list = new ArrayList<>();
+            list.add(prev);
+            list.add(i-1);
+            ret.add(list);
         }
         return ret;
     }
