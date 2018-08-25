@@ -1,6 +1,8 @@
 package us.supercheng.algorithm.problems.maximizedistancetoclosestperson;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
 
@@ -8,6 +10,7 @@ public class App {
         int[] seats = {1,0,0,0,1,0,1};
         PrintHelper.echoLn(new App().maxDistToClosest(seats));
         PrintHelper.echoLn(new App().maxDistToClosest1(seats));
+        PrintHelper.echoLn(new App().maxDistToClosest2(seats));
     }
 
     public int maxDistToClosest(int[] seats) {
@@ -53,6 +56,33 @@ public class App {
         for(int i=index+1;i<seats.length; i++, ret++)
             if(seats[i] == 1)
                 return ret;
+        return ret;
+    }
+
+    public int maxDistToClosest2(int[] seats) {
+        int ret = Integer.MIN_VALUE;
+        List<Integer> list = new ArrayList<>();
+        for(int i=0;i<seats.length;i++)
+            if(seats[i] ==1)
+                list.add(i);
+
+        if(seats[0] == 0) {
+            int border = list.get(0) - 0;
+            if(border > ret)
+                ret = border;
+        }
+
+        if(seats[seats.length-1]==0) {
+            int border = seats.length - 1 - list.get(list.size()-1);
+            if(border > ret)
+                ret = border;
+        }
+
+        for(int i=0;i<list.size()-1;i++) {
+            int res = (list.get(i+1) - list.get(i)) / 2;
+            if(res > ret)
+                ret = res;
+        }
         return ret;
     }
 }
