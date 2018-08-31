@@ -1,7 +1,6 @@
 package us.supercheng.algorithm.problems.leafsimilartrees;
 
 import us.supercheng.algorithm.common.entity.TreeNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
