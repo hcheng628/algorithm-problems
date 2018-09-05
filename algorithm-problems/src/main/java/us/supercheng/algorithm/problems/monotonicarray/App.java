@@ -14,9 +14,9 @@ public class App {
             return true;
         boolean monotoneUp = true, monotoneDown = true;
         for(int i=0;i<A.length;i++) {
-            if((i-1 >=0 && A[i-1] > A[i]) || (i+1 <= A.length -1 && A[i+1] < A[i]))
+            if(monotoneUp && (i-1 >=0 && A[i-1] > A[i]) || (i+1 <= A.length -1 && A[i+1] < A[i]))
                 monotoneUp = false;
-            if((i-1 >=0 && A[i-1] < A[i]) || (i+1 <= A.length -1 && A[i+1] > A[i]))
+            if(monotoneDown && (i-1 >=0 && A[i-1] < A[i]) || (i+1 <= A.length -1 && A[i+1] > A[i]))
                 monotoneDown = false;
             if(monotoneUp == false && monotoneDown == false)
                 return false;
