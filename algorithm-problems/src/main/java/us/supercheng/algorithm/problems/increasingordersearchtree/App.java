@@ -28,4 +28,25 @@ public class App {
         this.list.add(node);
         this.helper(node.right);
     }
+
+
+    // Approach 2
+
+    TreeNode fakeHead;
+
+    public TreeNode increasingBST1(TreeNode root) {
+        this.fakeHead = new TreeNode(-13);
+        TreeNode ret = this.fakeHead;
+        this.helper1(root);
+        return ret.right;
+    }
+
+    private void helper1(TreeNode node) {
+        if(node == null)
+            return;
+        this.helper1(node.left);
+        this.fakeHead.right = new TreeNode(node.val);;
+        this.fakeHead = this.fakeHead.right;
+        this.helper1(node.right);
+    }
 }

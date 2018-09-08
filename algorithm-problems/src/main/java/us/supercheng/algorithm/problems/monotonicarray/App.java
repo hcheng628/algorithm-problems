@@ -7,6 +7,7 @@ public class App {
     public static void main(String [] args) {
         int [] A = {6,5,4,4};
         PrintHelper.echoLn(new App().isMonotonic(A));
+        PrintHelper.echoLn(new App().isMonotonic1(A));
     }
 
     public boolean isMonotonic(int[] A) {
@@ -21,6 +22,14 @@ public class App {
             if(monotoneUp == false && monotoneDown == false)
                 return false;
         }
+        return true;
+    }
+
+    public boolean isMonotonic1(int[] A) {
+        boolean isAsc = A[0] < A[A.length-1];
+        for(int i=0;i<A.length-1;i++)
+            if(A[i] != A[i+1] && isAsc == A[i+1] < A[i])
+                return false;
         return true;
     }
 }
