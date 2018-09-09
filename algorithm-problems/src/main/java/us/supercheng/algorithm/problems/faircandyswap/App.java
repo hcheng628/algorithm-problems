@@ -2,6 +2,8 @@ package us.supercheng.algorithm.problems.faircandyswap;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
 
+import java.util.Arrays;
+
 public class App {
 
     public static void main(String[] args) {
@@ -43,6 +45,61 @@ public class App {
                         return ret;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    public int[] fairCandySwap1(int[] A, int[] B) {
+        int [] ret = new int[2];
+        int sumA=0, sumB=0;
+        for(int each : A)
+            sumA += each;
+        for(int each : B)
+            sumB += each;
+        int diff = Math.abs(sumA - sumB) / 2;
+        if(sumA > sumB)
+            return this.helper(A, B, diff, ret, true);
+        else
+            return this.helper(B, A, diff, ret, false);
+    }
+
+    private int[] helper(int[] A, int [] B, int diff, int [] ret, boolean flag) {
+        Arrays.sort(B);
+        for(int i=0;i<A.length;i++) {
+            int index = Arrays.binarySearch(B,A[i]-diff);
+            if(index > -1) {
+                if(flag) {
+                    ret[0] = A[i];
+                    ret[1] = B[index];
+                } else {
+                    ret[0] = B[index];
+                    ret[1] = A[i];
+                }
+                return ret;
+            }
+        }
+        return null;
+    }
+
+    public int[] fairCandySwap2(int[] A, int[] B) {
+        int [] ret = new int[2];
+        boolean [] db = new boolean[1000001];
+        int diff = 0;
+        for(int each : A)
+            diff += each;
+        for(int each: B) {
+            diff -= each;
+            db[each] = true;
+        }
+        diff /=2;
+
+        for(int each : A) {
+            int res = each - diff;
+            if(res>0 && res<db.length && db[res]) {
+                ret[0] = each;
+                ret[1] = res;
+                return ret;
             }
         }
         return null;

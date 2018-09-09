@@ -40,4 +40,34 @@ public class App {
         } else
             return charA[swapA] == B.charAt(swapB) && charA[swapB] == B.charAt(swapA);
     }
+
+    public boolean buddyStrings1(String A, String B) {
+        if(A.length() != B.length() || A.length() == 0)
+            return false;
+
+        int count = 0, swapA = -1, swapB = -1;
+        boolean dupFlag = false;
+        int [] letters = new int[26];
+        for(int i=0;i<A.length();i++) {
+            if(A.charAt(i) != B.charAt(i)) {
+                if(++count > 2)
+                    return false;
+                if(swapA == -1)
+                    swapA = i;
+                else
+                    swapB = i;
+            }
+            if(!dupFlag && ++letters[A.charAt(i)-'a'] > 1)
+                dupFlag = true;
+        }
+
+        switch(count) {
+            case 1:
+                return false;
+            case 2:
+                return A.charAt(swapA) == B.charAt(swapB) && A.charAt(swapB) == B.charAt(swapA);
+            default:
+                return dupFlag;
+        }
+    }
 }
