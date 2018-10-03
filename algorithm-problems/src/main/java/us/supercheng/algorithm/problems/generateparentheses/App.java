@@ -13,6 +13,13 @@ public class App {
             count++;
         }
         PrintHelper.echoLn("Total: " + count);
+
+        count = 0;
+        for(String each :  new App().generateParenthesis2(n)) {
+            PrintHelper.echoLn(each);
+            count++;
+        }
+        PrintHelper.echoLn("Total: " + count);
     }
 
     public List<String> generateParenthesis(int n) {
@@ -38,5 +45,35 @@ public class App {
             this.helper(s + "(", ret, left-1, right);
         if(right > 0)
             this.helper(s + ")", ret, left, right-1);
+    }
+
+    public List<String> generateParenthesis2(int n) {
+        List<String> ret = new ArrayList<>();
+
+        if(n<1)
+            return ret;
+
+        this.helper2(new StringBuilder(), ret, n, n);
+        return ret;
+    }
+
+    private void helper2(StringBuilder sb, List<String> ret, int left, int right) {
+        if(left == 0 && right ==0) {
+            ret.add(sb.toString());
+            return;
+        }
+
+        if(left > right)
+            return;
+
+        if(left > 0) {
+            this.helper2(sb.append("("), ret, left-1, right);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        if(right > 0) {
+            this.helper2(sb.append(")"), ret, left, right-1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
     }
 }
