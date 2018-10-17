@@ -20,31 +20,26 @@ public class App {
     public List<List<Integer>> permuteUnique(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> ret = new ArrayList<>();
-        Set<List<Integer>> set = new HashSet<>();
-        this.helper(nums, new ArrayList(), set);
-        for(List<Integer> each : set)
-            ret.add(each);
+        boolean [] used = new boolean[nums.length];
+        this.helper(nums, new ArrayList(), ret, used);
         return ret;
     }
 
-    private void helper(int [] nums, List<Integer> list, Set<List<Integer>> set) {
+    private void helper(int [] nums, List<Integer> list, List<List<Integer>> ret, boolean [] used) {
         if(list.size() == nums.length) {
-            List<Integer> temp = new ArrayList<>(list);
-            List<Integer> temp2 = new ArrayList<>(temp);
-            Collections.sort(temp2);
-            for(int i=0;i<nums.length;i++)
-                if(temp2.get(i) != nums[i])
-                    return;
-            if(!set.contains(temp)) {
-                set.add(temp);
-            }
+            ret.add(new ArrayList<>(list));
             return;
         }
 
         for(int i=0;i<nums.length;i++) {
+            if(used[i] == true)
+                continue;
+            used[i] = true;
             list.add(nums[i]);
-            this.helper(nums, list, set);
+            this.helper(nums, list, ret, used);
+            used[i] = false;
             list.remove(list.size()-1);
+            for(;i<nums.length-1 && nums[i] == nums[i+1];i++);
         }
     }
 }
