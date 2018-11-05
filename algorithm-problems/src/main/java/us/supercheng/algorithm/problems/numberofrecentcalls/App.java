@@ -6,7 +6,7 @@ import java.util.Queue;
 public class App {
     private Queue<Integer> queue;
 
-    public RecentCounter() {
+    public App() {
         this.queue = new LinkedList<>();
     }
 
