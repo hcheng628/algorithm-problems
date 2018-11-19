@@ -1,61 +1,51 @@
 package us.supercheng.algorithm.problems.decodeways;
 
-import java.util.ArrayList;
-import java.util.List;
+import us.supercheng.algorithm.common.helper.PrintHelper;
 
 public class App {
 
     public static void main(String[] args) {
-        int res = new App().numDecodings("226");
+        PrintHelper.echoLn(new App().numDecodings("226"));
+    }
+
+    public int numDecodingsSlow(String s) {
+        char [] chars = s.toCharArray();
+        int [] dp = new int [s.length()+1];
+        dp[0] = 1;
+        dp[1] = chars[0] == '0' ? 0 : 1;
+
+        for(int i=2, charIndex=1;i<dp.length;i++, charIndex++) {
+            if(dp[i-1] == 0 && dp[i-2] == 0)
+                return 0;
+            int twoDigits = Integer.valueOf(chars[charIndex-1] + "" + chars[charIndex]);
+            int currDigit = chars[charIndex] - 48;
+            if(twoDigits>= 10 && twoDigits <= 26)
+                dp[i] += dp[i-2];
+            if(currDigit >= 1 && currDigit <= 9)
+                dp[i] += dp[i-1];
+        }
+        return dp[dp.length-1];
     }
 
     public int numDecodings(String s) {
-        if(s == null || s.length() == 0)
-            return 0;
-        if(s.length() == 1)
-            return 1;
+        char [] chars = s.toCharArray();
+        int prePre = 1,
+            pre = chars[0] == '0' ? 0 : 1,
+            size = chars.length + 1;
 
-        char[] chars = s.toCharArray();
-        //Set<String> set = new HashSet<>();
-        List<String> superList = new ArrayList<>();
-
-        this.helper(superList, "", chars, 0);
-
-        for(String row : superList) {
-            System.out.println(row);
+        for(int i=2;i<size;i++) {
+            int curr = 0;
+            if(prePre == 0 && pre == 0)
+                return 0;
+            int twoDigits = Integer.valueOf(chars[i-2] + "" + chars[i-1]);
+            int currDigit = chars[i-1] - 48;
+            if(twoDigits>= 10 && twoDigits <= 26)
+                curr += prePre;
+            if(currDigit >= 1 && currDigit <= 9)
+                curr += pre;
+            prePre = pre;
+            pre = curr;
         }
-        return 0;
-    }
-
-    private void helper(List<String> superList, String list, char[] chars, int index) {
-        System.out.println("index: " + index);
-
-//        if(addIt && index < chars.length) {
-//            list.add(Character.toString(chars[index]));
-//        }
-
-        if (index > chars.length) {
-            return;
-        } else if (list.length() == chars.length) {
-            superList.add(list);
-            return;
-        }
-
-
-        for(int i=index;i<chars.length;i++) {
-            //list.add(Character.toString(chars[i]));
-            list += Character.toString(chars[i]);
-            this.helper(superList, list, chars, i+1);
-            //System.out.println("i: " + i);
-            if(i+1 <= chars.length -1 && Integer.parseInt((chars[i]) + "" + (chars[i+1])) < 26 ) {
-                //list.add(chars[i] + "" + chars[i+1]);
-                list += chars[i] + "" + chars[i+1];
-                this.helper(superList, list, chars, i+2);
-                list.substring(0, list.length()-1);
-            }
-
-            list.substring(0, list.length()-1);
-            //list.remove(list.size()-1);
-        }
+        return pre;
     }
 }
