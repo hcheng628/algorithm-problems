@@ -1,6 +1,12 @@
 package us.supercheng.algorithm.problems.decodeways;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 public class App {
+
+    public static void main(String[] args) {
+        PrintHelper.echoLn(new App().numDecodings("226"));
+    }
 
     public int numDecodingsSlow(String s) {
         char [] chars = s.toCharArray();
@@ -23,10 +29,9 @@ public class App {
 
     public int numDecodings(String s) {
         char [] chars = s.toCharArray();
-
         int prePre = 1,
-                pre = chars[0] == '0' ? 0 : 1,
-                size = chars.length + 1;
+            pre = chars[0] == '0' ? 0 : 1,
+            size = chars.length + 1;
 
         for(int i=2;i<size;i++) {
             int curr = 0;
