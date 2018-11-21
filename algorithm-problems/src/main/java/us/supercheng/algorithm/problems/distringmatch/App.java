@@ -14,7 +14,7 @@ public class App {
             else
                 ret[i] = max--;
         }
-        
+
         ret[ret.length-1] = min;
 
         return ret;
