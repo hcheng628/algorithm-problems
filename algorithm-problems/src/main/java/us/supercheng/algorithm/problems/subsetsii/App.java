@@ -19,7 +19,7 @@ public class App {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> ret = new ArrayList<>();
-        this.helper(ret, new ArrayList<>(), nums, 0);
+        this.helper(ret, new ArrayList(), nums, 0);
         return ret;
     }
 
@@ -40,11 +40,11 @@ public class App {
         Set<String> set = new HashSet<>();
 
         if(nums.length > 0)
-            list.add(new ArrayList<>());
+            list.add(new ArrayList());
 
         Arrays.sort(nums);
         for(int i=0;i<nums.length;i++)
-            this.helper(list, new ArrayList<>(), nums, i);
+            this.helper(list, new ArrayList(), nums, i);
 
         StringBuilder sb = new StringBuilder();
         for(List<Integer> eachRow : list) {

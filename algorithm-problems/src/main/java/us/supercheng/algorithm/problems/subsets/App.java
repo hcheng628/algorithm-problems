@@ -12,7 +12,7 @@ public class App {
         ret.add(new ArrayList());
         if(nums.length > 0) {
             Arrays.sort(nums);
-            this.helper(nums, ret, new ArrayList<>(), 0);
+            this.helper(nums, ret, new ArrayList(), 0);
         }
         return ret;
     }

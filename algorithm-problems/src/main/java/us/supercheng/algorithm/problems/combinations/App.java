@@ -6,7 +6,7 @@ import java.util.List;
 public class App {
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> ret = new ArrayList<>();
-        this.helper(ret, new ArrayList<>(), 1, n, k);
+        this.helper(ret, new ArrayList(), 1, n, k);
         return ret;
     }
 
