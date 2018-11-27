@@ -1,6 +1,6 @@
 package us.supercheng.algorithm.problems.validatebinarysearchtree;
 
-import us.supercheng.algorithm.common.entity.TreeNode;`
+import us.supercheng.algorithm.common.entity.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
