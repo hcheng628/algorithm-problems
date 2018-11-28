@@ -13,20 +13,17 @@ class Solution {
             return root;
 
         TreeNode left = this.helper(root.left);
-        TreeNode right = this.helper(root.right);
-
-        if(left == null && right == null)
-            return root;
-
+        this.helper(root.right);
         if(left != null) {
             TreeNode temp = root.right;
             root.right = left;
             while(left.right != null)
                 left = left.right;
             left.right = temp;
-            root.left = null;
-        }
 
+            if(root.left != null)
+                root.left = null;
+        }
         return root;
     }
 }
