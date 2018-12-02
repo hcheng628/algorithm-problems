@@ -3,7 +3,7 @@ package us.supercheng.algorithm.problems.constructbinarytreefrominorderandpostor
 import us.supercheng.algorithm.common.entity.TreeNode;
 
 public class Solution {
-    
+
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if(inorder == null || postorder == null || inorder.length == 0 || postorder.length ==0)
             return null;
