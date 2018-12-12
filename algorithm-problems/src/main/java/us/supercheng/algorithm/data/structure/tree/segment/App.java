@@ -1,5 +1,8 @@
 package us.supercheng.algorithm.data.structure.tree.segment;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+import us.supercheng.algorithm.common.helper.ThreadHelper;
+
 public class App {
 
     public static void main(String[] args) {
@@ -11,5 +14,9 @@ public class App {
             }
         });
         segmentTree.echo();
+
+        ThreadHelper.sleep(1);
+        Integer res = segmentTree.getRange(0,1);
+        PrintHelper.echoLn("\r\nres: " + res);
     }
-}
+};

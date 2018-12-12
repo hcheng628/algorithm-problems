@@ -24,8 +24,8 @@ public class SegmentTree<E> {
         }
 
         int mid = l + (r - l) /2,
-            leftIndex = this.getLeftChildIndex(index),
-            rightIndex = this.getRightChildIndex(index);
+                leftIndex = this.getLeftChildIndex(index),
+                rightIndex = this.getRightChildIndex(index);
         this.buildSegmentTree(leftIndex,l,mid);
         this.buildSegmentTree(rightIndex,mid+1,r);
         this.tree[index] = this.merger.merge(this.tree[leftIndex], this.tree[rightIndex]);
@@ -50,8 +50,26 @@ public class SegmentTree<E> {
         return root * 2 + 2;
     }
 
-    private E getRange(int left, int right) {
-        return null;
+    public E getRange(int left, int right) {
+        return this.getRange(0, 0, this.data.length-1, left, right);
+    }
+
+    private E getRange(int rootIndex, int leftIndex, int rightIndex, int left, int right) {
+        if(leftIndex == left && rightIndex == right) {
+            return this.tree[rootIndex];
+        }
+
+        int mid = leftIndex + (rightIndex - leftIndex) / 2;
+        if(left > mid) {
+            return this.getRange(this.getRightChildIndex(rootIndex), left, rightIndex, left, right);
+        } else if (right <= mid) {
+            return this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, right, left, right);
+        }
+
+        E leftPart = this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, mid, left, mid);
+        E rightPart = this.getRange(this.getRightChildIndex(rootIndex), mid+1, rightIndex, mid+1, right);
+
+        return this.merger.merge(leftPart, rightPart);
     }
 
     private void setRange(int left, int right) {
