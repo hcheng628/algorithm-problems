@@ -1,6 +1,7 @@
 package us.supercheng.algorithm.data.structure.tree.segment;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
+import us.supercheng.algorithm.common.helper.ThreadHelper;
 
 public class SegmentTree<E> {
 
@@ -14,7 +15,7 @@ public class SegmentTree<E> {
             this.data[i] = data[i];
         this.tree = (E []) new Object[data.length*4];
         this.merger = merger;
-        this.buildSegmentTree(0, 0, this.data.length-1);
+        this.buildSegmentTree(0, 0, this.getSize()-1);
     }
 
     private void buildSegmentTree(int index, int l, int r) {
@@ -36,7 +37,7 @@ public class SegmentTree<E> {
     }
 
     private E get(int index) {
-        if(index < 0 || index >= this.data.length)
+        if(index < 0 || index >= this.getSize())
             throw new IllegalArgumentException("Invalid Index");
         return this.data[index];
     }
@@ -51,29 +52,46 @@ public class SegmentTree<E> {
     }
 
     public E getRange(int left, int right) {
-        return this.getRange(0, 0, this.data.length-1, left, right);
+        return this.getRange(0, 0, this.getSize()-1, left, right);
     }
 
     private E getRange(int rootIndex, int leftIndex, int rightIndex, int left, int right) {
-        if(leftIndex == left && rightIndex == right) {
+        if(leftIndex == left && rightIndex == right)
             return this.tree[rootIndex];
+
+        int mid = leftIndex + (rightIndex - leftIndex) / 2;
+        if(left > mid)
+            return this.getRange(this.getRightChildIndex(rootIndex), mid+1, rightIndex, left, right);
+        else if (right <= mid)
+            return this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, mid, left, right);
+
+        return this.merger.merge(this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, mid, left, mid),
+                this.getRange(this.getRightChildIndex(rootIndex), mid+1, rightIndex, mid+1, right));
+    }
+
+    public void setRange(int index, E e) {
+        if(index < 0 || index >= this.getSize())
+            throw new IllegalArgumentException("Invalid Index");
+        this.setRange(0,0,this.getSize()-1, index, e);
+
+    }
+
+    private void setRange(int rootIndex, int leftIndex, int rightIndex, int index, E e) {
+        if(leftIndex == index && rightIndex == index) {
+            this.tree[rootIndex] = e;
+            return;
         }
 
         int mid = leftIndex + (rightIndex - leftIndex) / 2;
-        if(left > mid) {
-            return this.getRange(this.getRightChildIndex(rootIndex), left, rightIndex, left, right);
-        } else if (right <= mid) {
-            return this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, right, left, right);
+
+        if(index <= mid) {
+            this.setRange(this.getLeftChildIndex(rootIndex), index, mid, index, e);
+        } else {
+            this.setRange(this.getRightChildIndex(rootIndex), mid+1, index, index, e);
         }
 
-        E leftPart = this.getRange(this.getLeftChildIndex(rootIndex), leftIndex, mid, left, mid);
-        E rightPart = this.getRange(this.getRightChildIndex(rootIndex), mid+1, rightIndex, mid+1, right);
-
-        return this.merger.merge(leftPart, rightPart);
-    }
-
-    private void setRange(int left, int right) {
-
+        this.tree[rootIndex] = this.merger.merge(this.tree[this.getLeftChildIndex(rootIndex)],
+                                                    this.tree[this.getRightChildIndex(rootIndex)]);
     }
 
     public void echo() {
