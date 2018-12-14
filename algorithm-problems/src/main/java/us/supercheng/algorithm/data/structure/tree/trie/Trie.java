@@ -5,9 +5,9 @@ import java.util.TreeMap;
 public class Trie {
 
     private class Node {
+
         boolean isWord;
         TreeMap<Character, Node> next;
-
 
         Node(boolean isWord) {
             this.isWord = isWord;
@@ -22,7 +22,6 @@ public class Trie {
     private Node root;
     private int size;
 
-
     public Trie() {
         this.root = new Node();
         this.size = 0;
@@ -33,12 +32,25 @@ public class Trie {
     }
 
     public void addWord(String s) {
-        // To do
+        Node curr = this.root;
+        for(int i=0;i<s.length();i++) {
+            char currC = s.charAt(i);
+            if(!curr.next.containsKey(currC))
+                curr.next.put(currC, new Node());
+            curr = curr.next.get(currC);
+        }
+        curr.isWord = true;
+        this.size++;
     }
 
     public boolean contains(String s) {
-        // To do
-        return false;
+        Node curr = this.root;
+        for(int i=0;i<s.length();i++) {
+            char currC = s.charAt(i);
+            if(!curr.next.containsKey(currC))
+                return false;
+            curr = curr.next.get(currC);
+        }
+        return curr.isWord;
     }
-
 }
