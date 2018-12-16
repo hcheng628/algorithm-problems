@@ -14,5 +14,13 @@ public class App {
         PrintHelper.echoLn("Contains: " + trie.contains("abc"));
         PrintHelper.echoLn("curr size: " + trie.getTrieSize());
 
+        trie.addWord("Moka");
+        trie.addWord("Cheng");
+        trie.addWord("Pasta");
+        PrintHelper.echoLn("Contains: " + trie.contains("Moka"));
+        PrintHelper.echoLn("Contains: " + trie.contains("Cheng"));
+        PrintHelper.echoLn("Contains: " + trie.contains("Pasta"));
+
+        PrintHelper.echoLn("Size: " + trie.getTrieSize());
     }
 }
