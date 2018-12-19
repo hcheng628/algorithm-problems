@@ -6,20 +6,20 @@ import java.util.Random;
 public class App {
 
     public static void main(String [] args ) {
-        int size = 1000000;
+        int size = 100000;
         UF1 uf1 = new UF1(size);
         UF2 uf2 = new UF2(size);
         UF3 uf3 = new UF3(size);
         UF4 uf4 = new UF4(size);
         UF5 uf5 = new UF5(size);
+        UF6 uf6 = new UF6(size);
 
-
-        PrintHelper.echoLn("Union Find 1 -> Time Spent: " + runTest(uf1, 0));
+        PrintHelper.echoLn("Union Find 1 -> Time Spent: " + runTest(uf1, size));
         PrintHelper.echoLn("Union Find 2 -> Time Spent: " + runTest(uf2, size));
         PrintHelper.echoLn("Union Find 3 -> Time Spent: " + runTest(uf3, size));
         PrintHelper.echoLn("Union Find 4 -> Time Spent: " + runTest(uf4, size));
         PrintHelper.echoLn("Union Find 5 -> Time Spent: " + runTest(uf5, size));
-
+        PrintHelper.echoLn("Union Find 6 -> Time Spent: " + runTest(uf6, size));
     }
 
     public static double runTest(UnionFind uf, int operations) {
