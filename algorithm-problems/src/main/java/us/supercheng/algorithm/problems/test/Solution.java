@@ -1,55 +1,61 @@
 package us.supercheng.algorithm.problems.test;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 class Solution {
 
     public static void main(String[] args) {
-        String s = "aabb";
-        Solution app = new Solution();
-        List<List<String>> res = app.partition(s);
+        int [][] nums = {{1,1,0},{1,1,0},{0,0,1}};
+        int [][] num2 = {{1,1,0},{1,1,0},{0,0,1}};
 
-        for(List<String> row : res) {
-            for(String each : row)
-                PrintHelper.echo(each + ", ");
-            PrintHelper.echoLn("");
-        }
+        Solution solution = new Solution();
+        int res = solution.findCircleNum(nums);
+        PrintHelper.echoLn("res: " + res);
+
+        Map<String, String> map = new HashMap<>();
+
+        //map.put("a", "A");
+
+        PrintHelper.echoLn(map.put("b", "B"));
+        map.put("a", "A");
+        PrintHelper.echoLn(map.get("a"));
+        map.put("a", "B");
+        PrintHelper.echoLn(map.get("a"));
+
     }
 
-    public List<List<String>> partition(String s) {
-        if(s == null || s.length() < 1)
-            return new ArrayList();
+    private int [] data;
 
-        List<List<String>> ret = new ArrayList();
-        this.helper(ret, new ArrayList(), s);
-        return ret;
-    }
+    public int findCircleNum(int[][] M) {
+        this.data = new int [M.length ];
+        for(int i=0;i<this.data.length;i++)
+            this.data[i] = i;
 
-    private void helper(List<List<String>> ret, List<String> list, String s) {
-        if(s.length() == 0) {
-            ret.add(new ArrayList(list));
-            return;
-        }
-
-        for(int i=0;i<s.length();i++) {
-            String each = s.substring(0, i+1);
-            if(this.isP(each)) {
-                list.add(each);
-                this.helper(ret, list, s.substring(i+1));
-                list.remove(list.size()-1);
+        int index = 0;
+        for(int i=0;i<M.length;i++) {
+            for(int j=i+1;j<M[0].length;j++,index++) {
+                if(M[i][j] == 1) {
+                    this.makeFriend(i, j);
+                }
             }
         }
+
+        Set<Integer> set = new HashSet<>();
+        for(int each : this.data)
+            set.add(each);
+        return set.size();
     }
 
-    private boolean isP(String a) {
-        if(a.length() == 1)
-            return true;
-        for(int l=0,r=a.length()-1;l<r;l++,r--)
-            if(a.charAt(l) != a.charAt(r))
-                return false;
-        return true;
+    private void makeFriend(int a, int b) {
+        if(this.data[a] == this.data[b])
+            return;
+
+        int groupId = this.data[b];
+        for(int i=0;i<this.data.length;i++)
+            if(this.data[i] == groupId)
+                this.data[i] = this.data[a];
     }
+
 }
