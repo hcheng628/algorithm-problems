@@ -158,4 +158,67 @@ public class AVLTree<K extends Comparable<K>, V> {
         pivot.height = Math.max(this.getHeight(pivot.left), this.getHeight(pivot.right)) + 1;
         return pivot;
     }
+
+    private Node getMin(Node head) {
+        if(head.left == null)
+            return head;
+        return this.getMin(head.left);
+    }
+
+    public V remove(K k) {
+        Node removeNode = this.get(this.root, k);
+        if(removeNode != null) {
+            this.root = this.remove(this.root, k);
+            return removeNode.val;
+        }
+        return null;
+    }
+
+    private Node remove(Node head, K k) {
+        if(head == null)
+            return null;
+
+        Node retNode = null;
+        if(k.compareTo(head.key) < 0) {
+            head.left = this.remove(head.left, k);
+            retNode = head;
+        } else if (k.compareTo(head.key) > 0) {
+            head.right = this.remove(head.right, k);
+            retNode = head;
+        } else {
+            if(head.left == null) {
+                retNode = head.right;
+                head.right = null;
+                this.size--;
+            } else if (head.right == null) {
+                retNode = head.left;
+                head.left = null;
+                this.size--;
+            } else {
+                Node successor = this.getMin(head.right);
+                successor.right = this.remove(head.right, successor.key);
+                successor.left = head.left;
+                head.left = head.right = null;
+                retNode = successor;
+            }
+        }
+
+        if(retNode == null)
+            return null;
+
+        retNode.height = Math.max(this.getHeight(retNode.left), this.getHeight(retNode.right)) + 1;
+        int balanceFactor = this.getBalanceFactor(retNode);
+        if(balanceFactor < -1 || balanceFactor > 1) {
+            if(balanceFactor > 0) {
+                if(this.getBalanceFactor(retNode.left) <= -1 )
+                    retNode.left = this.doLL(retNode.left);
+                return this.doRR(retNode);
+            } else {
+                if(this.getBalanceFactor(retNode.right) >= 1)
+                    retNode.right = this.doRR(retNode.right);
+                return this.doLL(retNode);
+            }
+        }
+        return retNode;
+    }
 }

@@ -48,6 +48,17 @@ public class App {
             PrintHelper.echoLn(avl.isBalanced());
             PrintHelper.echoLn("Occ prejudice: " + avl.get("prejudice"));
             PrintHelper.echoLn("Occ pride: " + avl.get("pride"));
+
+            for(String word : words) {
+                avl.remove(word);
+
+                if(avl.contains(word))
+                    throw new RuntimeException("Delete Exception");
+                if(!avl.isBST())
+                    throw new RuntimeException("Not BST Exception");
+                if(!avl.isBalanced())
+                    throw new RuntimeException("Not Balanced BST Exception");
+            }
         }
         PrintHelper.echoLn("");
     }
