@@ -1,9 +1,5 @@
 package us.supercheng.algorithm.data.structure.tree.rb;
 
-import us.supercheng.algorithm.common.helper.FileOperation;
-import us.supercheng.algorithm.common.helper.PrintHelper;
-import java.util.ArrayList;
-
 public class RBTree<K extends Comparable<K>, V> {
 
     private class Node{
@@ -51,35 +47,45 @@ public class RBTree<K extends Comparable<K>, V> {
             return new Node(key, value);
         }
 
+
         if(key.compareTo(node.key) < 0)
             node.left = add(node.left, key, value);
         else if(key.compareTo(node.key) > 0)
             node.right = add(node.right, key, value);
         else
             node.value = value;
-        return node;
-    }
 
-    private Node rotateRight(Node node) {
-        Node newSubRoot = node.left;
-        boolean color = node.isRedNode;
-        node.isRedNode = newSubRoot.isRedNode;
-        newSubRoot.isRedNode = color;
-        node.left = newSubRoot.right;
-        newSubRoot.right = node;
-        return newSubRoot;
+        if(this.isRedNode(node.right) && !this.isRedNode(node.left))
+            node = this.rotateLeft(node);
+
+        if(this.isRedNode(node.left) && this.isRedNode(node.left.left))
+            node = this.rotateRight(node);
+
+        if(this.isRedNode(node.left) && this.isRedNode(node.right))
+            node = this.flipColors(node);
+
+        return node;
     }
 
     private Node rotateLeft(Node node) {
         Node newSubRoot = node.right;
         node.right = newSubRoot.left;
         newSubRoot.left= node;
-        boolean color = node.isRedNode;
-        node.isRedNode = newSubRoot.isRedNode;
-        newSubRoot.isRedNode = color;
+
+        newSubRoot.isRedNode = node.isRedNode;
+        node.isRedNode = RED;
         return newSubRoot;
     }
 
+    private Node rotateRight(Node node) {
+        Node newSubRoot = node.left;
+        node.left = newSubRoot.right;
+        newSubRoot.right = node;
+
+        newSubRoot.isRedNode = node.isRedNode;
+        node.isRedNode = RED;
+        return newSubRoot;
+    }
 
     private Node flipColors(Node node) {
         if(!node.isRedNode)
@@ -102,7 +108,7 @@ public class RBTree<K extends Comparable<K>, V> {
             return node;
         else if(key.compareTo(node.key) < 0)
             return getNode(node.left, key);
-        else // if(key.compareTo(node.key) > 0)
+        else
             return getNode(node.right, key);
     }
 
@@ -179,24 +185,6 @@ public class RBTree<K extends Comparable<K>, V> {
             successor.left = node.left;
             node.left = node.right = null;
             return successor;
-        }
-    }
-
-    public static void main(String[] args){
-        PrintHelper.echoLn("Pride and Prejudice");
-        ArrayList<String> words = new ArrayList<>();
-        if(FileOperation.readFile("pride-and-prejudice.txt", words)) {
-            PrintHelper.echoLn("Total words: " + words.size());
-            RBTree<String, Integer> map = new RBTree<>();
-            for (String word : words) {
-                if (map.contains(word))
-                    map.set(word, map.get(word) + 1);
-                else
-                    map.add(word, 1);
-            }
-            PrintHelper.echoLn("Total different words: " + map.getSize());
-            PrintHelper.echoLn("Frequency of PRIDE: " + map.get("pride"));
-            PrintHelper.echoLn("Frequency of PREJUDICE: " + map.get("prejudice"));
         }
     }
 }
