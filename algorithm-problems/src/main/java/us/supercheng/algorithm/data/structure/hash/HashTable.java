@@ -1,8 +1,15 @@
 package us.supercheng.algorithm.data.structure.hash;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 import java.util.TreeMap;
 
 public class HashTable <K, V> {
+
+    private static final int LOWER_BOUND = 2;
+    private static final int UPPER_BOUND = 10;
+    private static final int INIT_CAPACITY = 97;
+
     private int size;
     private int M;
     private TreeMap<K, V>[] hashTable;
@@ -18,7 +25,7 @@ public class HashTable <K, V> {
     }
 
     public HashTable() {
-        this(97);
+        this(INIT_CAPACITY);
     }
 
     public int size() {
@@ -29,7 +36,7 @@ public class HashTable <K, V> {
         return this.size == 0;
     }
 
-    public int calHash(K k) {
+    private int calHash(K k) {
         return k.hashCode() & 0x7fffffff % this.M;
     }
 
@@ -39,6 +46,8 @@ public class HashTable <K, V> {
         if(map.containsKey(k)) {
             ret = map.remove(k);
             this.size--;
+            if(this.size  < LOWER_BOUND * this.M && this.M / 2 >= INIT_CAPACITY)
+                this.resize(this.M / 2);
         }
         return ret;
     }
@@ -50,6 +59,9 @@ public class HashTable <K, V> {
         else {
             map.put(k, v);
             this.size++;
+            if(this.size >= UPPER_BOUND * this.M) {
+                this.resize(this.M * 2);
+            }
         }
     }
 
@@ -58,6 +70,21 @@ public class HashTable <K, V> {
         if(!map.containsKey(k))
             throw new RuntimeException("No such record in " + this.getClass().getSimpleName());
         map.put(k, v);
+    }
+
+    private void resize(int newM) {
+        TreeMap<K, V> [] newHashTable = new TreeMap[newM];
+        int oldM = this.M;
+        this.M = newM;
+        for(int i=0;i<this.M;i++)
+            newHashTable[i] = new TreeMap<>();
+
+        for(int i=0;i<oldM;i++) {
+            TreeMap<K, V> eachTreeMap = this.hashTable[i];
+            for(K key : eachTreeMap.keySet())
+                newHashTable[this.calHash(key)].put(key, eachTreeMap.get(key));
+        }
+        this.hashTable = newHashTable;
     }
 
     public V get(K k) {

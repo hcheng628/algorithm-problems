@@ -24,6 +24,7 @@ public class App {
         PrintHelper.echoLn(table.get("Illy"));
         table.remove("KIMBO");
 
+        /* */
         PrintHelper.echoLn("Pride and Prejudice");
         ArrayList<String> words = new ArrayList();
         if(FileOperation.readFile("src/main/resources/books/pride-and-prejudice.txt", words)) {
@@ -69,7 +70,7 @@ public class App {
             for(String word : words) {
                 hashTable.remove(word);
                 if(hashTable.contains(word))
-                    throw new RuntimeException("Delete Exception");
+                    throw new RuntimeException("Delete Exception Word: " + word);
             }
         }
         PrintHelper.echoLn("");
