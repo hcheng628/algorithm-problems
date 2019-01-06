@@ -1,31 +1,27 @@
 package us.supercheng.algorithm.data.structure.hash;
 
-import us.supercheng.algorithm.common.helper.PrintHelper;
-
 import java.util.TreeMap;
 
 public class HashTable <K, V> {
 
     private static final int LOWER_BOUND = 2;
     private static final int UPPER_BOUND = 10;
-    private static final int INIT_CAPACITY = 97;
+    private int capacityIndex = 0;
+    private static final int[] CAPACITY = {53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593,
+            49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469,
+            12582917, 25165843, 50331653, 100663319, 201326611, 402653189, 805306457, 1610612741};
 
     private int size;
     private int M;
     private TreeMap<K, V>[] hashTable;
 
-    public HashTable(int M) {
+    public HashTable() {
         this.size = 0;
-        if(M < 0)
-            this.M = 97;
-        this.M = M;
+        this.capacityIndex = 0;
+        this.M = CAPACITY[this.capacityIndex];
         this.hashTable = new TreeMap[M];
         for(int i=0;i<this.hashTable.length;i++)
             this.hashTable[i] = new TreeMap<>();
-    }
-
-    public HashTable() {
-        this(INIT_CAPACITY);
     }
 
     public int size() {
@@ -46,8 +42,8 @@ public class HashTable <K, V> {
         if(map.containsKey(k)) {
             ret = map.remove(k);
             this.size--;
-            if(this.size  < LOWER_BOUND * this.M && this.M / 2 >= INIT_CAPACITY)
-                this.resize(this.M / 2);
+            if(this.size  < LOWER_BOUND * this.M && this.capacityIndex > 0)
+                this.resize(CAPACITY[--this.capacityIndex]);
         }
         return ret;
     }
@@ -59,9 +55,8 @@ public class HashTable <K, V> {
         else {
             map.put(k, v);
             this.size++;
-            if(this.size >= UPPER_BOUND * this.M) {
-                this.resize(this.M * 2);
-            }
+            if(this.size >= UPPER_BOUND * this.M && this.capacityIndex + 1 < CAPACITY.length)
+                this.resize(CAPACITY[++this.capacityIndex]);
         }
     }
 

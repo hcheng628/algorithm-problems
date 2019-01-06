@@ -31,7 +31,7 @@ public class App {
             PrintHelper.echoLn("Total words: " + words.size());
             // Test HashTable
             long startTime = System.nanoTime();
-            HashTable<String, Integer> hashTable = new HashTable<>(13013);
+            HashTable<String, Integer> hashTable = new HashTable<>();
             for (String word : words) {
                 if (hashTable.contains(word))
                     hashTable.set(word, hashTable.get(word) + 1);
