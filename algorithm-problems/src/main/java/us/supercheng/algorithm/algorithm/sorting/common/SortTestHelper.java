@@ -25,23 +25,14 @@ public class SortTestHelper {
         return arr;
     }
 
-    public static void printArray(Object [] arr) {
-        for(int i=0;i<arr.length;i++)
-            PrintHelper.echo(arr[i] + " ");
-        PrintHelper.echoLn("");
-    }
+
 
     public static boolean isSorted(Comparable[] arr) {
-        return isSorted(arr, 0, arr.length);
+        return ArrayHelper.isSorted(arr);
     }
 
     public static boolean isSorted(Comparable[] arr, int left, int right) {
-        for(int i=left;i<right-1;i++)
-            if(arr[i].compareTo(arr[i+1]) > 0) {
-                PrintHelper.echoLn("Not sorted @ " + i + "[" + arr[i] + "]");
-                return false;
-            }
-        return true;
+        return ArrayHelper.isSorted(arr, left, right);
     }
 
     public static void doTestSort(String sortClassName, Comparable[] arr) throws Exception {

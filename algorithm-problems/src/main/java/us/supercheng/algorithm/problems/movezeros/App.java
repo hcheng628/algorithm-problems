@@ -16,17 +16,13 @@ public class App {
         int [] arr2 = {1,0,2,0,0,3};
 
         PrintHelper.echoLn("Shifting Approach");
-        ArrayHelper.echo(arr);
         PrintHelper.echoLn(" - Before");
         app.moveZeroes(arr);
-        ArrayHelper.echo(arr);
         PrintHelper.echoLn(" - After");
 
         PrintHelper.echoLn("Swapping Approach");
-        ArrayHelper.echo(arr2);
         PrintHelper.echoLn(" - Before");
         app.moveZeroes2(arr2);
-        ArrayHelper.echo(arr2);
         PrintHelper.echoLn(" - After");
     }
 

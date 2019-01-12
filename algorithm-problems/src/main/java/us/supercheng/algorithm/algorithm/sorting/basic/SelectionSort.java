@@ -30,9 +30,9 @@ public class SelectionSort {
         students[3] = new Student("A",95);
 
         PrintHelper.echoLn("Before Sort: ");
-        SortTestHelper.printArray(students);
+        ArrayHelper.echo(students);
         SortTestHelper.doTestSort(new SelectionSort().getClass().getName(), students);
         PrintHelper.echoLn("After Sort: ");
-        SortTestHelper.printArray(students);
+        ArrayHelper.echo(students);
     }
 }
