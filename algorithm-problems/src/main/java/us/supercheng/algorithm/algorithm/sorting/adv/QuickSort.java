@@ -1,9 +1,9 @@
 package us.supercheng.algorithm.algorithm.sorting.adv;
 
+import us.supercheng.algorithm.algorithm.sorting.basic.InsertionSort;
 import us.supercheng.algorithm.algorithm.sorting.common.SortTestHelper;
 import us.supercheng.algorithm.common.helper.ArrayHelper;
 import us.supercheng.algorithm.common.helper.PrintHelper;
-import us.supercheng.algorithm.common.helper.ThreadHelper;
 import java.util.Arrays;
 
 public class QuickSort {
@@ -15,6 +15,11 @@ public class QuickSort {
     }
 
     private static void sort(Comparable[] arr, int left, int right) {
+        if(right - left < 16) {
+            InsertionSort.sort(arr, left, right+1);
+            return;
+        }
+
         if(left >= right)
             return;
         int pivot = partition(arr, left, right);
@@ -24,22 +29,37 @@ public class QuickSort {
     }
 
     private static int partition(Comparable[] arr, int left, int right) {
-        int lessIndex = left;
-        for(int i=left+1;i<=right;i++)
-            if(arr[i].compareTo(arr[left]) < 0)
-                ArrayHelper.swap(arr, ++lessIndex, i);
-        ArrayHelper.swap(arr, lessIndex, left);
-        return lessIndex;
+        ArrayHelper.swap(arr, left, (int)(Math.random() * (right - left + 1)) + left);
+        int low = left + 1,
+            high = right;
+        while(true) {
+            while(low <= right && arr[low].compareTo(arr[left]) < 0)
+                low++;
+            while(high > left && arr[high].compareTo(arr[left]) > 0)
+                high--;
+            if(low > high)
+                break;
+            ArrayHelper.swap(arr, low++, high--);
+        }
+        ArrayHelper.swap(arr, left, high);
+        return high;
     }
 
     public static void main(String[] args) throws Exception {
-        int N = 100000,
-                LOWER_BOUND = 0,
-                UPPER_BOUND = 200000;
+        int N = 1000000,
+                LOWER_BOUND = -20000,
+                UPPER_BOUND = 20000,
+                SWAP_TIMES = 100;
 
         Integer[] arr = SortTestHelper.generateRandomArray(N, LOWER_BOUND, UPPER_BOUND),
                 arrCopy = Arrays.copyOf(arr, arr.length);
         //Integer [] arr = {3, 11, 6, 1, 17, 0, 15, 13, 7, 9};
+        SortTestHelper.doTestSort(new QuickSort().getClass().getName(), arr);
+        SortTestHelper.doTestMethod(new MergeSort().getClass().getName(), "sortTD", arrCopy);
+
+        // Nearly Sorted
+        arr = SortTestHelper.generateNearlySortedArray(N, SWAP_TIMES);
+        arrCopy = Arrays.copyOf(arr, arr.length);
         SortTestHelper.doTestSort(new QuickSort().getClass().getName(), arr);
         SortTestHelper.doTestMethod(new MergeSort().getClass().getName(), "sortTD", arrCopy);
     }
