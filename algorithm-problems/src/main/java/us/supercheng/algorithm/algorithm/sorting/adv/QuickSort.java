@@ -3,7 +3,6 @@ package us.supercheng.algorithm.algorithm.sorting.adv;
 import us.supercheng.algorithm.algorithm.sorting.basic.InsertionSort;
 import us.supercheng.algorithm.algorithm.sorting.common.SortTestHelper;
 import us.supercheng.algorithm.common.helper.ArrayHelper;
-import us.supercheng.algorithm.common.helper.PrintHelper;
 import java.util.Arrays;
 
 public class QuickSort {
@@ -37,52 +36,23 @@ public class QuickSort {
             InsertionSort.sort(arr, left, right+1);
             return;
         }
-        //ArrayHelper.swap(arr, left, (int) Math.random() * (right - left + 1) + left);
-        Comparable v = arr[left];
+
+        ArrayHelper.swap(arr, left, (int) Math.random() * (right - left + 1) + left);
         int ltIndex = left,
             gtIndex = right + 1,
             i = left + 1;
+
         while (i < gtIndex) {
-            if(arr[i].compareTo(v) > 0) {
-                ArrayHelper.swap(arr, i, gtIndex - 1);
-                gtIndex--;
-            } else if (arr[i].compareTo(v) < 0) {
-                ArrayHelper.swap(arr, i, ltIndex + 1);
-                ltIndex++;
+            if(arr[i].compareTo(arr[left]) > 0)
+                ArrayHelper.swap(arr, i, --gtIndex);
+            else if (arr[i].compareTo(arr[left]) < 0)
+                ArrayHelper.swap(arr, i++, ++ltIndex);
+            else
                 i++;
-            } else {
-                i++;
-            }
         }
         ArrayHelper.swap(arr, ltIndex, left);
-        //ArrayHelper.echo(arr);
-        //PrintHelper.echoLn("left : " + left + " lt: " + ltIndex + " gt: " + gtIndex + " right: " + right);
         sortDup(arr, left, ltIndex-1);
         sortDup(arr, gtIndex, right);
-    }
-
-    private static void sortBoBo(Comparable[] arr, int left, int right){
-        Comparable v = arr[left];
-        int ltIndex = left;
-        int gtIndex = right + 1;
-        int i = left +1;
-        while( i < gtIndex ){
-            if( arr[i].compareTo(v) < 0 ){
-                ArrayHelper.swap( arr, i, ltIndex+1);
-                i ++;
-                ltIndex ++;
-            }
-            else if( arr[i].compareTo(v) > 0 ){
-                ArrayHelper.swap( arr, i, gtIndex-1);
-                gtIndex --;
-            }
-            else{ // arr[i] == v
-                i ++;
-            }
-        }
-        ArrayHelper.swap( arr, left, ltIndex);
-        sortBoBo(arr, left, ltIndex-1);
-        sortBoBo(arr, gtIndex, right);
     }
 
     private static int partition(Comparable[] arr, int left, int right) {
@@ -120,10 +90,6 @@ public class QuickSort {
         SortTestHelper.doTestSort(new QuickSort().getClass().getName(), arr);
         SortTestHelper.doTestMethod(new MergeSort().getClass().getName(), "sortTD", arrCopy);
 
-        Integer [] nums = {3,6,2,5,4};
-        QuickSort.sortDup(nums);
-        ArrayHelper.echo(nums);
-
         // Lots of Dup
         arr = SortTestHelper.generateRandomArray(N, 0, 20);
         arrCopy = Arrays.copyOf(arr, arr.length);
@@ -131,6 +97,5 @@ public class QuickSort {
         SortTestHelper.doTestSort(new QuickSort().getClass().getName(), arr);
         SortTestHelper.doTestMethod(new QuickSort().getClass().getName(), "sortDup", arrCopy);
         SortTestHelper.doTestMethod(new MergeSort().getClass().getName(), "sortTD", arrCopy2);
-
     }
 }
