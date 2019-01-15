@@ -2,7 +2,6 @@ package us.supercheng.algorithm.algorithm.heap;
 
 import us.supercheng.algorithm.common.helper.ArrayHelper;
 import us.supercheng.algorithm.common.helper.PrintHelper;
-import us.supercheng.algorithm.common.helper.ThreadHelper;
 
 public class MaxHeap<T extends Comparable> {
 
@@ -17,6 +16,17 @@ public class MaxHeap<T extends Comparable> {
         this.data = (T []) new Comparable [this.capacity + 1];
     }
 
+    public MaxHeap(Comparable[] arr) {
+        this.capacity = arr.length;
+        this.data = (T []) new Comparable [this.capacity + 1];
+        for(int i=1;i<this.data.length;i++)
+            this.data[i] = (T) arr[i-1];
+        this.size = this.capacity;
+
+        for(int i=this.size/2;i>=1;i--)
+            shiftDown(i);
+    }
+
     private void shiftUp(int index) {
         while(index > 1 && this.data[index/2].compareTo(this.data[index]) < 0) {
             int parent = index/2;
@@ -26,7 +36,7 @@ public class MaxHeap<T extends Comparable> {
     }
 
     private void shiftDown(int index) {
-        while(index * 2 < this.size) {
+        while(index * 2 <= this.size) {
             int child = index * 2;
             if(child + 1 <= this.size && this.data[child+1].compareTo(this.data[child]) > 0) {
                 child++;
@@ -72,24 +82,33 @@ public class MaxHeap<T extends Comparable> {
         return this.size;
     }
 
+    public void echo() {
+        for(int i=1;i<this.data.length;i++)
+            PrintHelper.echo(this.data[i] + " ");
+    }
+
     public static void main(String[] args) {
-        int SIZE = 10;
+        int SIZE = 100;
         MaxHeap<Integer> maxHeap = new MaxHeap<Integer>(SIZE);
         int N = SIZE;
-        int M = 100;
+        int M = 1000;
         for( int i = 0 ; i < N ; i ++ )
             maxHeap.insert( new Integer((int)(Math.random() * M)) );
 
-        ThreadHelper.sleep(3);
-        PrintHelper.echoLn("size: " + maxHeap.size());
         Integer[] arr = new Integer[N];
-        for( int i = 0 ; i < N ; i ++ ){
+        for( int i=N-1 ; i>=0 ;i -- ){
             arr[i] = maxHeap.popMax();
-            PrintHelper.echo(arr[i] + " ");
+            //PrintHelper.echo(arr[i] + " ");
         }
         PrintHelper.echoLn("");
 
+        PrintHelper.echoLn("Is Sorted: " + ArrayHelper.isSorted(arr));
+
         for( int i = 1 ; i < N ; i ++ )
             assert arr[i-1] >= arr[i];
+        Integer [] nums = {2,1,3,4,7,9,6,5,8};
+        MaxHeap<Integer> maxHeap1 = new MaxHeap<Integer>(nums);
+        maxHeap1.echo();
+
     }
 }
