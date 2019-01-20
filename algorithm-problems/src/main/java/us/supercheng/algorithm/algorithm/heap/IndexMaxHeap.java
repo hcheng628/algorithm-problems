@@ -9,12 +9,14 @@ public class IndexMaxHeap<Item extends Comparable> {
     private int capacity;
     private Item[] data;
     private int [] indexes;
+    private int [] reverse;
 
     public IndexMaxHeap(int capacity) {
         this.capacity = capacity;
         this.size = 0;
         this.data = (Item[]) new Comparable[this.capacity+1];
         this.indexes = new int [capacity+1];
+        this.reverse = new int [capacity+1];
     }
 
     public int size() {
@@ -39,15 +41,25 @@ public class IndexMaxHeap<Item extends Comparable> {
 
     public Item getItem(int i) {
         this.checkIndex(i++);
-        return this.data[i];
+        if(this.reverse[i] == 0)
+            return null;
+        return this.data[this.indexes[this.reverse[i]]];
+    }
+
+    public boolean contains(int i) {
+        this.checkIndex(i++);
+        return this.reverse[i] != 0;
     }
 
     public Item extractMax() {
         if(this.isEmpty())
             throw new RuntimeException("Empty " + this.getClass().getSimpleName());
-        Item ret = this.data[this.indexes[1]];
 
+        Item ret = this.data[this.indexes[1]];
         this.swapIndexes(1, this.size);
+
+        this.reverse[this.indexes[this.size]] = 0;
+
         this.size--;
         this.shiftDown(1);
         return ret;
@@ -58,8 +70,9 @@ public class IndexMaxHeap<Item extends Comparable> {
             throw new RuntimeException("Empty " + this.getClass().getSimpleName());
 
         int ret = this.indexes[1];
-
         this.swapIndexes(1, this.size);
+        this.reverse[this.indexes[this.size]] = 0;
+
         this.size--;
         shiftDown(1);
         return ret-1;
@@ -69,9 +82,9 @@ public class IndexMaxHeap<Item extends Comparable> {
         if (this.size + 1 > capacity )
             throw new RuntimeException(this.getClass().getSimpleName() + " is full capacity: " + this.capacity);
         this.checkIndex(i);
-
         this.data[++i] = item;
         this.indexes[++this.size] = i;
+        this.reverse[i] = this.size;
         this.shiftUp(this.size);
     }
 
@@ -83,7 +96,6 @@ public class IndexMaxHeap<Item extends Comparable> {
     }
 
     private void shiftDown(int i) {
-
         while(i*2 <=this.size) {
             int child = i * 2;
             if(child + 1 <= this.size && this.data[this.indexes[child+1]].compareTo(this.data[this.indexes[child]]) > 0)
@@ -100,6 +112,9 @@ public class IndexMaxHeap<Item extends Comparable> {
             int temp = this.indexes[a];
             this.indexes[a] = this.indexes[b];
             this.indexes[b] = temp;
+
+            this.reverse[this.indexes[a]] = a;
+            this.reverse[this.indexes[b]] = b;
         }
     }
 
@@ -110,14 +125,11 @@ public class IndexMaxHeap<Item extends Comparable> {
 
     public void change( int i , Item newItem ) {
         this.checkIndex(i++);
-        for(int j=1;j<this.indexes.length;j++)
-            if(this.indexes[j] == i) {
-                this.data[i] = newItem;
-                this.shiftDown(j);
-                this.shiftUp(j);
-                return;
-            }
-
+        if(this.reverse[i] != 0) {
+            this.data[i] = newItem;
+            this.shiftUp(this.indexes[this.reverse[i]]);
+            this.shiftDown(this.indexes[this.reverse[i]]);
+        }
     }
 
     public void echo() {
@@ -128,6 +140,12 @@ public class IndexMaxHeap<Item extends Comparable> {
         ArrayHelper.echo(temp);
         PrintHelper.echoLn("Data:");
         ArrayHelper.echo(this.data);
+
+        PrintHelper.echoLn("Reverse Index:");
+        temp = new Integer[this.reverse.length];
+        for(int i=0;i<temp.length;i++)
+            temp[i] = this.reverse[i];
+        ArrayHelper.echo(temp);
         PrintHelper.echoLn("");
     }
 
@@ -156,7 +174,6 @@ public class IndexMaxHeap<Item extends Comparable> {
         IndexMaxHeap<Integer> indexMaxHeap = new IndexMaxHeap<>(N);
         for( int i = 0 ; i < N ; i ++ )
             indexMaxHeap.insert( i , (int)(Math.random()*N) );
-
         PrintHelper.echoLn(indexMaxHeap.testIndexes());
 
         indexMaxHeap.echo();
