@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class BST<Key extends Comparable, Value> {
 
-    private Node root;
+    private Node<Key, Value> root;
     private int size;
 
     public BST() {
@@ -26,11 +26,12 @@ public class BST<Key extends Comparable, Value> {
     }
 
     public boolean contains(Key k) {
-        return false;
+        return this.search(this.root, k) != null;
     }
 
     public Value search(Key key) {
-        return this.search(this.root, key);
+        Node<Key, Value> ret = this.search(this.root, key);
+        return ret == null ? null : ret.v;
     }
 
     public void insert(Key k, Value v) {
@@ -76,31 +77,48 @@ public class BST<Key extends Comparable, Value> {
     public Value getMax() {
         if(this.size == 0)
             return null;
-        Node<Key, Value> curr = this.root;
-        while(curr.right != null)
-            curr = curr.right;
-        return curr.v;
+//        Node<Key, Value> curr = this.root;
+//        while(curr.right != null)
+//            curr = curr.right;
+//        return curr.v;
+        return this.getMax(this.root).v;
     }
 
     public Value getMin() {
         if(this.size == 0)
             return null;
-        Node<Key, Value> curr = this.root;
-        while(curr.left != null)
-            curr = curr.left;
-        return curr.v;
+//        Node<Key, Value> curr = this.root;
+//        while(curr.left != null)
+//            curr = curr.left;
+//        return curr.v;
+        return this.getMin(this.root).v;
     }
 
     public Value removeMin() {
-        return null;
+        if(this.size == 0)
+            return null;
+        Value ret = this.getMin();
+        this.root = this.removeMin(this.root);
+        return ret;
     }
 
     public Value removeMax() {
-        return null;
+        if(this.size == 0)
+            return null;
+        Value ret = this.getMax();
+        this.root = this.removeMax(this.root);
+        return ret;
     }
 
     public Value remove(Key key) {
-        return null;
+        if(this.size == 0)
+            return null;
+
+        Value ret = this.search(key);
+        if(ret == null)
+            return null;
+        this.root = this.remove(this.root, key);
+        return ret;
     }
 
     private Node insert(Node node, Key k, Value v) {
@@ -108,25 +126,26 @@ public class BST<Key extends Comparable, Value> {
             this.size++;
             return new Node(k, v);
         }
-        if(k.compareTo(node.k)>0) {
+
+        if(k.compareTo(node.k)>0)
             node.right = this.insert(node.right, k, v);
-        } else if (k.compareTo(node.k)<0) {
+        else if (k.compareTo(node.k)<0)
             node.left = this.insert(node.left, k, v);
-        } else {
+        else
             node.v = v; // Update based on Key
-        }
         return node;
     }
 
-    private Value search(Node<Key, Value> node, Key k) {
+    private Node<Key, Value> search(Node<Key, Value> node, Key k) {
         if (node == null)
             return null;
+
         if (k.compareTo(node.k) > 0)
             return this.search(node.right, k);
         else if (k.compareTo(node.k) < 0)
             return this.search(node.left, k);
         else
-            return node.v;
+            return node;
     }
 
     private void preOrder(Node<Key, Value> node, List<Value> list) {
@@ -145,6 +164,18 @@ public class BST<Key extends Comparable, Value> {
         this.inOrder(node.right, list);
     }
 
+    private Node<Key, Value> getMin(Node<Key, Value> node) {
+        if(node.left == null)
+            return node;
+        return this.getMin(node.left);
+    }
+
+    private Node<Key, Value> getMax(Node<Key, Value> node) {
+        if(node.right == null)
+            return node;
+        return this.getMax(node.right);
+    }
+
     private void postOrder(Node<Key, Value> node, List<Value> list) {
         if(node == null)
             return;
@@ -153,10 +184,60 @@ public class BST<Key extends Comparable, Value> {
         list.add(node.v);
     }
 
+    private Node<Key, Value> removeMin(Node<Key, Value> node) {
+        if(node.left == null) {
+            this.size--;
+            if(node.right != null)
+                return node.right;
+            node.right = null;
+            return null;
+        }
+        node.left = this.removeMin(node.left);
+        return node;
+    }
 
+    private Node<Key, Value> removeMax(Node<Key, Value> node) {
+        if(node.right == null) {
+            Node leftNode = node.left;
+            this.size--;
+            node.left = null;
+            return leftNode;
+        }
+        node.right = this.removeMax(node.right);
+        return node;
+    }
+
+    private Node<Key, Value> remove(Node<Key, Value> node, Key key) {
+        if(key.compareTo(node.k) < 0) {
+            node.left = this.remove(node.left, key);
+            return node;
+        } else if(key.compareTo(node.k) > 0) {
+            node.right = this.remove(node.right, key);
+            return node;
+        } else {
+            this.size--;
+            if(node.right == null) {
+                Node ret = node.left;
+                node.left = null;
+                return ret;
+            } else if (node.left == null) {
+                Node ret = node.right;
+                node.right = null;
+                return ret;
+            } else {
+                Node rightMin = this.getMin(node.right),
+                     ret = new Node(rightMin.k, rightMin.v);
+                ret.right = this.removeMin(node.right);
+                ret.left = node.left;
+                this.size++;
+                node.left = node.right = null;
+                return ret;
+            }
+        }
+    }
 
     public static void main(String[] args) {
-        int N = 10; //1000000
+        int N = 100; //1000000
 
         // 创建一个数组，包含[0...N)的所有元素
         Integer[] arr = new Integer[N];
@@ -208,8 +289,76 @@ public class BST<Key extends Comparable, Value> {
         }
         PrintHelper.echoLn("");
 
+        PrintHelper.echoLn("Search: " + bst.search(10));
 
 
+        PrintHelper.echoLn("Deleting......");
+        for(int i=0;i<5;i++) {
+            bst.removeMin();
+            PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+            for(String each : bst.inOrder()) {
+                PrintHelper.echo(each + ", ");
+            }
+            PrintHelper.echoLn("");
+        }
+
+        for(int i=0;i<5;i++) {
+            bst.removeMax();
+            PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+            for(String each : bst.inOrder()) {
+                PrintHelper.echo(each + ", ");
+            }
+            PrintHelper.echoLn("");
+        }
+
+        PrintHelper.echoLn("Del 1.....");
+        bst.remove(1);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
+
+        PrintHelper.echoLn("Del 3.....");
+        bst.remove(3);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
+
+
+        PrintHelper.echoLn("Del 5.....");
+        bst.remove(5);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
+
+        PrintHelper.echoLn("Del 2.....");
+        bst.remove(2);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
+
+        PrintHelper.echoLn("Del 4.....");
+        bst.remove(4);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
+
+        PrintHelper.echoLn("Del 6.....");
+        bst.remove(6);
+        PrintHelper.echoLn("LevelOrder: size: " + bst.size());
+        for(String each : bst.inOrder()) {
+            PrintHelper.echo(each + ", ");
+        }
+        PrintHelper.echoLn("");
 
         // 对[0...2*N)的所有整型测试在二分搜索树中查找
         // 若i在[0...N)之间，则能查找到整型所对应的字符串
@@ -222,5 +371,4 @@ public class BST<Key extends Comparable, Value> {
                 assert res == null;
         }
     }
-
 }
