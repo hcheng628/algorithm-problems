@@ -236,6 +236,38 @@ public class BST<Key extends Comparable, Value> {
         }
     }
 
+    public Value floor(Key key) {
+        if(this.size == 0 || key.compareTo(this.getMin(this.root).k) < 0)
+            return null;
+        Node<Key, Value> ret = this.floor(this.root, key);
+        return ret == null ? null : ret.v;
+    }
+
+    private Node<Key, Value> floor(Node<Key, Value> node, Key key) {
+        if(node == null || key.compareTo(node.k) == 0)
+            return node;
+        else if (key.compareTo(node.k) < 0)
+            return this.floor(node.left, key);
+        Node maxFloor = this.floor(node.right, key);
+        return maxFloor != null ? maxFloor : node;
+    }
+
+    public Value ceil(Key key) {
+        if(this.size == 0 || key.compareTo(this.getMax(this.root).k) > 0)
+            return null;
+        Node<Key, Value> ret = this.ceil(this.root, key);
+        return ret == null ? null : ret.v;
+    }
+
+    private Node<Key, Value> ceil(Node<Key, Value> node, Key key) {
+        if(node == null || key.compareTo(node.k) == 0)
+            return node;
+        else if (key.compareTo(node.k) > 0)
+            return this.ceil(node.right, key);
+        Node minCeil = this.ceil(node.left, key);
+        return minCeil != null ? minCeil : node;
+    }
+
     public static void main(String[] args) {
         int N = 100; //1000000
 
@@ -370,5 +402,33 @@ public class BST<Key extends Comparable, Value> {
             else
                 assert res == null;
         }
+
+        bst = new BST<>();
+
+        int a = 5,
+                b = 2,
+                c =18,
+                d = -4,
+                e = 3,
+                f = 18,
+                g = 21,
+                h = 19,
+                i = 25;
+
+        bst.insert(a,a+"");
+        bst.insert(b,b+"");
+        bst.insert(c,c+"");
+        bst.insert(d,d+"");
+        bst.insert(e,e+"");
+        bst.insert(f,f+"");
+        bst.insert(g,g+"");
+        bst.insert(h,h+"");
+        bst.insert(i,i+"");
+
+        PrintHelper.echoLn("Floor 4: " + bst.floor(4));
+        PrintHelper.echoLn("Ceil 4: " + bst.ceil(4));
+
+
+
     }
 }
