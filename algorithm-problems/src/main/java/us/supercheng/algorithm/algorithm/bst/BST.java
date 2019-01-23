@@ -243,6 +243,51 @@ public class BST<Key extends Comparable, Value> {
         return ret == null ? null : ret.v;
     }
 
+    public Value ceil(Key key) {
+        if(this.size == 0 || key.compareTo(this.getMax(this.root).k) > 0)
+            return null;
+        Node<Key, Value> ret = this.ceil(this.root, key);
+        return ret == null ? null : ret.v;
+    }
+
+    public Key predecessor(Key key) {
+        if(this.size == 0)
+            return null;
+
+        Node<Key, Value> node = this.search(this.root, key);
+        if(node == null)
+            return null;
+
+        if(node.k == this.getMin(this.root).k)
+            return null;
+
+        if(node.left != null) {
+            Node<Key, Value> subMax = this.getMax(node.left);
+            return subMax.k;
+        }
+        Node<Key, Value> preNode = predecessorFromAncestor(this.root, key);
+        return preNode == null ? null : preNode.k;
+    }
+
+    public Key successor(Key key) {
+        if(this.size == 0)
+            return null;
+
+        Node<Key, Value> node = this.search(this.root, key);
+        if(node == null)
+            return null;
+
+        if(node.k == this.getMax(this.root).k)
+            return null;
+
+        if(node.right != null) {
+            Node<Key, Value> subMin = this.getMin(node.right);
+            return subMin.k;
+        }
+        Node<Key, Value> succNode = successorFromAncestor(this.root, key);
+        return succNode == null ? null : succNode.k;
+    }
+
     private Node<Key, Value> floor(Node<Key, Value> node, Key key) {
         if(node == null || key.compareTo(node.k) == 0)
             return node;
@@ -252,13 +297,6 @@ public class BST<Key extends Comparable, Value> {
         return maxFloor != null ? maxFloor : node;
     }
 
-    public Value ceil(Key key) {
-        if(this.size == 0 || key.compareTo(this.getMax(this.root).k) > 0)
-            return null;
-        Node<Key, Value> ret = this.ceil(this.root, key);
-        return ret == null ? null : ret.v;
-    }
-
     private Node<Key, Value> ceil(Node<Key, Value> node, Key key) {
         if(node == null || key.compareTo(node.k) == 0)
             return node;
@@ -266,6 +304,26 @@ public class BST<Key extends Comparable, Value> {
             return this.ceil(node.right, key);
         Node minCeil = this.ceil(node.left, key);
         return minCeil != null ? minCeil : node;
+    }
+
+    private Node<Key, Value> predecessorFromAncestor(Node<Key, Value> node, Key key) {
+        if(key.compareTo(node.k) < 0)
+            return this.predecessorFromAncestor(node.left, key);
+        else if (key.compareTo(node.k) > 0) {
+            Node<Key, Value> subMax = this.predecessorFromAncestor(node.right, key);
+            return subMax == null ? node : subMax;
+        } else
+            return null;
+    }
+
+    private Node<Key, Value> successorFromAncestor(Node<Key, Value> node, Key key) {
+        if(key.compareTo(node.k) > 0)
+            return this.successorFromAncestor(node.right, key);
+        else if (key.compareTo(node.k) < 0) {
+            Node<Key, Value> succNode = this.successorFromAncestor(node.left, key);
+            return succNode == null ? node : succNode;
+        } else
+            return null;
     }
 
     public static void main(String[] args) {
@@ -405,15 +463,17 @@ public class BST<Key extends Comparable, Value> {
 
         bst = new BST<>();
 
-        int a = 5,
-                b = 2,
-                c =18,
-                d = -4,
-                e = 3,
-                f = 18,
-                g = 21,
-                h = 19,
-                i = 25;
+        int a = 8,
+                b = 3,
+                c = 10,
+                d = 1,
+                e = 6,
+                f = 14,
+                g = 4,
+                h = 7,
+                i = 13,
+                j = 202,
+                k = 204;
 
         bst.insert(a,a+"");
         bst.insert(b,b+"");
@@ -425,10 +485,10 @@ public class BST<Key extends Comparable, Value> {
         bst.insert(h,h+"");
         bst.insert(i,i+"");
 
-        PrintHelper.echoLn("Floor 4: " + bst.floor(4));
-        PrintHelper.echoLn("Ceil 4: " + bst.ceil(4));
+        PrintHelper.echoLn("Floor 5: " + bst.floor(5));
+        PrintHelper.echoLn("Ceil 5: " + bst.ceil(5));
 
-
-
+        PrintHelper.echoLn("Predecessor 6: " + bst.predecessor(6));
+        PrintHelper.echoLn("Successor 7: " + bst.successor(7));
     }
 }
