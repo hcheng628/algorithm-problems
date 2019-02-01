@@ -1,9 +1,11 @@
 package us.supercheng.algorithm.algorithm.graph.basic;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DenseGraph {
+public class DenseGraph implements Graph{
 
     private int vertex;
     private int edge;
@@ -34,7 +36,7 @@ public class DenseGraph {
         }
     }
 
-    private boolean hasEdge(int from, int to) {
+    public boolean hasEdge(int from, int to) {
         if (this.isDir) {
             return this.mat[from][to];
         } else {
@@ -45,8 +47,17 @@ public class DenseGraph {
     public Iterable<Integer> adj(int v) {
         List<Integer> ret = new ArrayList<>();
         for(int i=0;i<this.edge;i++)
-            if (this.mat[i][v])
+            if (this.mat[v][i])
                 ret.add(i);
         return ret;
+    }
+
+    @Override
+    public void show() {
+        for (boolean[] row : this.mat) {
+            for (int i=0;i<row.length;i++)
+                PrintHelper.echo(i == row.length-1 ? row[i] : row[i] + "\t");
+            PrintHelper.echoLn("");
+        }
     }
 }
