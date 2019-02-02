@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.algorithm.graph.basic;
 
+import us.supercheng.algorithm.common.helper.PrintHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -23,17 +25,17 @@ public class Path {
             this.from[i] = -1;
 
         this.dfs(this.source);
+
+
     }
 
     private void dfs(int vertex) {
-        if(this.visited[vertex])
-            return;
-
         this.visited[vertex] = true;
-
         for (int eachV : this.g.adj(vertex)) {
-            this.from[eachV] = vertex;
-            this.dfs(eachV);
+            if (!this.visited[eachV]) {
+                this.from[eachV] = vertex;
+                this.dfs(eachV);
+            }
         }
     }
 
@@ -48,6 +50,8 @@ public class Path {
         List<Integer> ret = new ArrayList<>();
         Stack<Integer> stack = new Stack();
 
+
+
         while (destin!=-1) {
             stack.push(destin);
             destin = this.from[destin];
@@ -59,6 +63,8 @@ public class Path {
     }
 
     public void echoPath(int destin) {
-
+        List<Integer> list = this.findPath(destin);
+        for (int i=0;i<list.size();i++)
+          PrintHelper.echo(i != list.size() -1 ? list.get(i) + "->" : list.get(i) + "\r\n");
     }
 }
