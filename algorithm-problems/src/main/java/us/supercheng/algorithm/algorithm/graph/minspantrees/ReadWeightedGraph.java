@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.mimspantrees;
+package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
 import java.io.BufferedInputStream;
 import java.io.File;

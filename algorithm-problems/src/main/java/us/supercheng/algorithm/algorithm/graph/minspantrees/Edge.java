@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.mimspantrees;
+package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
 public class Edge<Weight extends Number & Comparable> implements Comparable<Edge>{
 

@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.mimspantrees;
+package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
 import us.supercheng.algorithm.common.helper.PrintHelper;
 import java.util.Vector;
