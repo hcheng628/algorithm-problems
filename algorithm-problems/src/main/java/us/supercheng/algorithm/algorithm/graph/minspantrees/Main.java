@@ -30,6 +30,15 @@ public class Main {
         for( int i = 0 ; i < mst.size() ; i ++ )
             PrintHelper.echoLn(mst.elementAt(i));
         PrintHelper.echoLn("The MST weight is: " + lazyPrimMST.result());
+        PrintHelper.echoLn("\r\n**********\r\n");
 
+        g = new SparseWeightedGraph<Double>(8, false);
+        readWeightedGraph = new ReadWeightedGraph(g, filePrefix+testGW1);
+        PrintHelper.echoLn("Test Prim MST:");
+        PrimMST<Double> primMST = new PrimMST<Double>(g);
+        mst = lazyPrimMST.getEdges();
+        for( int i = 0 ; i < mst.size() ; i ++ )
+            PrintHelper.echoLn(mst.elementAt(i));
+        PrintHelper.echoLn("The MST weight is: " + lazyPrimMST.result());
     }
 }
