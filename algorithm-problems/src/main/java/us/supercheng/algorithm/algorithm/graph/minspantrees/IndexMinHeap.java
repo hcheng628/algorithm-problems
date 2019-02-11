@@ -34,7 +34,7 @@ public class IndexMinHeap<Item extends Comparable> {
     }
 
     public void insert(int index, Item item) {
-        if (this.size + 1 <= this.capacity) {
+        if (this.size + 1 <= this.capacity && !this.contain(index+1)) {
             this.data[++index] = item;
 
             this.indexes[++this.size] = index;
@@ -60,7 +60,6 @@ public class IndexMinHeap<Item extends Comparable> {
                 left++;
 
             if (this.data[this.indexes[left]].compareTo(this.data[this.indexes[index]]) < 0) {
-                //ArrayHelper.swap(this.indexes, left, index);
                 this.swapIndexesAndReverse(left, index);
                 index = left;
             } else
@@ -84,11 +83,8 @@ public class IndexMinHeap<Item extends Comparable> {
         if (this.isEmpty())
             return null;
         Item ret = this.getMin();
-        //ArrayHelper.swap(this.indexes, 1, this.size--);
         this.swapIndexesAndReverse(1, this.size);
-
-        this.reverse[this.indexes[size]] = 0; //???
-
+        this.reverse[this.indexes[size]] = 0;
         this.size--;
         this.shiftDown(1);
         return ret;
@@ -104,9 +100,11 @@ public class IndexMinHeap<Item extends Comparable> {
     }
 
     private void swapIndexesAndReverse(int a, int b) {
-        int revA = this.indexes[a], revB = this.indexes[b];
-        ArrayHelper.swap(this.indexes, a, b);
-        ArrayHelper.swap(this.reverse, revA, revB);
+        int revA = this.indexes[a];
+        this.indexes[a] = this.indexes[b];
+        this.indexes[b] = revA;
+        this.reverse[this.indexes[a]] = a;
+        this.reverse[this.indexes[b]] = b;
     }
 
     private int getLeftChild(int index) {
