@@ -6,6 +6,7 @@ import us.supercheng.algorithm.common.helper.PrintHelper;
 public class IndexMinHeap<Item extends Comparable> {
     private Item[] data;
     private Integer [] indexes;
+    private Integer [] reverse;
     private int size;
     private int capacity;
 
@@ -13,16 +14,19 @@ public class IndexMinHeap<Item extends Comparable> {
         this.capacity = capacity;
         this.data = (Item[]) new Comparable[this.capacity+1];
         this.indexes = new Integer[this.capacity + 1];
+        this.reverse = new Integer[this.capacity + 1];
     }
 
     public IndexMinHeap(Item[] arr) {
         this.capacity = arr.length;
         this.data = (Item[]) new Comparable[this.capacity+1];
         this.indexes = new Integer[this.capacity + 1];
+        this.reverse = new Integer[this.capacity + 1];
 
         for (int i=0;i<arr.length;i++) {
             this.data[i+1] = arr[i];
             this.indexes[i+1] = i+1;
+            this.reverse[i+1] = i+1;
         }
 
         for (int i=this.size/2;i>0;i--)
@@ -32,7 +36,10 @@ public class IndexMinHeap<Item extends Comparable> {
     public void insert(int index, Item item) {
         if (this.size + 1 <= this.capacity) {
             this.data[++index] = item;
-            this.indexes[++size] = index;
+
+            this.indexes[++this.size] = index;
+            this.reverse[index] = this.size;
+
             this.shiftUp(this.size);
         }
     }
@@ -40,7 +47,8 @@ public class IndexMinHeap<Item extends Comparable> {
     public void shiftUp(int index) {
         int parent = this.getParent(index);
         if(parent > 0 && this.data[this.indexes[index]].compareTo(this.data[this.indexes[parent]]) < 0) {
-            ArrayHelper.swap(this.indexes, index, parent);
+            //ArrayHelper.swap(this.indexes, index, parent);
+            this.swapIndexesAndReverse(index, parent);
             this.shiftUp(parent);
         }
     }
@@ -52,7 +60,8 @@ public class IndexMinHeap<Item extends Comparable> {
                 left++;
 
             if (this.data[this.indexes[left]].compareTo(this.data[this.indexes[index]]) < 0) {
-                ArrayHelper.swap(this.indexes, left, index);
+                //ArrayHelper.swap(this.indexes, left, index);
+                this.swapIndexesAndReverse(left, index);
                 index = left;
             } else
                 return;
@@ -75,7 +84,12 @@ public class IndexMinHeap<Item extends Comparable> {
         if (this.isEmpty())
             return null;
         Item ret = this.getMin();
-        ArrayHelper.swap(this.indexes, 1, this.size--);
+        //ArrayHelper.swap(this.indexes, 1, this.size--);
+        this.swapIndexesAndReverse(1, this.size);
+
+        this.reverse[this.indexes[size]] = 0; //???
+
+        this.size--;
         this.shiftDown(1);
         return ret;
     }
@@ -87,6 +101,12 @@ public class IndexMinHeap<Item extends Comparable> {
         int ret = this.indexes[1] - 1;
         this.popMin();
         return ret;
+    }
+
+    private void swapIndexesAndReverse(int a, int b) {
+        int revA = this.indexes[a], revB = this.indexes[b];
+        ArrayHelper.swap(this.indexes, a, b);
+        ArrayHelper.swap(this.reverse, revA, revB);
     }
 
     private int getLeftChild(int index) {
@@ -122,17 +142,17 @@ public class IndexMinHeap<Item extends Comparable> {
         PrintHelper.echoLn("Data:");
         ArrayHelper.echo(this.data);
 
-//        PrintHelper.echoLn("Reverse Index:");
-//        temp = new Integer[this.reverse.length];
-//        for(int i=0;i<temp.length;i++)
-//            temp[i] = this.reverse[i];
-//        ArrayHelper.echo(temp);
-//        PrintHelper.echoLn("");
+        PrintHelper.echoLn("Reverse Index:");
+        temp = new Integer[this.reverse.length];
+        for(int i=0;i<temp.length;i++)
+            temp[i] = this.reverse[i];
+        ArrayHelper.echo(temp);
+        PrintHelper.echoLn("");
     }
 
     boolean contain( int i ){
         if (++i<=this.size)
-            return this.data[i] != null;
+            return this.reverse[i] != 0;
         return false;
     }
 
@@ -143,15 +163,10 @@ public class IndexMinHeap<Item extends Comparable> {
     }
 
     public void change( int i , Item newItem ){
-        this.data[++i] = newItem;
-        for (int j=1;j<this.indexes.length;j++) {
-            ArrayHelper.echo(indexes);
-            PrintHelper.echoLn(">" + j);
-            if (indexes[j] == i) {
-                this.shiftDown(j);
-                this.shiftUp(j);
-                return;
-            }
+        if (this.contain(++i)) {
+            this.data[i] = newItem;
+            this.shiftUp(this.reverse[i]);
+            this.shiftDown(this.reverse[i]);
         }
     }
 
