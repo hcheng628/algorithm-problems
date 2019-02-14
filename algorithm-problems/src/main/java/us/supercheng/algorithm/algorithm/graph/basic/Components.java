@@ -1,5 +1,6 @@
 package us.supercheng.algorithm.algorithm.graph.basic;
 
+import us.supercheng.algorithm.algorithm.graph.common.Graph;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 
 public class Components {

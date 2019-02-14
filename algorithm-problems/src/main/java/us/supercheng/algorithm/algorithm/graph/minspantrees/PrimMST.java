@@ -1,5 +1,9 @@
 package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
+import us.supercheng.algorithm.algorithm.graph.common.Edge;
+import us.supercheng.algorithm.algorithm.graph.common.IndexMinHeap;
+import us.supercheng.algorithm.algorithm.graph.common.WeightedGraph;
+
 import java.util.Vector;
 
 public class PrimMST<Weight extends Number & Comparable> {
@@ -7,7 +11,7 @@ public class PrimMST<Weight extends Number & Comparable> {
     private WeightedGraph<Weight> g;
     private Number mstAmount;
     private boolean [] visited;
-    private Edge<Weight>[] edgeTo;        // 访问的点所对应的边, 算法辅助数据结构
+    private Edge<Weight>[] edgeTo;
     private Vector<Edge<Weight>> edges;
     private IndexMinHeap<Edge<Weight>> indexMinHeap;
 

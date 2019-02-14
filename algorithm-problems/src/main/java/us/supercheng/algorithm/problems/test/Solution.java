@@ -8,54 +8,48 @@ class Solution {
 
     public static void main(String[] args) {
         int [][] nums = {{1,1,0},{1,1,0},{0,0,1}};
-        int [][] num2 = {{1,1,0},{1,1,0},{0,0,1}};
 
         Solution solution = new Solution();
-        int res = solution.findCircleNum(nums);
-        PrintHelper.echoLn("res: " + res);
-
-        Map<String, String> map = new HashMap<>();
-
-        //map.put("a", "A");
-
-        PrintHelper.echoLn(map.put("b", "B"));
-        map.put("a", "A");
-        PrintHelper.echoLn(map.get("a"));
-        map.put("a", "B");
-        PrintHelper.echoLn(map.get("a"));
+        int res = solution.numSquares(12);
 
     }
 
-    private int [] data;
+    public int numSquares(int n) {
 
-    public int findCircleNum(int[][] M) {
-        this.data = new int [M.length ];
-        for(int i=0;i<this.data.length;i++)
-            this.data[i] = i;
-
-        int index = 0;
-        for(int i=0;i<M.length;i++) {
-            for(int j=i+1;j<M[0].length;j++,index++) {
-                if(M[i][j] == 1) {
-                    this.makeFriend(i, j);
-                }
+        List<Integer> list = new ArrayList<>();
+        int i=1;
+        for (;true;i++) {
+            int res = i*i;
+            if (res > n) {
+                i--;
+                break;
+            } else if (res == n) {
+                return 1;
             }
+
+            list.add(res);
         }
 
-        Set<Integer> set = new HashSet<>();
-        for(int each : this.data)
-            set.add(each);
-        return set.size();
+        //PrintHelper.echoLn("i === " + i);
+
+        List<Integer> ret = new ArrayList<>();
+
+        this.helper(list, ret, 0, n);
+        return 0;
     }
 
-    private void makeFriend(int a, int b) {
-        if(this.data[a] == this.data[b])
+    private void helper(List<Integer> list, List<Integer> ret, int i, int res) {
+        if(res - list.get(i) < 0)
             return;
+        else if (res - list.get(i) == 0) {
+            ret.add(list.get(i));
+            return;
+        }
 
-        int groupId = this.data[b];
-        for(int i=0;i<this.data.length;i++)
-            if(this.data[i] == groupId)
-                this.data[i] = this.data[a];
+        for (int j=0;j<list.size();j++) {
+
+        }
+
+
     }
-
 }

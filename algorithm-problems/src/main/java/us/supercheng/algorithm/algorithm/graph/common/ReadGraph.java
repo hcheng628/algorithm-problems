@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.minspantrees;
+package us.supercheng.algorithm.algorithm.graph.common;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -8,23 +8,22 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ReadWeightedGraph {
+public class ReadGraph {
 
     private Scanner scanner;
 
-    public ReadWeightedGraph(WeightedGraph<Double> weightedGraph, String filename) {
+    public ReadGraph(Graph graph, String filename) {
         this.readFile(filename);
         try {
             int vertexes = this.scanner.nextInt(),
-                    edges = this.scanner.nextInt();
+                edges = this.scanner.nextInt();
             if (vertexes < 0 || edges < 0)
                 throw new IllegalArgumentException("number of vertexes and edges in a Graph must be nonnegative");
 
             for (int i=0;i<edges;i++) {
                 int from = this.scanner.nextInt();
                 int to = this.scanner.nextInt();
-                double weight = this.scanner.nextDouble();
-                weightedGraph.addEdge(new Edge<>(from, to, weight));
+                graph.addEdge(from, to);
             }
         } catch (InputMismatchException imE) {
             throw new InputMismatchException("attempts to read an 'int' value from input stream, but the next token is \"" + scanner.next() + "\"");

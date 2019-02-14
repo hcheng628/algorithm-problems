@@ -1,5 +1,9 @@
 package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
+import us.supercheng.algorithm.algorithm.graph.common.DenseWeightedGraph;
+import us.supercheng.algorithm.algorithm.graph.common.Edge;
+import us.supercheng.algorithm.algorithm.graph.common.ReadWeightedGraph;
+import us.supercheng.algorithm.algorithm.graph.common.SparseWeightedGraph;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 import java.util.Vector;
 
@@ -40,5 +44,16 @@ public class Main {
         for( int i = 0 ; i < mst.size() ; i ++ )
             PrintHelper.echoLn(mst.elementAt(i));
         PrintHelper.echoLn("The MST weight is: " + lazyPrimMST.result());
+        PrintHelper.echoLn("\r\n**********\r\n");
+
+        g = new SparseWeightedGraph<Double>(8, false);
+        readWeightedGraph = new ReadWeightedGraph(g, filePrefix+testGW1);
+        PrintHelper.echoLn("Test Kruskal MST:");
+        KruskalMST<Double> kruskalMST = new KruskalMST<Double>(g);
+        mst = kruskalMST.getEdges();
+        for( int i = 0 ; i < mst.size() ; i ++ )
+            PrintHelper.echoLn(mst.elementAt(i));
+        PrintHelper.echoLn("The MST weight is: " + lazyPrimMST.result());
+        PrintHelper.echoLn("\r\n**********\r\n");
     }
 }

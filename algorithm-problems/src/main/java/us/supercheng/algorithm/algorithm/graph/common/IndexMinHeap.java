@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.minspantrees;
+package us.supercheng.algorithm.algorithm.graph.common;
 
 import us.supercheng.algorithm.common.helper.ArrayHelper;
 import us.supercheng.algorithm.common.helper.PrintHelper;

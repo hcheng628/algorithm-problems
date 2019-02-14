@@ -1,11 +1,12 @@
 package us.supercheng.algorithm.algorithm.graph.basic;
 
+import us.supercheng.algorithm.algorithm.graph.common.Graph;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DenseGraph implements Graph{
+public class DenseGraph implements Graph {
 
     private int vertex;
     private int edge;

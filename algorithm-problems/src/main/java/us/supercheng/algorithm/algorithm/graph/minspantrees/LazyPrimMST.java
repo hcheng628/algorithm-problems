@@ -1,5 +1,9 @@
 package us.supercheng.algorithm.algorithm.graph.minspantrees;
 
+import us.supercheng.algorithm.algorithm.graph.common.Edge;
+import us.supercheng.algorithm.algorithm.graph.common.MinHeap;
+import us.supercheng.algorithm.algorithm.graph.common.WeightedGraph;
+
 import java.util.Vector;
 
 public class LazyPrimMST<Weight extends Number & Comparable> {
