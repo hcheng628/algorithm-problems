@@ -1,5 +1,7 @@
-package us.supercheng.algorithm.algorithm.graph.minspantrees;
+package us.supercheng.algorithm.algorithm.graph.common;
 
+import us.supercheng.algorithm.algorithm.graph.common.Edge;
+import us.supercheng.algorithm.algorithm.graph.common.WeightedGraph;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 import java.util.Vector;
 
@@ -8,7 +10,7 @@ public class DenseWeightedGraph<Weight extends Number & Comparable> implements W
     private int vertex;
     private int edge;
     private boolean isDir;
-    private Edge<Weight> [][] g;
+    private Edge<Weight>[][] g;
 
     public DenseWeightedGraph(int n, boolean isDir) {
         this.vertex = n;

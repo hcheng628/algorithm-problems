@@ -1,4 +1,6 @@
-package us.supercheng.algorithm.algorithm.graph.minspantrees;
+package us.supercheng.algorithm.algorithm.graph.common;
+
+import us.supercheng.algorithm.algorithm.graph.common.Edge;
 
 public interface WeightedGraph<Weight extends Number & Comparable> {
     int getVertex();

@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.algorithm.graph.basic;
+package us.supercheng.algorithm.algorithm.graph.common;
 
 public interface Graph {
     int getVertex();

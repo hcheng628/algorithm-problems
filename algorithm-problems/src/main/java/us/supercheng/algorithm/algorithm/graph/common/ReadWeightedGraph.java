@@ -1,30 +1,30 @@
-package us.supercheng.algorithm.algorithm.graph.basic;
+package us.supercheng.algorithm.algorithm.graph.common;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ReadGraph {
+public class ReadWeightedGraph {
 
     private Scanner scanner;
 
-    public ReadGraph(Graph graph, String filename) {
+    public ReadWeightedGraph(WeightedGraph<Double> weightedGraph, String filename) {
         this.readFile(filename);
         try {
             int vertexes = this.scanner.nextInt(),
-                edges = this.scanner.nextInt();
+                    edges = this.scanner.nextInt();
             if (vertexes < 0 || edges < 0)
                 throw new IllegalArgumentException("number of vertexes and edges in a Graph must be nonnegative");
 
             for (int i=0;i<edges;i++) {
                 int from = this.scanner.nextInt();
                 int to = this.scanner.nextInt();
-                graph.addEdge(from, to);
+                double weight = this.scanner.nextDouble();
+                weightedGraph.addEdge(new Edge<>(from, to, weight));
             }
         } catch (InputMismatchException imE) {
             throw new InputMismatchException("attempts to read an 'int' value from input stream, but the next token is \"" + scanner.next() + "\"");

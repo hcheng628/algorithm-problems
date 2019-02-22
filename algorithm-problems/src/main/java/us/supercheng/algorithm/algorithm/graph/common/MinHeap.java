@@ -1,6 +1,5 @@
-package us.supercheng.algorithm.algorithm.graph.minspantrees;
+package us.supercheng.algorithm.algorithm.graph.common;
 
-import us.supercheng.algorithm.algorithm.sorting.common.SortTestHelper;
 import us.supercheng.algorithm.common.helper.ArrayHelper;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 
@@ -113,8 +112,6 @@ public class MinHeap<Item extends Comparable> {
             PrintHelper.echo(arr[i] + ", ");
         }
         PrintHelper.echoLn("");
-
-        // 确保arr数组是从小到大排列的
 
         for( int i = 1 ; i < N ; i ++ ) {
             if (arr[i-1] > arr[i]) {
