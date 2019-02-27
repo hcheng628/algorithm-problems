@@ -59,4 +59,27 @@ public class App {
             //PrintHelper.echo(" After\n");
         }
     }
+
+    public void moveZeroes3(int[] nums) {
+        int zero=0,
+                noneZero = 0;
+        for (;noneZero < nums.length;noneZero++)
+            if (nums[noneZero] != 0)
+                nums[zero++] = nums[noneZero];
+
+        for (;zero < nums.length;zero++)
+            nums[zero] = 0;
+    }
+
+    public void moveZeroes4(int[] nums) {
+        for (int zero=0,noneZero = 0;zero < nums.length;zero++)
+            if (nums[zero] != 0) {
+                if (zero != noneZero) {
+                    int temp = nums[zero];
+                    nums[zero] = nums[noneZero];
+                    nums[noneZero] = temp;
+                }
+                noneZero++;
+            }
+    }
 }
