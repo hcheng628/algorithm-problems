@@ -21,4 +21,19 @@ public class App {
             nums[b] = temp;
         }
     }
+
+    //3 Way Quick Sort
+    public void sortColors2(int[] nums) {
+        for (int zero=-1, one=0, two=nums.length;one<two;) {
+            if (nums[one] == 0) {
+                nums[one] = nums[++zero];
+                nums[zero] = 0;
+                one++;
+            } else if (nums[one] == 2) {
+                nums[one] = nums[--two];
+                nums[two] = 2;
+            } else
+                one++;
+        }
+    }
 }

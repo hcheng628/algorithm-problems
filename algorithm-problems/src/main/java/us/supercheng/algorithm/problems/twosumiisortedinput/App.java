@@ -31,4 +31,20 @@ public class App {
         }
         return arr;
     }
+
+    public int[] twoSum2(int[] numbers, int target) {
+        int [] ans = new int [2];
+        for (int left=0, right=numbers.length-1;left<right;) {
+            int res = numbers[left] + numbers[right];
+            if (res == target) {
+                ans[0] = left+1;
+                ans[1] = right+1;
+                break;
+            } else if (res > target)
+                right--;
+            else
+                left++;
+        }
+        return ans;
+    }
 }
