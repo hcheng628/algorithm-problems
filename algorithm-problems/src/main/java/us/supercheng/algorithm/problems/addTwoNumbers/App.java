@@ -1,4 +1,4 @@
-package us.supercheng.algorithm.problems.addTwoNumbers;
+package us.supercheng.algorithm.problems.addtwonumbers;
 
 import us.supercheng.algorithm.common.entity.ListNode;
 
