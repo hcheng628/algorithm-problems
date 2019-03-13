@@ -19,12 +19,18 @@ public class App {
     }
 
     public Integer goDown(TreeNode t, Integer count) {
-        if(t == null) {
+        if(t == null)
             return count;
-        }
+
         count++;
         int countA = goDown(t.left, count);
         int countB = goDown(t.right, count);
         return countA > countB ? countA : countB;
+    }
+
+    public int maxDepth2(TreeNode root) {
+        if (root == null)
+            return 0;
+        return Math.max(this.maxDepth(root.left), this.maxDepth(root.right)) + 1;
     }
 }
