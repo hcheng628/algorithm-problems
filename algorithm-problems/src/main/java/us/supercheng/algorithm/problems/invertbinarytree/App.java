@@ -24,4 +24,20 @@ public class App {
         root.left = root.right;
         root.right = temp;
     }
+
+    public TreeNode invertTree2(TreeNode root) {
+        this.invert(root);
+        return root;
+    }
+
+    private void invert(TreeNode root) {
+        if (root == null)
+            return;
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        this.invert(root.left);
+        this.invert(root.right);
+    }
 }
