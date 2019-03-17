@@ -37,4 +37,18 @@ public class App {
             this.cal(node.right, curSum, target);
         }
     }
+
+    public int pathSum2(TreeNode root, int sum) {
+        if (root == null)
+            return 0;
+        return this.dfs(root, sum) + this.pathSum2(root.left, sum) + this.pathSum2(root.right, sum);
+    }
+
+    private int dfs(TreeNode root, int sum) {
+        if (root == null)
+            return 0;
+        int newVal = sum - root.val;
+        return newVal == 0 ? this.dfs(root.left, newVal) + this.dfs(root.right, newVal) + 1
+                : this.dfs(root.left, newVal) + this.dfs(root.right, newVal);
+    }
 }

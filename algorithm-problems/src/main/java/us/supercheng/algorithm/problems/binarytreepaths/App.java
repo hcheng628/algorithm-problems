@@ -45,4 +45,26 @@ public class App {
             this.helper(root.right, list, eachStr + root.val + "->");
         }
     }
+
+    public List<String> binaryTreePaths2(TreeNode root) {
+        if (root == null)
+            return new ArrayList<>();
+
+        List<String> list = new ArrayList<>();
+
+        if (root.left == null && root.right == null) {
+            list.add(Integer.toString(root.val));
+            return list;
+        }
+
+        if (root.left != null)
+            for (String each : this.binaryTreePaths(root.left))
+                list.add(root.val + "->" + each);
+
+        if (root.right != null)
+            for (String each : this.binaryTreePaths(root.right))
+                list.add(root.val + "->" + each);
+
+        return list;
+    }
 }
