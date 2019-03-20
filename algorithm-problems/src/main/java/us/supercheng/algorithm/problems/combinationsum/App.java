@@ -25,4 +25,29 @@ public class App {
                 list.remove(list.size()-1);
             }
     }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ret = new ArrayList<>();
+        Arrays.sort(candidates);
+
+        this.dfs(candidates, target, ret, new ArrayList<>(), 0);
+        return ret;
+    }
+
+    private void dfs(int[] nums, int target, List<List<Integer>> ret, List<Integer> list, int idx) {
+        for (int i=idx;i<nums.length;i++) {
+            int newTarget = target-nums[i];
+            if (newTarget < 0)
+                break;
+            else {
+                list.add(nums[i]);
+                if (newTarget == 0) {
+                    ret.add(new ArrayList<>(list));
+                    list.remove(list.size()-1);
+                    break;
+                }
+                this.dfs(nums, target - nums[i], ret, list, i);
+                list.remove(list.size()-1);
+            }
+        }
+    }
 }
