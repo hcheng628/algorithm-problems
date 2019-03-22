@@ -28,4 +28,22 @@ public class App {
                 list.remove(list.size()-1);
             }
     }
+
+    public List<List<Integer>> subsets2(int[] nums) {
+        List<List<Integer>> ret = new ArrayList<>();
+        if (nums != null && nums.length > 0) {
+            this.dfsSubSets(ret, nums, 0, new ArrayList<>());
+            ret.add(new ArrayList<>());
+        }
+        return ret;
+    }
+
+    private void dfsSubSets(List<List<Integer>> ret, int[] nums, int idx, List<Integer> list) {
+        for (int i=idx;i<nums.length;i++) {
+            list.add(nums[i]);
+            ret.add(new ArrayList<>(list));
+            this.dfsSubSets(ret, nums, i+1, list);
+            list.remove(list.size()-1);
+        }
+    }
 }

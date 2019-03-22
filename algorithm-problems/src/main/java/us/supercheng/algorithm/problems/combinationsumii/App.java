@@ -31,4 +31,30 @@ public class App {
                 list.remove(list.size()-1);
             }
     }
+
+    public List<List<Integer>> combinationSum2B(int[] candidates, int target) {
+        List<List<Integer>> ret = new ArrayList<>();
+        Arrays.sort(candidates);
+        this.dfs(ret, candidates, target, new ArrayList<>(), 0);
+        return ret;
+    }
+
+    private void dfs(List<List<Integer>> ret, int[] nums, int target, List<Integer> list, int idx) {
+        int prev = -1;
+        for (int i=idx;i<nums.length;prev = nums[i],i++) {
+            int newTarget = target - nums[i];
+            if (newTarget < 0)
+                return;
+            else if (newTarget == 0) {
+                list.add(nums[i]);
+                ret.add(new ArrayList<>(list));
+                list.remove(list.size()-1);
+                return;
+            } else if (nums[i] != prev) {
+                list.add(nums[i]);
+                this.dfs(ret, nums, newTarget, list, i+1);
+                list.remove(list.size()-1);
+            }
+        }
+    }
 }
