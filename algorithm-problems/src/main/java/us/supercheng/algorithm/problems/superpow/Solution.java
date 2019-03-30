@@ -1,7 +1,7 @@
 package us.supercheng.algorithm.problems.superpow;
 
 class Solution {
-    
+
     public int superPow(int a, int[] b) {
         if (b == null || b.length == 0)
             return 1;
