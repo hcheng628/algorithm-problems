@@ -1,6 +1,7 @@
 package us.supercheng.algorithm.problems.wordsearch;
 
 public class App {
+
     public boolean exist(char[][] board, String word) {
         char [] chars = word.toCharArray();
         for(int i=0;i<board.length;i++)
@@ -29,5 +30,44 @@ public class App {
         visited[x][y] = false;
 
         return ret;
+    }
+
+
+    final int [][] DIR = {{1,0},{-1,0},{0,1},{0,-1}};
+    int m;
+    int n;
+    boolean[][] visited;
+
+    public boolean existDFS(char[][] board, String word) {
+        this.m = board.length;
+        this.n = board[board.length-1].length;
+        this.visited = new boolean [m][n];
+
+        for (int i=0;i<m;i++)
+            for (int j=0;j<n;j++)
+                if (this.search(board, word, 0, i, j))
+                    return true;
+        return false;
+    }
+
+    private boolean search(char[][] board, String word, int idx, int x, int y) {
+        if (idx == word.length()-1)
+            return board[x][y] == word.charAt(idx);
+
+        if (board[x][y] == word.charAt(idx)) {
+            this.visited[x][y] = true;
+            for (int i=0;i<4;i++) {
+                int newX = x + DIR[i][0], newY = y + DIR[i][1];
+                if (this.isInArea(newX, newY) && !this.visited[newX][newY] && this.search(board, word, idx+1, newX, newY))
+                    return true;
+            }
+            this.visited[x][y] = false;
+        }
+
+        return false;
+    }
+
+    private boolean isInArea(int x, int y) {
+        return (x>-1 && y >-1 && x < m && y < n);
     }
 }

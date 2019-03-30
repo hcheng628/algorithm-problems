@@ -38,4 +38,29 @@ class Solution {
 
         throw new IllegalArgumentException("Invalid Input");
     }
+
+    Integer [] dp;
+
+    public int numSquaresRec(int n) {
+        this.dp = new Integer[n+1];
+        this.dp[1] = 1;
+        return this.dfs(n);
+    }
+
+    private int dfs(int n) {
+        if(this.dp[n] != null)
+            return this.dp[n];
+
+        int min = Integer.MAX_VALUE;
+
+        for (int i=1;i*i<=n;i++) {
+            if (i*i == n)
+                return 1;
+            min = Math.min(this.dfs(n - i*i), min);
+        }
+
+        this.dp[n] = min+1;
+
+        return this.dp[n];
+    }
 }

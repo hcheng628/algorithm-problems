@@ -48,4 +48,46 @@ public class App {
         }
         return pre;
     }
+
+    int count;
+
+    public int numDecodingsRec(String s) {
+        this.dfsDecodeings(s, 0);
+        return this.count;
+    }
+
+    private void dfsDecodeings(String s, int idx) {
+        if(idx == s.length()) {
+            this.count++;
+            return;
+        }
+
+        char first = s.charAt(idx);
+        if ( first == '0')
+            return;
+
+        this.dfsDecodeings(s, idx+1);
+        if ((idx+1 < s.length())) {
+            char second = s.charAt(idx+1);
+            if (first == '1' || (first == '2' && (second != '7' && second != '8' && second != '9')))
+                this.dfsDecodeings(s, idx+2);
+        }
+    }
+
+    public int numDecodingsDP(String s) {
+        if (s == null || s.length() == 0 || (s.length() > 0 && s.charAt(0) == '0'))
+            return 0;
+
+        char[] chars = s.toCharArray();
+        int [] dp = new int [chars.length+1];
+        dp[0] = 1;
+
+        for (int i=1;i<dp.length;i++) {
+            if (chars[i-1] != '0')
+                dp[i] = dp[i-1];
+            if ((i>1) && ((chars[i-2] == '1') || (chars[i-2] == '2' && chars[i-1] <= '6')))
+                dp[i] += dp[i-2];
+        }
+        return dp[chars.length];
+    }
 }

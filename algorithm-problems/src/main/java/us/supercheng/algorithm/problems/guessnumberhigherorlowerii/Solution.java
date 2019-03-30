@@ -1,7 +1,7 @@
 package us.supercheng.algorithm.problems.guessnumberhigherorlowerii;
 
 public class Solution {
-    
+
     public int getMoneyAmount(int n) {
         int[][] dp = new int[n+1][n+1];
 
