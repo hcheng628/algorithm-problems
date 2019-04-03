@@ -6,6 +6,8 @@ public class PrintHelper {
         System.out.println(str);
     }
 
+    public static void echoLn() { echoLn("\r\n");}
+
     public static void echo(Object str){
         System.out.print(str);
     }
