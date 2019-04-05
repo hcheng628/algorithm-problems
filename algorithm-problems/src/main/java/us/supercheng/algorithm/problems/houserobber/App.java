@@ -69,4 +69,26 @@ public class App {
         ints[index] = Math.max(nums[index] + rob3Helper(nums,total,index -2, ints), rob3Helper(nums, total, index, ints));
         return ints[index];
     }
+
+    Integer [] memo;
+
+    public int rob4(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+        this.memo = new Integer [nums.length];
+        return this.helper(nums, nums.length-1);
+    }
+
+    private int helper(int[] nums, int idx) {
+        if (idx < 0)
+            return 0;
+        else if (idx == 0)
+            return nums[0];
+        else if (idx == 1)
+            return Math.max(nums[0], nums[1]);
+        else if (this.memo[idx] != null)
+            return this.memo[idx];
+        this.memo[idx] = Math.max(this.helper(nums, idx-2) + nums[idx], this.helper(nums,idx-1));
+        return this.memo[idx];
+    }
 }
