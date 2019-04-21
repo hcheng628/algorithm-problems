@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+
     public List<String> restoreIpAddresses(String s) {
         List<String> ret = new ArrayList<>();
         if(s.length() > 12)
@@ -23,23 +24,29 @@ public class App {
             char curr = s.charAt(i);
             this.helper(list, s, i+1 != s.length() ? subS + curr + "." : subS + curr, i+1, dotCount + 1, endLength);
 
-            if(i+1 <= s.length() -1 && curr != '0')
+            if(i+1 <= s.length()-1 && curr != '0')
                 this.helper(list, s, i+2 != s.length() ? subS + s.substring(i,i+2)+ "." : subS + s.substring(i,i+2), i+2, dotCount + 1, endLength);
 
-            if(i+2 <= s.length() - 1 && s.charAt(i) != '0') {
-                int subIp = Integer.parseInt(s.substring(i,i+3));
-                if(subIp <= 255)
+            if(i+2 <= s.length()-1 && curr != '0') {
+                int subIp = (curr - '0') * 100 + (s.charAt(i+1) - '0') * 10 + (s.charAt(i+2) - '0');
+                if(subIp < 256)
                     this.helper(list, s, i+3 != s.length() ? subS + subIp + "." : subS + subIp, i+3, dotCount + 1, endLength);
             }
         }
     }
 
 
+
+    
     List<List<Integer>> ipList;
 
     public List<String> restoreIpAddresses2(String s) {
-        this.ipList = new ArrayList<>();
         List<String> ret = new ArrayList<>();
+
+        if(s.length() > 12)
+            return ret;
+
+        this.ipList = new ArrayList<>();
         this.ipListHelper(s, new ArrayList<>());
 
         for (List<Integer> list : this.ipList) {
@@ -51,6 +58,7 @@ public class App {
             }
             ret.add(sb.toString());
         }
+
         return ret;
     }
 
