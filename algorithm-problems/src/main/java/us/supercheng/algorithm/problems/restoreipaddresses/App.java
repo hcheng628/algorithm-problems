@@ -33,4 +33,50 @@ public class App {
             }
         }
     }
+
+
+    List<List<Integer>> ipList;
+
+    public List<String> restoreIpAddresses2(String s) {
+        this.ipList = new ArrayList<>();
+        List<String> ret = new ArrayList<>();
+        this.ipListHelper(s, new ArrayList<>());
+
+        for (List<Integer> list : this.ipList) {
+            StringBuilder sb = new StringBuilder();
+            for (int i=0;i<4;i++) {
+                sb.append(list.get(i));
+                if (i != 3)
+                    sb.append('.');
+            }
+            ret.add(sb.toString());
+        }
+        return ret;
+    }
+
+
+    private void ipListHelper(String s, List<Integer> list) {
+        if (s.length() == 0 && list.size() == 4)
+            this.ipList.add(new ArrayList(list));
+
+        if (s.length() == 0 || list.size() == 4)
+            return;
+
+        this.listHelper(s.charAt(0) - '0', s.substring(1), list);
+
+        if (1 < s.length() && s.charAt(0) != '0')
+            this.listHelper((s.charAt(0) - '0') * 10 + (s.charAt(1) - '0'), s.substring(2), list);
+
+        if (2 < s.length() && s.charAt(0) != '0') {
+            int num = (s.charAt(0) - '0') * 100 + (s.charAt(1) - '0') * 10 + (s.charAt(2) - '0');
+            if (num < 256)
+                this.listHelper(num, s.substring(3), list);
+        }
+    }
+
+    private void listHelper(int num, String s, List<Integer> list) {
+        list.add(num);
+        this.ipListHelper(s, list);
+        list.remove(list.size()-1);
+    }
 }
