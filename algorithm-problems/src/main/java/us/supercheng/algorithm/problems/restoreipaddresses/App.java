@@ -37,7 +37,7 @@ public class App {
 
 
 
-    
+
     List<List<Integer>> ipList;
 
     public List<String> restoreIpAddresses2(String s) {
