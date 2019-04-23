@@ -24,4 +24,25 @@ public class App {
             head.next = head.next.next;
         return ret;
     }
+
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummyHead = new ListNode(13);
+        dummyHead.next = head;
+
+        this.del(dummyHead, n);
+        return dummyHead.next;
+    }
+
+    private int del(ListNode node, int n) {
+        if (node.next == null)
+            return 1;
+        int count = this.del(node.next, n);
+        if (count == -1)
+            return -1;
+        else if (count == n) {
+            node.next = node.next.next;
+            return -1;
+        }
+        return ++count;
+    }
 }

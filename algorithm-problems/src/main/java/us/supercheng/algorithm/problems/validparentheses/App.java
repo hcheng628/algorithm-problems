@@ -10,36 +10,58 @@ public class App {
     }
 
     public boolean isValid(String s) {
-        if(s.length() % 2 !=0) {
+        if (s == null || s.length() == 0)
+            return true;
+        else if(s.length() % 2 !=0)
             return false;
-        }
-        Stack st = new Stack();
-        for(int i=0;i<s.length();i++) {
-            char each = s.charAt(i);
-            if(st.size() != 0) {
+
+        Stack<Character> st = new Stack();
+
+        for(char each : s.toCharArray())
+            if(st.isEmpty())
+                st.push(each);
+            else
                 switch(each) {
                     case ')':
-                        if(st.peek().toString().charAt(0) == '(') {
+                        if(st.peek()== '(')
                             st.pop();
-                        }
                         break;
                     case ']':
-                        if(st.peek().toString().charAt(0) == '[') {
+                        if(st.peek() == '[')
                             st.pop();
-                        }
                         break;
                     case '}':
-                        if(st.peek().toString().charAt(0) == '{') {
+                        if(st.peek() == '{')
                             st.pop();
-                        }
                         break;
                     default:
                         st.push(each);
                 }
-            } else {
-                st.push(each);
+
+        return st.isEmpty();
+    }
+
+    public boolean isValid2(String s) {
+        if (s == null || s.length() == 0)
+            return true;
+        else if (s.length() % 2 != 0)
+            return false;
+        Stack<Character> stack = new Stack<>();
+
+        for (char each : s.toCharArray()) {
+            if (each == '(' || each == '{' || each == '[')
+                stack.push(each);
+            else {
+                if (stack.isEmpty())
+                    return false;
+                char peek = stack.peek();
+                if ((peek == '(' && each == ')') || (peek == '{' && each == '}') || (peek == '[' && each == ']'))
+                    stack.pop();
+                else
+                    return false;
             }
         }
-        return st.size() > 0 ? false : true;
+
+        return stack.isEmpty();
     }
 }
