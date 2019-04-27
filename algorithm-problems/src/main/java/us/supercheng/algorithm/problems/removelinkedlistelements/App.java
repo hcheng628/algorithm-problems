@@ -102,4 +102,35 @@ public class App {
         head.next = this.removeElementsRecursion2(head.next, val);
         return head.val == val ? head.next : head;
     }
+
+    public ListNode removeElements2(ListNode head, int val) {
+        while (head != null && head.val == val)
+            head = head.next;
+
+        if (head == null)
+            return null;
+
+        ListNode curr = head;
+
+        while (curr != null && curr.next != null)
+            if (curr.next.val == val)
+                curr.next = curr.next.next;
+            else
+                curr = curr.next;
+        return head;
+    }
+
+    public ListNode removeElements3(ListNode head, int val) {
+        ListNode dummy = new ListNode(13),
+                curr = dummy;
+        dummy.next = head;
+
+        while (curr.next != null)
+            if (curr.next.val == val)
+                curr.next = curr.next.next;
+            else
+                curr = curr.next;
+
+        return dummy.next;
+    }
 }

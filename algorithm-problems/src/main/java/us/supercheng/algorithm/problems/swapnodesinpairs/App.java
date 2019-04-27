@@ -15,4 +15,23 @@ public class App {
         }
         return head;
     }
+
+    public ListNode swapPairs2(ListNode head) {
+        ListNode dummyHead = new ListNode(13),
+                retNode = dummyHead;
+        dummyHead.next = head;
+
+        while (dummyHead.next != null && dummyHead.next.next != null) {
+            ListNode first = dummyHead.next,
+                    second = first.next;
+
+            dummyHead.next = second;
+            first.next = second.next;	// third
+            second.next = first;
+
+            dummyHead = dummyHead.next.next;
+        }
+
+        return retNode.next;
+    }
 }
