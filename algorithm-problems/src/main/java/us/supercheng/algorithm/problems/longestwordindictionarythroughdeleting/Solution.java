@@ -7,7 +7,7 @@ import java.util.List;
 class Solution {
 
     public String findLongestWord(String s, List<String> d) {
-        
+
         Collections.sort(d, new Comparator<String>() {
             public int compare(String a, String b) {
                 return a.length() != b.length() ? b.length() - a.length() : a.compareTo(b);
