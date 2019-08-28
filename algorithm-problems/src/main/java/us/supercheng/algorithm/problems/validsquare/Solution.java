@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 class Solution {
-    
+
     public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
 
         int[][] arr = new int[][]{p1, p2, p3, p4};
