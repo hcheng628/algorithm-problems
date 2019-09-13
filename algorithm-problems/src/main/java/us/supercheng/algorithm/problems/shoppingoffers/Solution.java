@@ -6,7 +6,7 @@ class Solution {
 
     public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
         int ret = 0,
-            len = price.size();
+                len = price.size();
 
         for (int i=0;i<len;i++)
             ret += price.get(i) * needs.get(i);
@@ -20,8 +20,22 @@ class Solution {
 
         int ret = MAX_PRICE;
         for (List<Integer> offer : offers) {
-            for (int i=0;i<len;i++)
-                needs.set(i, needs.get(i)-offer.get(i));
+            boolean useOffer = true;
+            for (int i=0;i<len;i++) {
+                int res = needs.get(i)-offer.get(i);
+                needs.set(i, res);
+
+                if (res < 0) {
+                    for (;i>-1;i--)
+                        needs.set(i, needs.get(i)+offer.get(i));
+                    useOffer = false;
+                    break;
+                }
+            }
+
+            if (!useOffer)
+                continue;
+
 
             int tempCurrent = offer.get(len) + currPrice;
             if (this.isEmptyNeeds(needs))
