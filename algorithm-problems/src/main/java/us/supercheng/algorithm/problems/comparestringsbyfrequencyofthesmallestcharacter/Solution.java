@@ -31,4 +31,46 @@ class Solution {
 
         return ret;
     }
+
+    public int[] numSmallerByFrequencyBinarySearch(String[] queries, String[] words) {
+        int qLen = queries.length,
+            wLen = words.length;
+
+        int[] qMap = new int [qLen],
+              wMap = new int [wLen],
+              ret = new int [qLen];
+
+        for (int i=0;i<qLen;i++)
+            qMap[i] = this.calF2(queries[i].toCharArray());
+        for (int i=0;i<wLen;i++)
+            wMap[i] = this.calF2(words[i].toCharArray());
+        Arrays.sort(wMap);
+
+        for (int i=0;i<qLen;i++) {
+            int left = 0,
+                right = wLen-1;
+
+            while (right >= left) {
+                int mid = left + (right - left) / 2;
+                if (wMap[mid] > qMap[i])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
+            ret[i] = wLen - left;
+        }
+
+        return ret;
+    }
+
+    private int calF2(char[] chars) {
+        int [] bucket = new int [26];
+        for (char c : chars)
+            bucket[c-'a']++;
+
+        for (int i=0;i<26;i++)
+            if (bucket[i]!=0)
+                return bucket[i];
+        return -1;
+    }
 }
