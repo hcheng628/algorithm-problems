@@ -44,4 +44,19 @@ class Solution {
             return "#";
         return root.val + this.helper(root.left) + "," + this.helper(root.right);
     }
+
+    public List<TreeNode> findDuplicateSubtreesPostOrder(TreeNode root) {
+        List<TreeNode> ret = new ArrayList<>();
+        this.postOrder(root, new HashMap<>(), ret);
+        return ret;
+    }
+
+    private String postOrder(TreeNode root, Map<String, Integer> map, List<TreeNode> ret) {
+        if (root == null) return "#";
+        String s = root.val + "," + this.postOrder(root.left, map, ret) + "," + this.postOrder(root.right, map, ret);
+        map.put(s, map.getOrDefault(s, 0)+1);
+        if (map.get(s) == 2)
+            ret.add(root);
+        return s;
+    }
 }
