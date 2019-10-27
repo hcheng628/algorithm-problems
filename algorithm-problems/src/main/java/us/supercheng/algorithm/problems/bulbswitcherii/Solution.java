@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Solution {
+
     public int flipLights(int n, int m) {
         if (n == 0 || m == 0)
             return 1;
