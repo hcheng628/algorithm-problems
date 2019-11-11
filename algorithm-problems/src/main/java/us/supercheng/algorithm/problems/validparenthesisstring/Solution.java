@@ -4,6 +4,35 @@ import java.util.Stack;
 
 class Solution {
 
+    public boolean checkValidString(String s) {
+        if (s == null || s.length() < 1)
+            return true;
+
+        int low = 0,
+            high = 0;
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                low++;
+                high++;
+            } else if (c == '*') {
+                if (low > 0)
+                    low--;
+                high++;
+            } else {
+                if (low > 0)
+                    low--;
+                high--;
+            }
+
+            if (high < 0)
+                return false;
+        }
+
+        return low == 0;
+    }
+
+
     private Boolean[][] mat;
 
     public boolean checkValidStringMemo(String s) {
