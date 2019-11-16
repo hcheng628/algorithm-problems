@@ -1,11 +1,44 @@
 package us.supercheng.algorithm.problems.redundantconnection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
+
+    public int[] findRedundantConnectionDFS(int[][] edges) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        Set<Integer> visited = new HashSet<>();
+
+        for (int[] e : edges) {
+            if (!graph.containsKey(e[0]))
+                graph.put(e[0], new ArrayList<>());
+            if (!graph.containsKey(e[1]))
+                graph.put(e[1], new ArrayList<>());
+        }
+
+        for (int[] e : edges) {
+            visited.clear();
+            if (!graph.get(e[0]).isEmpty() && !graph.get(e[1]).isEmpty() && this.dfs(graph, e[0], e[1], visited))
+                return e;
+            graph.get(e[0]).add(e[1]);
+            graph.get(e[1]).add(e[0]);
+
+        }
+        return null;
+    }
+
+    private boolean dfs(Map<Integer, List<Integer>> graph, int from, int to, Set<Integer> visited) {
+        if (from == to)
+            return true;
+
+        if (visited.contains(from))
+            return false;
+
+        visited.add(from);
+        for (int newFrom : graph.get(from))
+            if (this.dfs(graph, newFrom, to, visited))
+                return true;
+        return false;
+    }
 
     public int[] findRedundantConnection(int[][] edges) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
