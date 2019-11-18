@@ -4,6 +4,37 @@ import java.util.*;
 
 class Solution {
 
+    // Union Find Start
+    Integer[] parent;
+
+    public int[] findRedundantConnectionUnionFind(int[][] edges) {
+        this.parent = new Integer[1001];
+
+        for (int i=0;i<1001;i++)
+            this.parent[i] = i;
+
+        for (int[] e : edges) {
+            int pIdx1 = this.findParent(e[0]),
+                    pIdx2 = this.findParent(e[1]);
+            if (pIdx1 == pIdx2)
+                return e;
+            this.union(pIdx1, pIdx2);
+        }
+
+        return null;
+    }
+
+    private void union(int parentA, int parentB) {
+        this.parent[parentA] = parentB;
+    }
+
+    private int findParent(int a) {
+        return this.parent[a] == a ? a : this.findParent(this.parent[a]);
+    }
+    // Union Find End
+
+
+    // DFS Start
     public int[] findRedundantConnectionDFS(int[][] edges) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         Set<Integer> visited = new HashSet<>();
@@ -39,6 +70,7 @@ class Solution {
                 return true;
         return false;
     }
+    // DFS End
 
     public int[] findRedundantConnection(int[][] edges) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
