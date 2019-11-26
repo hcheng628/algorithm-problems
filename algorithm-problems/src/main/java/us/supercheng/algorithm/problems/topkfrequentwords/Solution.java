@@ -2,39 +2,50 @@ package us.supercheng.algorithm.problems.topkfrequentwords;
 
 import java.util.*;
 
+import java.util.Arrays;
+
 class Solution {
 
-    public List<String> topKFrequent(String[] words, int k) {
-        if (words == null || words.length < 1)
-            return new ArrayList<>();
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int len = nums.length,
+                target = 0,
+                idx = 0;
 
-        Map<String, Integer> map = new HashMap<>();
-        Set<Integer> set = new HashSet<>();
-        List<String> ret = new ArrayList<>();
+        for (int n : nums)
+            target += n;
 
-        for (String s : words)
-            map.put(s, map.getOrDefault(s, 0) + 1);
+        if (target % k != 0)
+            return false;
 
-        for (String key : map.keySet())
-            set.add(map.get(key));
+        target /= k;
+        Arrays.sort(nums);
+        idx = Arrays.binarySearch(nums, target+1);
+        if (idx >-1 || idx >= -len)
+            return false;
 
-        List<Integer> list = new ArrayList<>(set);
-        Collections.sort(list);
-
-        int count = k,
-            lastIdx=list.size()-1;
-        for (int i=0;i<k&&count>0;i++) {
-            int curr = list.get(lastIdx-i);
-            List<String> temp = new ArrayList<>();
-            for (String key : map.keySet())
-                if (map.get(key) == curr)
-                    temp.add(key);
-
-            Collections.sort(temp);
-            for (int j=0;count>0&&j<temp.size();j++,count--)
-                ret.add(temp.get(j));
+        for (idx = len-1;nums[idx]==target;) {
+            k--;
+            idx--;
         }
+        return this.dfs(new int[k], nums, idx, target);
+    }
 
-        return ret;
+    private boolean dfs(int[] set, int[] nums, int idx, int target) {
+        if (idx < 0)
+            return true;
+
+        int curr = nums[idx];
+        for (int i=0;i<set.length;i++) {
+            if (set[i] + curr <= target) {
+                set[i] += curr;
+                if (this.dfs(set, nums, idx-1, target))
+                    return true;
+                set[i] -= curr;
+            }
+
+            if (set[i] == 0)
+                break;
+        }
+        return false;
     }
 }
