@@ -7,7 +7,7 @@ import java.util.Map;
 
 class Solution {
 
-    Map<Integer, List<Node>> graph;
+    Map<Integer, Map<Integer, Integer>> graph;
     Integer[] visited;
 
     public int networkDelayTime(int[][] times, int N, int K) {
@@ -15,10 +15,11 @@ class Solution {
         this.visited = new Integer[N+1];
 
         // build graph
-        for (int i=1;i<=N;i++)
-            this.graph.put(i, new ArrayList<>());
-        for (int[] time : times)
-            this.graph.get(time[0]).add(new Node(time[1], time[2]));
+        for (int[] time : times) {
+            if (!this.graph.containsKey(time[0]))
+                this.graph.put(time[0], new HashMap<>());
+            this.graph.get(time[0]).put(time[1], time[2]);
+        }
 
         // dfs
         int ret = 0;
@@ -33,18 +34,11 @@ class Solution {
 
     private void dfs(int from, int curr) {
         this.visited[from] = this.visited[from] == null ? curr : Math.min(this.visited[from], curr);
-        for (Node n : this.graph.get(from))
-            if (this.visited[n.to] == null || this.visited[n.to] > curr + n.weight)
-                this.dfs(n.to, curr + n.weight);
-    }
-
-    class Node {
-        int to;
-        int weight;
-
-        public Node(int to, int weight) {
-            this.to = to;
-            this.weight = weight;
+        Map<Integer, Integer> map = this.graph.get(from);
+        if (map != null) {
+            for (Integer to : map.keySet())
+                if (this.visited[to] == null || this.visited[to] > curr + map.get(to))
+                    this.dfs(to, curr+map.get(to));
         }
     }
 }
