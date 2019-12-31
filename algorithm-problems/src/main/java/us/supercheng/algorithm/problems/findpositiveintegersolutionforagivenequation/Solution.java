@@ -20,3 +20,4 @@ public class Solution {
         }
     }
 }
+//find-positive-integer-solution-for-a-given-equation
