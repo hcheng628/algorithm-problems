@@ -41,4 +41,26 @@ class Solution {
                     this.dfs(to, curr+map.get(to));
         }
     }
+
+    public int networkDelayTimeBellmanFord(int[][] times, int N, int K) {
+        if (times == null || times.length < 1)
+            return -1;
+        
+        int ret = 0;
+        Integer[] dis = new Integer[N];
+        dis[K-1] = 0;
+    
+        for (int i=0,len=times.length;i<N-1;i++)
+            for (int j=0;j<len;j++)
+                if (dis[times[j][0]-1] != null && (dis[times[j][1]-1] == null || dis[times[j][1]-1] > dis[times[j][0]-1] + times[j][2]))
+                    dis[times[j][1]-1] = dis[times[j][0]-1] + times[j][2];
+        
+        for (Integer each : dis)
+            if (each == null)
+                return -1;
+            else
+                ret = Math.max(ret, each);
+
+        return ret;
+    }
 }
