@@ -57,4 +57,32 @@ class Solution {
         }
         return false;
     }
+
+    public boolean pyramidTransitionDFS(String bottom, List<String> allowed) {
+        Map<String, Set<Character>> map = new HashMap<>();
+        for (String s : allowed) {
+            String base = s.substring(0,2);
+            map.putIfAbsent(base, new HashSet<>());
+            map.get(base).add(s.charAt(2));
+        }
+        return this.dfs(1, 0, "", bottom, bottom.length(), map);
+    }
+
+    private boolean dfs(int level, int idx, String above, String bottom, int target, Map<String, Set<Character>> map) {
+        if (level == target)
+            return true;
+
+        if (idx + 1 == bottom.length())
+            return this.dfs(level+1, 0, "", above, target, map);
+
+        String base = new StringBuilder().append(bottom.charAt(idx)).append(bottom.charAt(idx+1)).toString();
+        Set<Character> set = map.get(base);
+        if (set == null)
+            return false;
+        else
+            for (char c : set)
+                if (this.dfs(level, idx+1, above + c, bottom, target, map))
+                    return true;
+        return false;
+    }
 }
