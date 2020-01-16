@@ -41,4 +41,22 @@ public class Solution {
 
         return false;
     }
+
+    public boolean canTransform(String start, String end) {
+        for (int idxStart=0, idxEnd=0, len=start.length();idxStart<len && idxEnd < len;idxStart++,idxEnd++) {
+            while(idxStart < len && start.charAt(idxStart) == 'X')
+                idxStart++;
+            while(idxEnd < len && end.charAt(idxEnd) == 'X')
+                idxEnd++;
+
+            if (idxStart >= len || idxEnd >= len)
+                return idxStart == idxEnd;
+
+            if ((start.charAt(idxStart) != end.charAt(idxEnd)) ||
+                    (start.charAt(idxStart) == 'L' && idxStart < idxEnd) || (end.charAt(idxEnd) == 'R' && idxEnd < idxStart))
+                return false;
+        }
+
+        return true;
+    }
 }
