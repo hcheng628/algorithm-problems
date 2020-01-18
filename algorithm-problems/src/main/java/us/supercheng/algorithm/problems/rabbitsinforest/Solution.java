@@ -19,4 +19,19 @@ public class Solution {
 
         return ret;
     }
+
+    public int numRabbitsOPT(int[] answers) {
+        int[] map = new int[1000];
+        int ret = 0;
+
+        for (int a : answers)
+            if (map[a] > 0)
+                map[a]--;
+            else {
+                map[a] = a;
+                ret += a+1;
+            }
+
+        return ret;
+    }
 }
