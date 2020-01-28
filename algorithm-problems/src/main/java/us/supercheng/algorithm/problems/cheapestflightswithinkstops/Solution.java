@@ -1,9 +1,6 @@
 package us.supercheng.algorithm.problems.cheapestflightswithinkstops;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Solution {
 
@@ -92,6 +89,36 @@ public class Solution {
                 this.dfsMap(next, dst, stops-1, F, cost+tripCost);
                 this.visited[next] = false;
             }
+    }
+
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        Queue<int[]> q = new LinkedList<>();
+        K++;
+        int ret = Integer.MAX_VALUE;
+
+        for (int[] f : flights) {
+            if (!graph.containsKey(f[0]))
+                graph.put(f[0], new ArrayList<>());
+            List<int[]> list = graph.get(f[0]);
+            list.add(new int[]{f[1], f[2]});
+        }
+
+        q.add(new int[]{src, 0});
+        for (;!q.isEmpty() && K >= 0;K--)
+            for (int i=0, size = q.size();i<size;i++) {
+                int[] curr = q.remove();
+                if (curr[1] > ret)
+                    continue;
+                if (curr[0] == dst)
+                    ret = Math.min(curr[1], ret);
+                List<int[]> nexts = graph.get(curr[0]);
+                if (nexts != null)
+                    for (int[] next : nexts)
+                        q.add(new int[]{next[0], curr[1] + next[1]});
+            }
+
+        return ret == Integer.MAX_VALUE ? -1 : ret;
     }
 
     private void printGraph() {
