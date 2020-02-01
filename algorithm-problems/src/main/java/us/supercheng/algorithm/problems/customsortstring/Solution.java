@@ -26,4 +26,25 @@ public class Solution {
 
         return sb.toString();
     }
+
+    public String customSortStringOPTMap(String S, String T) {
+        int[] map = new int[26];
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : T.toCharArray())
+            map[c-'a']++;
+
+        for (char c : S.toCharArray()) {
+            int cNum = c-'a';
+            for (int i=0,len=map[cNum];i<len;i++)
+                sb.append(c);
+            map[cNum] = 0;
+        }
+
+        for (int i=0;i<26;i++)
+            for (int j=0,count=map[i],cNum=i+'a';j<count;j++)
+                sb.append((char)cNum);
+
+        return sb.toString();
+    }
 }
