@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.problems.customsortstring;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,5 +48,25 @@ public class Solution {
                 sb.append((char)cNum);
 
         return sb.toString();
+    }
+
+    public String customSortStringSORT(String S, String T) {
+        char[] chars = new StringBuilder().append(T).toString().toCharArray();
+        Character[] ret = new Character[chars.length];
+
+        for (int i=0, len=chars.length;i<len;i++)
+            ret[i] = chars[i];
+
+        Arrays.sort(ret, new Comparator<Character>(){
+            @Override
+            public int compare(Character o1, Character o2) {
+                return S.indexOf(o1) - S.indexOf(o2);
+            }
+        });
+
+        for (int i=0,len=chars.length;i<len;i++)
+            chars[i] = ret[i];
+
+        return String.valueOf(chars);
     }
 }
