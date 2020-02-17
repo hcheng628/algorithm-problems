@@ -59,12 +59,9 @@ public class Solution {
 
         visited[curr] = true;
         for (int next : graph[curr])
-            if (!this.dfsOPT(graph, next, visited, res, ret)) {
-                res[next] = false;
-                return false;
-            }
+            if (!this.dfsOPT(graph, next, visited, res, ret))
+                return res[next] = false;
 
-        res[curr] = true;
-        return true;
+        return res[curr] = true;
     }
 }
