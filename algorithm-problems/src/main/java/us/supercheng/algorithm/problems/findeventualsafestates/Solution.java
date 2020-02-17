@@ -36,4 +36,35 @@ public class Solution {
             }
         return true;
     }
+
+    public List<Integer> eventualSafeNodesOPT(int[][] graph) {
+        int len = graph.length;
+        Boolean[] res = new Boolean[len];
+        boolean[] visited = new boolean[len];
+        List<Integer> ret = new ArrayList<>();
+
+        for (int from=0;from<len;from++)
+            if (this.dfsOPT(graph, from, visited, res, ret))
+                ret.add(from);
+
+        return ret;
+    }
+
+    private boolean dfsOPT(int[][] graph, int curr, boolean[] visited, Boolean[] res, List<Integer> ret) {
+        if (res[curr] != null)
+            return res[curr];
+
+        if (visited[curr])
+            return false;
+
+        visited[curr] = true;
+        for (int next : graph[curr])
+            if (!this.dfsOPT(graph, next, visited, res, ret)) {
+                res[next] = false;
+                return false;
+            }
+
+        res[curr] = true;
+        return true;
+    }
 }
