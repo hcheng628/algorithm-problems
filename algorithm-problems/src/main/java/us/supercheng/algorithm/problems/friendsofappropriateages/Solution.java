@@ -26,4 +26,27 @@ public class Solution {
 
         return ret;
     }
+
+    public int numFriendRequests_BucketVersion(int[] ages) {
+        int[] bucket = new int[121];
+        int ret = 0;
+
+        for (int age : ages)
+            bucket[age]++;
+
+
+        for (int i=120; i>-1; i--) {
+            int countA = bucket[i];
+            for (int j=1; j<=i && countA > 0; j++) {
+                int countB = bucket[j];
+                if (countB == 0 || j <= i * 0.5 + 7)
+                    continue;
+                ret += countA * countB;
+                if (i == j)
+                    ret -= countA;
+            }
+        }
+
+        return ret;
+    }
 }
