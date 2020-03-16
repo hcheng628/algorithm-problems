@@ -78,4 +78,31 @@ public class Solution {
 
         return ret;
     }
+
+    public int maxProfitAssignmentTreeMapv2(int[] difficulty, int[] profit, int[] worker) {
+        int ret = 0,
+            len = profit.length;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        for (int i=0;i<len;i++)
+            map.put(difficulty[i], Math.max(map.getOrDefault(difficulty[i], profit[i]), profit[i]));
+
+        Arrays.sort(difficulty);
+        int currMax = map.get(map.lowerKey(difficulty[0]+1));
+        for (int i=1;i<len;i++) {
+            int curr = map.get(map.lowerKey(difficulty[i]+1));
+            if (currMax > curr)
+                map.put(difficulty[i], currMax);
+            else
+                currMax = curr;
+        }
+
+        for (int w : worker) {
+            Integer res = map.lowerKey(w+1);
+            if (res != null)
+                ret += map.get(res);
+        }
+
+        return ret;
+    }
 }
