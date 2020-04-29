@@ -5,45 +5,39 @@ import java.util.*;
 public class Solution {
 
     public int[] loudAndRich(int[][] richer, int[] quiet) {
-        Map<Integer, Set<Integer>> map = new HashMap();
         int len = quiet.length;
         int[] ret = new int[len];
+        List<Set<Integer>> graph = new ArrayList<>();
 
-        for (int i=0; i<len; i++)
-            map.put(i, new HashSet<>());
+        for (int i=0; i<len; i++) {
+            graph.add(new HashSet());
+            ret[i] = -1;
+        }
 
         for (int[] row : richer)
-            map.get(row[1]).add(row[0]);
+            graph.get(row[1]).add(row[0]);
 
-        for (int i=0; i<len; i++) {
-            Set<Integer> set = map.get(i);
-            for (int each : new ArrayList<>(set))
-                this.dfs(map, map.get(i), each);
-        }
-
-        for (int i=0; i<len; i++) {
-            int val = quiet[i],
-                idx = i;
-
-            for (int each : map.get(i))
-                if (quiet[each] < val) {
-                    val = quiet[each];
-                    idx = each;
-                }
-
-            ret[i] = idx;
-        }
+        for (int i=0; i<len; i++)
+            this.dfs(graph, i, quiet, ret);
 
         return ret;
     }
 
 
-    private void dfs(Map<Integer, Set<Integer>> map, Set<Integer> target, int curr) {
-        for (int each : map.get(curr)) {
-            if (target.contains(each))
-                continue;
-            target.add(each);
-            this.dfs(map, target, each);
+    private void dfs(List<Set<Integer>> graph, int curr, int[] q, int[] result) {
+        if (result[curr] != -1)
+            return;
+
+        result[curr] = curr;
+        int val = q[curr];
+
+        for (int next : graph.get(curr)) {
+            this.dfs(graph, next, q, result);
+            if (q[result[next]] < val) {
+                val = q[result[next]];
+                result[curr] = result[next];
+            }
         }
+
     }
 }
