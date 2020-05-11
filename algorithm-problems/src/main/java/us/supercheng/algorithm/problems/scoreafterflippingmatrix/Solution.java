@@ -47,4 +47,22 @@ public class Solution {
             System.out.println(Arrays.toString(r));
         System.out.println("**********");
     }
+
+    public int matrixScoreOpt(int[][] A) {
+        int len = A.length,
+                rowLen = A[0].length,
+                ret = (1 << rowLen - 1) * len;
+
+        for (int i=1; i<rowLen; i++) {
+            int one = 0;
+
+            for (int j=0; j<len; j++)
+                if (A[j][i] == A[j][0])
+                    one++;
+
+            ret += (1 << rowLen - i - 1) * Math.max(one, len - one);
+        }
+
+        return ret;
+    }
 }
