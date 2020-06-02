@@ -1,5 +1,8 @@
 package us.supercheng.algorithm.problems.advantageshuffle;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Solution {
@@ -27,5 +30,33 @@ public class Solution {
         }
 
         return A;
+    }
+
+    public int lenLongestFibSubseqDP(int[] A) {
+        int len = A.length,
+                ret = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        int[][] dp = new int[len][len];
+
+        for (int i=0; i<len; i++) {
+            Arrays.fill(dp[i], 2);
+            map.put(A[i], i);
+        }
+
+        for (int i=0; i<len; i++)
+            for (int j=i+1; j<len; j++) {
+                int val = A[j] - A[i];
+                if (val >= A[i])
+                    break;
+
+                Integer idx = map.get(val);
+                if (idx == null)
+                    continue;
+
+                dp[i][j] = dp[idx][i] + 1;
+                ret = Math.max(ret, dp[i][j]);
+            }
+
+        return ret > 2 ? ret : 0;
     }
 }
