@@ -5,6 +5,26 @@ import java.util.Set;
 
 public class Solution {
 
+    public int flipgameArr(int[] fronts, int[] backs) {
+        int len = fronts.length,
+            ret = 2001;
+        boolean[] dup = new boolean[ret];
+
+        for (int i=0; i<len; i++)
+            if (fronts[i] == backs[i])
+                dup[fronts[i]] = true;
+
+        for (int i=0; i<len; i++)
+            if (!dup[fronts[i]])
+                ret = Math.min(ret, fronts[i]);
+
+        for (int i=0; i<len; i++)
+            if (!dup[backs[i]])
+                ret = Math.min(ret, backs[i]);
+
+        return ret == 2001 ? 0 : ret;
+    }
+
     int ret;
 
     public int flipgame(int[] fronts, int[] backs) {
