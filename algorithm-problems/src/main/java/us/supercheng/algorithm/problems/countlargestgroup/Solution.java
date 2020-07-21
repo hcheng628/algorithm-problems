@@ -3,7 +3,7 @@ package us.supercheng.algorithm.problems.countlargestgroup;
 public class Solution {
 
     public int countLargestGroup(int n) {
-        int[] bucket = new int[10001];
+        int[] bucket = new int[37]; // 9 + 9 + 9 + 9 = 36
         int max = 0,
                 ret = 0;
 
@@ -14,12 +14,13 @@ public class Solution {
                 sum += num % 10;
 
             bucket[sum]++;
-            max = Math.max(bucket[sum], max);
-        }
 
-        for (int i=0; i<10001; i++)
-            if (bucket[i] == max)
+            if (bucket[sum] > max) {
+                ret = 1;
+                max = bucket[sum];
+            } else if (bucket[sum] == max)
                 ret++;
+        }
 
         return ret;
     }
