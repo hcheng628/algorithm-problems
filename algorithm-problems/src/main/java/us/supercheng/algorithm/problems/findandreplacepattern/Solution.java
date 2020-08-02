@@ -45,4 +45,37 @@ public class Solution {
 
         return sb.toString();
     }
+
+    public List<String> findAndReplacePatternMap(String[] words, String pattern) {
+        Integer[] aToB = null,
+                  bToA = null;
+        List<String> ret = new ArrayList<>();
+        int pLen = pattern.length();
+
+        for (String w : words) {
+            aToB = new Integer[26];
+            bToA = new Integer[26];
+            boolean isAdding = true;
+
+            for (int i=w.length()-1; isAdding && i>-1; i--) {
+                char c = w.charAt(i);
+                int idx = c - 'a',
+                        p = i % pLen;
+                char cc = pattern.charAt(p);
+
+                if (aToB[idx] == null) {
+                    if (bToA[cc - 'a'] != null)
+                        isAdding = false;
+                    aToB[idx] = pattern.charAt(p) - 'a';
+                    bToA[cc - 'a'] = c - 'a';
+                } else if (aToB[idx] != cc-'a' || bToA[cc-'a'] != c-'a')
+                    isAdding = false;
+            }
+
+            if (isAdding)
+                ret.add(w);
+        }
+
+        return ret;
+    }
 }
