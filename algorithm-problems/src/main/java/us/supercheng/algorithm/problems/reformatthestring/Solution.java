@@ -4,8 +4,8 @@ public class Solution {
 
     public String reformat(String s) {
         int countC = 0,
-                countD = 0,
-                len = s.length();
+            countD = 0,
+            len = s.length();
 
         if (len == 1)
             return s;
@@ -27,7 +27,7 @@ public class Solution {
 
         StringBuilder sb = new StringBuilder();
         int idxC = 0,
-                idxD = 0;
+            idxD = 0;
 
         if (countC > countD)
             while (sb.length() != len) {
