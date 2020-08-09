@@ -27,4 +27,3 @@ public class Solution {
     }
 
 }
-//kids-with-the-greatest-number-of-candies
