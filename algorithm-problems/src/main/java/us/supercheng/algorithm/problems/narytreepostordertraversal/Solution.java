@@ -1,19 +1,20 @@
-package us.supercheng.algorithm.problems.narytreepreordertraversal;
+package us.supercheng.algorithm.problems.narytreepostordertraversal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
 
-    public List<Integer> preorder(Node root) {
+    public List<Integer> postorder(Node root) {
         if (root == null)
             return new ArrayList<>();
 
         List<Integer> ret = new ArrayList<>();
-        ret.add(root.val);
+        if (root.children != null)
+            for (Node n : root.children)
+                ret.addAll(this.postorder(n));
 
-        for (Node n : root.children)
-            ret.addAll(this.preorder(n));
+        ret.add(root.val);
 
         return ret;
     }
