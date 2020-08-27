@@ -19,4 +19,3 @@ public class Solution {
         return true;
     }
 }
-// make-two-arrays-equal-by-reversing-sub-arrays
