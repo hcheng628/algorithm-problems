@@ -69,8 +69,8 @@ public class Solution {
 
     public int totalFruitSW(int[] tree) {
         int ret = 0,
-                left = 0,
-                len = tree.length;
+            left = 0,
+            len = tree.length;
 
         for (int i=1, right = -1; i<len; i++)
             if (tree[i] != tree[i-1]) {
