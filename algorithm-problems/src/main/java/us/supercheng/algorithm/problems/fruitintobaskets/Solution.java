@@ -66,4 +66,21 @@ public class Solution {
 
         return ret;
     }
+
+    public int totalFruitSW(int[] tree) {
+        int ret = 0,
+                left = 0,
+                len = tree.length;
+
+        for (int i=1, right = -1; i<len; i++)
+            if (tree[i] != tree[i-1]) {
+                if (right > -1 && tree[i] != tree[right]) {
+                    ret = Math.max(ret, i - left);
+                    left = right + 1;
+                }
+                right = i - 1;
+            }
+
+        return Math.max(ret, len - left);
+    }
 }
