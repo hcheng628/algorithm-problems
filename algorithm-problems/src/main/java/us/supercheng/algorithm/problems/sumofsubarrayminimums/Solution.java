@@ -38,4 +38,30 @@ public class Solution {
 
         return ret;
     }
+
+    public int sumSubarrayMinsOPT(int[] A) {
+        int len = A.length;
+        long ret = 0;
+        int[] leftCount = new int[len],
+              rightCount = new int[len];
+
+        for (int i=0; i<len; i++) {
+            int count = 1;
+            for (int j = i - 1; j>=0 && A[j]>=A[i]; j -= leftCount[j])
+                count += leftCount[j];
+            leftCount[i] = count;
+        }
+
+        for (int i=len-1; i>=0; i--) {
+            int count = 1;
+            for (int j = i + 1; j<len && A[j]>A[i]; j += rightCount[j])
+                count += rightCount[j];
+            rightCount[i] = count;
+        }
+
+        for (int i = 0; i< len; i++)
+            ret += A[i] * leftCount[i] * rightCount[i];
+
+        return (int) (ret % 1000000007);
+    }
 }
