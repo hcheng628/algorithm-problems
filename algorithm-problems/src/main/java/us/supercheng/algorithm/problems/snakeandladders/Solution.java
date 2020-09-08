@@ -86,12 +86,14 @@ public class Solution {
 
     private int[] getP(int p) {
         int row = this.size - p / this.size,
-                col = p % this.size - 1;
+            col = p % this.size - 1;
 
         if (p % this.size != 0)
             row--;
+
         if (col < 0)
             col = this.size - 1;
+
         if ((this.size % 2 == 0 && row % 2 == 0) || (this.size % 2 != 0 && row % 2 != 0))
             col = Math.abs(this.size - col - 1);
 
