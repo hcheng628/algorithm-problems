@@ -9,3 +9,7 @@ class Solution:
                     ret += 1
 
         return ret
+
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        bucket = [nums.count(n) - 1 for n in nums]
+        return sum(bucket) // 2
