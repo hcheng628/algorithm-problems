@@ -21,4 +21,39 @@ public class Solution {
         return -1;
     }
 
+    public int partitionDisjointOPT(int[] A) {
+        int len = A.length,
+            currMax = A[0];
+        int[] arrMin = new int[len];
+
+        arrMin[len-1] = A[len-1];
+        for (int i=len-2; i>-1; i--)
+            arrMin[i] = Math.min(arrMin[i+1], A[i]);
+
+        for (int i=0; i<len-1; i++) {
+            currMax = Math.max(currMax, A[i]);
+            if (currMax <= arrMin[i+1])
+                return i+1;
+        }
+
+        return -1;
+    }
+
+    public int partitionDisjointGreedy(int[] A) {
+        int len = A.length,
+            leftMax = A[0],
+            currMax = leftMax,
+            idx = 0;
+
+        for (int i=0; i<len; i++) {
+            currMax = Math.max(A[i], currMax);
+            if (leftMax > A[i]) {
+                leftMax = currMax;
+                idx = i;
+            }
+        }
+
+        return idx + 1;
+    }
+
 }
