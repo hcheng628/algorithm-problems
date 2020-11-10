@@ -46,33 +46,37 @@ public class Solution {
     }
 
     public int minFallingPathSumDP(int[][] A) {
-        int rowL = A.length,
-                colL = A[0].length,
-                ret = Integer.MAX_VALUE;
+        int rLen = A.length,
+                cLen = A[0].length;
 
-        if (rowL == 1 && colL == 1)
+        if (rLen == 1 && cLen == 1)
             return A[0][0];
 
-        int[][] dp = new int[rowL][colL];
+        int[] dp = new int[cLen];
+        Integer ret = null;
 
-        for (int c=0; c<colL; c++)
-            dp[0][c] = A[0][c];
 
-        for (int r=1; r<rowL; r++)
-            for (int c=0; c<colL; c++) {
-                int res = dp[r-1][c];
+        for (int i=0; i<cLen; i++)
+            dp[i] = A[0][i];
 
-                if (c-1>-1 && dp[r-1][c-1] < res)
-                    res = dp[r-1][c-1];
+        for (int i=1; i<rLen; i++) {
+            int[] temp = new int[cLen];
 
-                if (c + 1 < colL && dp[r-1][c+1] < res)
-                    res = dp[r-1][c+1];
+            for (int j=0; j<cLen; j++) {
+                int res = dp[j];
 
-                dp[r][c] = res + A[r][c];
+                if (j-1 > -1 && dp[j-1] < res)
+                    res = dp[j-1];
 
-                if (r == rowL - 1 && dp[r][c] < ret)
-                    ret = dp[r][c];
+                if (j+1 < cLen && dp[j+1] < res)
+                    res = dp[j+1];
+
+                temp[j] = res + A[i][j];
+                if (i == rLen - 1 && (ret == null || ret > temp[j]))
+                    ret = temp[j];
             }
+            dp = temp;
+        }
 
         return ret;
     }
