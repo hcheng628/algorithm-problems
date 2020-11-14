@@ -25,4 +25,18 @@ public class Solution {
 
         return val == ret ? val : -1;
     }
+
+    public int specialArrayOpt(int[] nums) {
+        for (int L = nums.length, len = L; len > 0; len--) {
+            int count = 0;
+            for (int i=0; i<L && count <= len; i++)
+                if (nums[i] >= len)
+                    count++;
+
+            if (count == len)
+                return len;
+        }
+
+        return -1;
+    }
 }
