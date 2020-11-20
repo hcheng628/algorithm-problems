@@ -8,27 +8,25 @@ import java.util.Set;
 public class Solution {
 
     public int[] beautifulArray(int N) {
-        int[] arr = new int[]{1},
-                ret = new int[N];
+        List<Integer> l = new ArrayList<>();
+        l.add(1);
+        int[] ret = new int[N];
 
-        for (int[] temp; arr.length < N; arr = temp) {
-            int len = arr.length,
-                    len2 = len * 2,
-                    idx = 0;
-            temp = new int[len2];
+        while (l.size() != N) {
+            List<Integer> temp = new ArrayList<>();
 
-            for (int i=0; i<len; i++)
-                temp[idx++] = arr[i] * 2;
+            for (int ll : l)
+                if (ll * 2 <= N)
+                    temp.add(ll * 2);
 
-            for (int i=0; i<len; i++)
-                temp[idx++] = arr[i] * 2 - 1;
+            for (int ll : l)
+                if (ll * 2 - 1 <= N)
+                    temp.add(ll * 2 - 1);
+
+            l = temp;
         }
 
-        for (int i=0, j=0, end=arr.length; j<end; j++)
-            if (arr[j] <= N)
-                ret[i++] = arr[j];
-
-        return ret;
+        return l.stream().mapToInt(i -> i).toArray();
     }
 
     // TLE
