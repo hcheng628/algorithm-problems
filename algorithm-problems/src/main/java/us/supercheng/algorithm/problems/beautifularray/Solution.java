@@ -7,6 +7,35 @@ import java.util.Set;
 
 public class Solution {
 
+    public int[] beautifulArrayRec(int N) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int i=1; i<=N; i++)
+            list.add(i);
+
+        return this.helper(list).stream().mapToInt(i->i).toArray();
+    }
+
+    private List<Integer> helper(List<Integer> list) {
+        if (list.size() < 3)
+            return list;
+
+        List<Integer> left = new ArrayList<>(),
+                right = new ArrayList<>(),
+                ret = new ArrayList<>();
+
+        for (int i=0, size=list.size(); i<size; i++)
+            if (i % 2== 0)
+                left.add(list.get(i));
+            else
+                right.add(list.get(i));
+
+        ret.addAll(this.helper(left));
+        ret.addAll(this.helper(right));
+
+        return ret;
+    }
+
     public int[] beautifulArray(int N) {
         List<Integer> l = new ArrayList<>();
         l.add(1);
