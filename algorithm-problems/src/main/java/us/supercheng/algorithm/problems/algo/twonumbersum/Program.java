@@ -43,4 +43,24 @@ public class Program {
 
         return new int[0];
     }
+
+    public static int[] twoNumberSum_Solution4(int[] array, int targetSum) {
+        Arrays.sort(array);
+
+        int len = array.length,
+            left = 0,
+            right = len - 1;
+
+        while (left < right) {
+            int val = array[left] + array[right];
+            if (val == targetSum)
+                return new int[]{array[left], array[right]};
+            else if (val < targetSum)
+                left++;
+            else
+                right--;
+        }
+
+        return new int[0];
+    }
 }
