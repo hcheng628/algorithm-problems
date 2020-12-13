@@ -1,9 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.test;
 
-import us.supercheng.algorithm.common.helper.PrintHelper;
-
-import java.util.*;
-
 class Solution {
 
     public static void main(String[] args) {

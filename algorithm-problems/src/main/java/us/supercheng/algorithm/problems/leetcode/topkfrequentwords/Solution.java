@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.topkfrequentwords;
 
-import java.util.*;
-
 import java.util.Arrays;
 
 class Solution {

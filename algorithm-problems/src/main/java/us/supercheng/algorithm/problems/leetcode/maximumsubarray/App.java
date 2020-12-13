@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.maximumsubarray;
 
-import java.util.Arrays;
-
 public class App {
 
     public static void main(String[]  args) {

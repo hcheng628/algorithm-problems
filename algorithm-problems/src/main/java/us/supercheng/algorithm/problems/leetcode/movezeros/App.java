@@ -1,6 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.movezeros;
 
-import us.supercheng.algorithm.common.helper.ArrayHelper;
 import us.supercheng.algorithm.common.helper.PrintHelper;
 
 public class App {

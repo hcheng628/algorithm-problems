@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.nonoverlappingintervals;
 
-import us.supercheng.algorithm.common.entity.Interval;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
