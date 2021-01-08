@@ -28,4 +28,17 @@ public class Program {
 
         return idx == len ? -1 : array[idx];
     }
+
+    public int firstDuplicateValue_Solution3(int[] array) {
+        for (int i=0, len=array.length; i<len; i++) {
+            int val = Math.abs(array[i]);
+
+            if (array[val - 1] < 0)
+                return Math.abs(array[i]);
+
+            array[val - 1] = -array[val - 1];
+        }
+
+        return -1;
+    }
 }
