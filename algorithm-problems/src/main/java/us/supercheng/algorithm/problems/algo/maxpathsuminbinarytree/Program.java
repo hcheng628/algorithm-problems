@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.problems.algo.maxpathsuminbinarytree;
 
-import java.util.*;
-
 public class Program {
 
     public static int maxPathSum(BinaryTree tree) {
@@ -49,5 +47,6 @@ public class Program {
             this.value = value;
         }
     }
+
 }
 
