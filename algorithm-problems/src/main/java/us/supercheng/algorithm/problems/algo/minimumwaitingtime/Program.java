@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Program {
 
+    // Time: O(nlog(n)) Space: O(1)
     public int minimumWaitingTime(int[] queries) {
         int ret = 0;
         Arrays.sort(queries);
