@@ -31,7 +31,8 @@ public class Program {
         }
 
         for (Character c : map.get(phone.charAt(idx) - '0')) {
-            chars[idx] = c;
+            if (chars[idx] != c)
+                chars[idx] = c;
             this.helper(ret, phone, len, idx+1, map, chars);
         }
     }
