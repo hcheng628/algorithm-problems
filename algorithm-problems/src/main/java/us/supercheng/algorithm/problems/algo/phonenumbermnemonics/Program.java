@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Program {
 
+    // Time: O(4^n*n) Space: O(4^n*n)
     public ArrayList<String> phoneNumberMnemonics(String phoneNumber) {
         ArrayList<String> ret = new ArrayList<>();
         int len = phoneNumber.length();
