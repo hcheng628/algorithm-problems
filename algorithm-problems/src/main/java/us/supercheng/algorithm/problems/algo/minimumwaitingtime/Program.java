@@ -5,7 +5,7 @@ import java.util.*;
 public class Program {
 
     // Time: O(nlog(n)) Space: O(1)
-    public int minimumWaitingTime(int[] queries) {
+    public int minimumWaitingTime_Solution1(int[] queries) {
         int ret = 0;
         Arrays.sort(queries);
 
@@ -13,6 +13,17 @@ public class Program {
             curr += queries[i];
             ret += curr;
         }
+
+        return ret;
+    }
+
+    // Time: O(nlog(n)) Space: O(1)
+    public int minimumWaitingTime_Solution2(int[] queries) {
+        int ret = 0;
+        Arrays.sort(queries);
+
+        for (int i=0, len=queries.length; i<len; i++)
+            ret += (len - i - 1) * queries[i];
 
         return ret;
     }
