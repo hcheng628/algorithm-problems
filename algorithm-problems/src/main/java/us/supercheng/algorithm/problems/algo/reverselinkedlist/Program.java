@@ -2,7 +2,7 @@ package us.supercheng.algorithm.problems.algo.reverselinkedlist;
 
 public class Program {
 
-    public static LinkedList reverseLinkedList(LinkedList head) {
+    public static LinkedList reverseLinkedList_Solution1(LinkedList head) {
         if (head == null)
             return head;
 
@@ -18,6 +18,17 @@ public class Program {
         }
 
         return ret;
+    }
+
+    public static LinkedList reverseLinkedList_Solution2(LinkedList head) {
+        if (head == null || head.next == null)
+            return head;
+
+        LinkedList newHead = reverseLinkedList_Solution2(head.next);
+        head.next.next = head;
+        head.next = null;
+
+        return newHead;
     }
 
     static class LinkedList {
