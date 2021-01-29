@@ -31,6 +31,19 @@ public class Program {
         return newHead;
     }
 
+    public static LinkedList reverseLinkedList_Solution3(LinkedList head) {
+        LinkedList prev = null;
+
+        for (LinkedList curr = head; curr != null; ) {
+            LinkedList next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
     static class LinkedList {
         int value;
         LinkedList next = null;
