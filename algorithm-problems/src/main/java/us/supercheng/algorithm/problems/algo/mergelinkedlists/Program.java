@@ -14,7 +14,7 @@ public class Program {
         }
     }
 
-    public static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {
+    public static LinkedList mergeLinkedLists_Solution1(LinkedList headOne, LinkedList headTwo) {
         if (headOne == null)
             return headTwo;
         else if (headTwo == null)
@@ -42,6 +42,36 @@ public class Program {
 
         if (headTwo != null)
             curr.next = headTwo;
+
+        return ret;
+    }
+
+    public static LinkedList mergeLinkedLists_Solution2(LinkedList headOne, LinkedList headTwo) {
+        if (headOne == null)
+            return headTwo;
+        else if (headTwo == null)
+            return headOne;
+
+        LinkedList ret = headOne.value < headTwo.value ? headOne : headTwo;
+        LinkedList one = headOne;
+        LinkedList two = headTwo;
+        LinkedList prev = null;
+
+        while (one != null && two != null)
+            if (one.value < two.value) {
+                prev = one;
+                one = one.next;
+            } else {
+                LinkedList next = two.next;
+                two.next = one;
+                if (prev != null)
+                    prev.next = two;
+                prev = two;
+                two = next;
+            }
+
+        if (two != null)
+            prev.next = two;
 
         return ret;
     }
