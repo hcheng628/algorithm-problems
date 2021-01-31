@@ -52,7 +52,6 @@ public class Program {
         else if (headTwo == null)
             return headOne;
 
-        LinkedList ret = headOne.value < headTwo.value ? headOne : headTwo;
         LinkedList one = headOne;
         LinkedList two = headTwo;
         LinkedList prev = null;
@@ -73,6 +72,36 @@ public class Program {
         if (two != null)
             prev.next = two;
 
-        return ret;
+        return headOne.value < headTwo.value ? headOne : headTwo;
+    }
+
+    public static LinkedList mergeLinkedLists_Solution3(LinkedList headOne, LinkedList headTwo) {
+        if (headOne == null)
+            return headTwo;
+        else if (headTwo == null)
+            return headOne;
+
+        helper(headOne, headTwo, null);
+        return headOne.value < headTwo.value ? headOne : headTwo;
+    }
+
+    public static void helper(LinkedList one, LinkedList two, LinkedList prev) {
+        if (two == null)
+            return;
+        else if (one == null) {
+            if (prev != null)
+                prev.next = two;
+            return;
+        }
+
+        if (one.value < two.value)
+            helper(one.next, two, one);
+        else {
+            LinkedList next = two.next;
+            if (prev != null)
+                prev.next = two;
+            two.next = one;
+            helper(one, next, two);
+        }
     }
 }
