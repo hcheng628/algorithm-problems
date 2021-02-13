@@ -12,7 +12,7 @@ public class Program {
         }
     }
 
-    public LinkedList sumOfLinkedLists(LinkedList linkedListOne, LinkedList linkedListTwo) {
+    public LinkedList sumOfLinkedLists_Solution1(LinkedList linkedListOne, LinkedList linkedListTwo) {
         LinkedList dummy = new LinkedList(-1);
         this.helper(dummy, linkedListOne, linkedListTwo, 0);
         return dummy.next;
@@ -41,4 +41,28 @@ public class Program {
         else
             return helper(node, one.next, two.next, newCarry);
     }
+
+    public LinkedList sumOfLinkedLists_Solution2(LinkedList linkedListOne, LinkedList linkedListTwo) {
+        LinkedList ret = new LinkedList(-1);
+        LinkedList list = ret;
+        int carry = 0;
+
+        for (LinkedList one = linkedListOne, two = linkedListTwo; one != null || two != null || carry != 0; ) {
+            int val = (one != null ? one.value : 0) + (two != null ? two.value : 0) + carry;
+            int num = val > 9 ? val - 10 : val;
+            carry = val > 9 ? 1 : 0;
+
+            LinkedList curr = new LinkedList(num);
+            list.next = curr;
+
+            list = list.next;
+            if (one != null)
+                one = one.next;
+            if (two != null)
+                two = two.next;
+        }
+
+        return ret.next;
+    }
+
 }
