@@ -3,7 +3,6 @@ package us.supercheng.algorithm.problems.algo.diskstacking;
 import java.util.*;
 
 public class Program {
-
     public static List<Integer[]> diskStacking(List<Integer[]> disks) {
         Collections.sort(disks, new Comparator<Integer[]>() {
             @Override
