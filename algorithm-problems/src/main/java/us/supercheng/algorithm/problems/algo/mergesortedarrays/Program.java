@@ -5,8 +5,49 @@ import java.util.List;
 
 public class Program {
 
-    // Time: O(m*n*log(m*n) Space: O(m*n)
+    // Time: O(m * log(k)) Space: O(m+n)
     public static List<Integer> mergeSortedArrays(List<List<Integer>> arrays) {
+        List<Integer> ret = new ArrayList<>();
+        int len = arrays.size();
+        int[] indice = new int[len];
+
+        return ret;
+    }
+
+    // Time: O(m*n) Space: O(m+n)
+    public static List<Integer> mergeSortedArrays_Solution1(List<List<Integer>> arrays) {
+        List<Integer> ret = new ArrayList<>();
+        int len = arrays.size();
+        int[] indice = new int[len];
+
+        while (true) {
+            int minIdx = -1;
+            int minVal = -1;
+
+            for (int i=0; i<len; i++) {
+                List<Integer> arr = arrays.get(i);
+                int idx = indice[i];
+
+                if (idx < arr.size()) {
+                    int val = arr.get(idx);
+                    if (minIdx == -1 || (minIdx != -1 && val < minVal)) {
+                        minIdx = i;
+                        minVal = val;
+                    }
+                }
+            }
+
+            if (minIdx == -1)
+                break;
+            indice[minIdx]++;
+            ret.add(minVal);
+        }
+
+        return ret;
+    }
+
+    // Time: O(m*n*log(m*n) Space: O(m*n)
+    public static List<Integer> mergeSortedArrays_Solution2(List<List<Integer>> arrays) {
         List<Integer> ret = new ArrayList<>();
         MinHeap heap = new MinHeap();
 
