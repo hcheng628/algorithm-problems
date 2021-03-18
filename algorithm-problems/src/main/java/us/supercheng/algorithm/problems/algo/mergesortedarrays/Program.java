@@ -5,15 +5,6 @@ import java.util.List;
 
 public class Program {
 
-    // Time: O(m * log(k)) Space: O(m+n)
-    public static List<Integer> mergeSortedArrays(List<List<Integer>> arrays) {
-        List<Integer> ret = new ArrayList<>();
-        int len = arrays.size();
-        int[] indice = new int[len];
-
-        return ret;
-    }
-
     // Time: O(m*n) Space: O(m+n)
     public static List<Integer> mergeSortedArrays_Solution1(List<List<Integer>> arrays) {
         List<Integer> ret = new ArrayList<>();
