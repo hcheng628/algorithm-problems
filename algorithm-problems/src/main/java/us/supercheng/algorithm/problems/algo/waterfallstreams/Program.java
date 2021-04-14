@@ -29,10 +29,10 @@ public class Program {
             else
                 this.travel(arr, amt, 'd', x + 1, y, ret);
         else
-        if (arr[x+1][y] == 1)
-            this.travel(arr, amt, 'r', x, y + 1, ret);
-        else
-            this.travel(arr, amt, 'd', x + 1, y, ret);
+            if (arr[x+1][y] == 1)
+                this.travel(arr, amt, 'r', x, y + 1, ret);
+            else
+                this.travel(arr, amt, 'd', x + 1, y, ret);
     }
 
 }
