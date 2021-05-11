@@ -13,7 +13,7 @@ public class Program {
     }
 
     // Time: O(n) Space: O(n)
-    public boolean linkedListPalindrome(LinkedList head) {
+    public boolean linkedListPalindrome_Solution1(LinkedList head) {
         return this.helper(head, head).res;
     }
 
@@ -37,6 +37,32 @@ public class Program {
             this.list = list;
             this.res = res;
         }
+    }
+
+    // Time: O(n) Space: O(1)
+    public boolean linkedListPalindrome(LinkedList head) {
+        LinkedList slow = head;
+
+        for (LinkedList fast = head; fast != null && fast.next != null; fast = fast.next.next)
+            slow = slow.next;
+
+        LinkedList tail = this.reverseList(slow);
+        for (; tail != null; head = head.next,tail = tail.next)
+            if (head.value != tail.value)
+                return false;
+
+        return true;
+    }
+
+    private LinkedList reverseList(LinkedList head) {
+        LinkedList prev = null;
+
+        for (LinkedList curr = head, next=null; curr != null; prev = curr, curr = next) {
+            next = curr.next;
+            curr.next = prev;
+        }
+
+        return prev;
     }
 
 }
