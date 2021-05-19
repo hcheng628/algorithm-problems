@@ -35,4 +35,20 @@ public class Program {
 
         return ret;
     }
+
+    // Time: O(n) Space: O(n) [call stack]
+    public LinkedList nodeSwapRec(LinkedList head) {
+        if (head == null)
+            return null;
+        else if (head.next == null)
+            return head;
+
+        LinkedList next = head.next;
+        LinkedList nextNext = next.next;
+
+        head.next = this.nodeSwap(nextNext);
+        next.next = head;
+
+        return next;
+    }
 }
