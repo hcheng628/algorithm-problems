@@ -66,4 +66,23 @@ public class Program {
             this.val = val;
         }
     }
+
+    // Time: O(n) Space: O(n)
+    public int[] nextGreaterElement_Solution3(int[] array) {
+        int len = array.length;
+        Stack<Integer> stack = new Stack<>();
+        int[] ret = new int[len];
+        Arrays.fill(ret, -1);
+
+        for (int i=0, len2=len*2; i<len2; i++) {
+            int idx = i % len;
+
+            while (!stack.isEmpty() && array[stack.peek()] < array[idx])
+                ret[stack.pop()] = array[idx];
+
+            stack.push(idx);
+        }
+
+        return ret;
+    }
 }
