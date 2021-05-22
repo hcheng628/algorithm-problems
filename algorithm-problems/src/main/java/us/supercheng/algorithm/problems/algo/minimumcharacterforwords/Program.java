@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Program {
 
-    // Time: O(w*n) Space: O(n)
+    // Time: O(w*n) Space: O(1) [fixed amount of different characters]
     public String[] minimumCharactersForWords(String[] words) {
         Map<Character, Integer> map = new HashMap<>();
         List<String> list = new ArrayList<>();
