@@ -3,8 +3,7 @@ package us.supercheng.algorithm.problems.algo.compareleaftraversal;
 import java.util.*;
 
 public class Program {
-
-
+    
     static class BinaryTree {
         public int value;
         public BinaryTree left = null;
@@ -16,7 +15,7 @@ public class Program {
     }
 
     // Time: O(n) Space: O(n)
-    public boolean compareLeafTraversal(BinaryTree tree1, BinaryTree tree2) {
+    public boolean compareLeafTraversal_Solution1(BinaryTree tree1, BinaryTree tree2) {
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();
 
@@ -44,5 +43,34 @@ public class Program {
 
         this.dfs(tree.left, list);
         this.dfs(tree.right, list);
+    }
+
+    // Time: O(max node of tree1 or 2) Space: O(max height of the tree1 or 2)
+    public boolean compareLeafTraversal(BinaryTree tree1, BinaryTree tree2) {
+        Stack<BinaryTree> stack1 = new Stack<>();
+        Stack<BinaryTree> stack2 = new Stack<>();
+
+        stack1.push(tree1);
+        stack2.push(tree2);
+
+        while (!stack1.isEmpty() && !stack2.isEmpty())
+            if (this.nextLeaf(stack1).value != this.nextLeaf(stack2).value)
+                return false;
+
+        return stack1.isEmpty() && stack2.isEmpty();
+    }
+
+    private BinaryTree nextLeaf(Stack<BinaryTree> stack) {
+        while (!stack.isEmpty()) {
+            BinaryTree t = stack.pop();
+            if (t.left == null && t.right == null)
+                return t;
+            if (t.right != null)
+                stack.push(t.right);
+            if (t.left != null)
+                stack.push(t.left);
+        }
+
+        return null;    // Should not return null as BST properties
     }
 }
