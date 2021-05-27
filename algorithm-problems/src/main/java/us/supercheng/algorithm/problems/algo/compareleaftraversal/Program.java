@@ -45,8 +45,8 @@ public class Program {
         this.dfs(tree.right, list);
     }
 
-    // Time: O(max node of tree1 or 2) Space: O(max height of the tree1 or 2)
-    public boolean compareLeafTraversal(BinaryTree tree1, BinaryTree tree2) {
+    // Time: O(max node of tree1 or 2) Space: O(max height of the tree1 or 2) can return early
+    public boolean compareLeafTraversal_Solution2(BinaryTree tree1, BinaryTree tree2) {
         Stack<BinaryTree> stack1 = new Stack<>();
         Stack<BinaryTree> stack2 = new Stack<>();
 
@@ -72,5 +72,61 @@ public class Program {
         }
 
         return null;    // Should not return null as BST properties
+    }
+
+    // Time: O(max node of tree1 or 2) Space: O(max height of the tree1 or 2)
+    public boolean compareLeafTraversal(BinaryTree tree1, BinaryTree tree2) {
+        BinaryTree leaves1 = this.processLeaves(tree1);
+        BinaryTree leaves2 = this.processLeaves(tree2);
+
+        while (leaves1 != null && leaves2 != null) {
+            if (leaves1.value != leaves2.value)
+                return false;
+
+            leaves1 = leaves1.right;
+            leaves2 = leaves2.right;
+        }
+
+        return leaves1 == null && leaves2 == null;
+    }
+
+    private BinaryTree processLeaves(BinaryTree t) {
+        Stack<BinaryTree> stack = new Stack<>();
+        stack.push(t);
+
+        BinaryTree ret = null;
+        BinaryTree prev = null;
+
+        while (!stack.isEmpty()) {
+            BinaryTree curr = stack.pop();
+
+            if (curr.left == null && curr.right == null) {
+                if (ret == null)
+                    ret = curr;
+
+                if (prev != null)
+                    prev.right = curr;
+                prev = curr;
+            }
+
+            if (curr.right != null)
+                stack.push(curr.right);
+
+            if (curr.left != null)
+                stack.push(curr.left);
+        }
+
+        return ret;
+    }
+
+    private void debugT(BinaryTree t) {
+        StringBuilder sb = new StringBuilder();
+
+        while (t != null) {
+            sb.append(t.value + "->");
+            t = t.right;
+        }
+
+        System.out.println(sb);
     }
 }
