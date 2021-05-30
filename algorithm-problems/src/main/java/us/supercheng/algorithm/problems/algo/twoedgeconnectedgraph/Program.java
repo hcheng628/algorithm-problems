@@ -18,9 +18,8 @@ public class Program {
             for (int i=0, colLen=row.length; i<colLen; i++) {
                 int backup = row[i];
                 row[i] = -1;
-                if (this.travel(edges, new HashSet<>(), 0).size() != len) {
+                if (this.travel(edges, new HashSet<>(), 0).size() != len)
                     return false;
-                }
                 row[i] = backup;
             }
 
