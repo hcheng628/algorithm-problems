@@ -1,51 +1,39 @@
 package us.supercheng.algorithm.problems.algo.nonattackingqueens;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Program2 {
 
     // Time: O(n!)  Space: O(n)
     public int nonAttackingQueens(int n) {
         Integer[] res = new Integer[n];
-        return this.helper(n, res, new HashSet<>(), new HashSet<>(), 0);
+        return this.helper(n, res, new HashSet<>(), new HashSet<>(), new HashSet<>(), 0);
     }
 
-    private int helper(int n, Integer[] res, Set<Integer> rSet, Set<Integer> cSet, int row) {
+    private int helper(int n, Integer[] res, Set<Integer> cSet, Set<Integer> upSet, Set<Integer> downSet, int row) {
         if (row >= n)
             return 1;
 
         int ret = 0;
 
-        for (int col = 0; col < n; col++)
-            if (!cSet.contains(col) && this.isDia(n, res, row, col)) {
-                rSet.add(row);
+        for (int col = 0; col < n; col++) {
+            int upVal = row + col;
+            int downVal = row - col;
+            if (!cSet.contains(col) && !upSet.contains(upVal) && !downSet.contains(downVal)) {
                 cSet.add(col);
+                upSet.add(upVal);
+                downSet.add(downVal);
                 res[row] = col;
-                ret += this.helper(n, res, rSet, cSet, row + 1);
-                rSet.remove(row);
+
+                ret += this.helper(n, res, cSet, upSet, downSet, row + 1);
+
                 cSet.remove(col);
-                res[row] = null;
+                upSet.remove(upVal);
+                downSet.remove(downVal);
             }
-
-        return ret;
-    }
-
-    // Time: O(n)
-    private boolean isDia(int n, Integer[] res, int r, int c) {
-        int downVal = r - c;
-        int upVal = r + c;
-
-        for (int row=0; row<n; row++) {
-            Integer col = res[row];
-            if (col == null)
-                continue;
-            if (downVal == row - col || upVal == row + col)
-                return false;
         }
 
-        return true;
+        return ret;
     }
 
 }
