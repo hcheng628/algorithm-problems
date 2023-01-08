@@ -34,4 +34,15 @@ public class Solution {
         return null;    // should not get here!!!
     }
 
+
+    public final TreeNode getTargetCopyDFS(final TreeNode original, final TreeNode cloned, final TreeNode target) {
+        if (original == null)
+            return null;
+        else if (original == target)
+            return cloned;
+
+        TreeNode res = this.getTargetCopyDFS(original.left, cloned.left, target);
+        return res == null ? this.getTargetCopyDFS(original.right, cloned.right, target) : res;
+    }
+
 }
