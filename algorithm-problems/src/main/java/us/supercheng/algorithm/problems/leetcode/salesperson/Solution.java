@@ -14,4 +14,13 @@ public class Solution {
                 "        AND o.sales_id = sp.sales_id\n" +
                 ")";
 
+    String SQL2 = "SELECT e_name AS name FROM (\n" +
+            "    SELECT c.name, sp.name as e_name\n" +
+            "    FROM SalesPerson AS sp\n" +
+            "    LEFT JOIN Orders AS o ON sp.sales_id = o.sales_id\n" +
+            "    LEFT JOIN Company AS c ON o.com_id = c.com_id\n" +
+            "    GROUP BY sp.sales_id\n" +
+            "    HAVING c.name != 'RED' OR c.name IS NULL\n" +
+            ") AS t";
+
 }

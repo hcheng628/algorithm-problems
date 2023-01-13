@@ -8,4 +8,10 @@ public class Solution {
             "SELECT product_id, product_name FROM Product\n" +
             "WHERE product_id IN (SELECT product_id FROM p2019) AND product_id NOT IN (SELECT product_id FROM not_p2019);";
 
+    String SQL2 = "SELECT p.product_id, p.product_name\n" +
+            "FROM Product AS p\n" +
+            "LEFT JOIN Sales AS s ON p.product_id = s.product_id\n" +
+            "GROUP BY s.product_id\n" +
+            "HAVING MIN(s.sale_date) >= '2019-01-01' AND MAX(s.sale_date) <= '2019-03-31'";
+
 }
