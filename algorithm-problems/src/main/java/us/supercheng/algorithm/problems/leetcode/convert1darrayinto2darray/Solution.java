@@ -16,4 +16,16 @@ public class Solution {
         return ret;
     }
 
+    public int[][] construct2DArrayOPT(int[] original, int m, int n) {
+        if (original == null || original.length != m * n)
+            return new int[0][0];
+
+        int[][] ret = new int[m][n];
+
+        for (int i = 0; i < m; i++)
+            System.arraycopy(original, i * n, ret[i], 0, n);
+
+        return ret;
+    }
+
 }
