@@ -7,21 +7,16 @@ public class Solution {
             return -1;
 
         int ret = 0;
-        boolean complete = false;
 
-        while (!complete) {
-            for (int i = 0, len = tickets.length; i < len; i++) {
-                if (tickets[i] == 0)
-                    continue;
-
-                tickets[i]--;
-                ret++;
-                if (tickets[i] == 0 && k == i) {
-                    complete = true;
-                    break;
+        complete:
+        while (true)
+            for (int i = 0, len = tickets.length; i < len; i++)
+                if (tickets[i] > 0) {
+                    tickets[i]--;
+                    ret++;
+                    if (tickets[i] == 0 && k == i)
+                        break complete;
                 }
-            }
-        }
 
         return ret;
     }
@@ -32,13 +27,10 @@ public class Solution {
 
         int ret = 0;
 
-        for (int i = 0; i < k; i++)
-            ret += Math.min(tickets[i], tickets[k]);
+        for (int i = 0, len = tickets.length; i < len; i++)
+            ret += i <= k ? Math.min(tickets[i], tickets[k]) : Math.min(tickets[i], tickets[k] - 1);
 
-        for (int i = k + 1, len = tickets.length; i < len; i++)
-            ret += Math.min(tickets[i], tickets[k] - 1) ;
-
-        return ret + tickets[k];
+        return ret;
     }
 
 }

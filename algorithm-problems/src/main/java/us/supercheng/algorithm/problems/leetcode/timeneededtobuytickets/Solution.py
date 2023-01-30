@@ -8,9 +8,6 @@ class Solution(object):
         ret = 0
 
         for i in range(len(tickets)):
-            if i <= k:
-                ret += min(tickets[i], tickets[k])
-            else:
-                ret += min(tickets[i], tickets[k] - 1)
+            ret += min(tickets[i], tickets[k] if i <= k else tickets[k] - 1)
 
         return ret
