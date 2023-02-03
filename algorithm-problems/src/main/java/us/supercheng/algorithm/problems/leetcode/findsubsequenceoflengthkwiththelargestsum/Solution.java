@@ -64,4 +64,75 @@ class Solution {
         return list.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    public int[] maxSubsequenceOPT(int[] nums, int k) {
+        if (nums.length == k)
+            return nums;
+
+        int[][] info = new int[2][k];
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0, len = nums.length; i < len; i++)
+            list.add(i);
+
+        Collections.sort(list, Comparator.comparingInt(l -> -nums[l]));
+        for (int i = 0; i < k; i++)
+            info[0][i] = list.get(i);
+
+        Arrays.sort(info[0]);
+        for (int i = 0; i < k; i++)
+            info[1][i] = nums[info[0][i]];
+
+        return info[1];
+    }
+
+    public int[] maxSubsequenceOPT1(int[] nums, int k) {
+        if (nums.length == k)
+            return nums;
+
+        int[][] info = new int[2][k];
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0, len = nums.length; i < len; i++)
+            list.add(i);
+
+        Collections.sort(list, Comparator.comparingInt(l -> -nums[l]));
+        for (int i = 0; i < k; i++)
+            info[0][i] = list.get(i);
+
+        Arrays.sort(info[0]);
+        for (int i = 0; i < k; i++)
+            info[1][i] = nums[info[0][i]];
+
+        return info[1];
+    }
+
+    public static void main(String[] args) {
+        Solution so = new Solution();
+//        System.out.println(Arrays.toString(so.maxSubsequenceOPT2(new int[]{2,1,3,3}, 2)));
+//        System.out.println(Arrays.toString(so.maxSubsequenceOPT2(new int[]{-1,-2,3,4}, 3)));
+        System.out.println(Arrays.toString(so.maxSubsequenceOPT2(new int[]{3,4,3,3}, 2)));
+//        System.out.println(Arrays.toString(so.maxSubsequenceOPT2(new int[]{50,-75}, 2)));
+    }
+
+    public int[] maxSubsequenceOPT2(int[] nums, int k)  {
+        if (nums.length == k)
+            return nums;
+
+        int[] ret = new int[k];
+        PriorityQueue<int[]> valueHeap = new PriorityQueue<>(Comparator.comparingInt(n -> n[0]));
+        PriorityQueue<int[]> idxHeap = new PriorityQueue<>(Comparator.comparingInt(n -> n[1]));
+
+        for (int i = 0, len = nums.length; i < len; i++) {
+            valueHeap.add(new int[]{nums[i], i});
+            if (valueHeap.size() > k)
+                valueHeap.poll();
+        }
+
+        while (!valueHeap.isEmpty())
+            idxHeap.offer(valueHeap.poll());
+
+        for (int i = 0; i < k; i++)
+            ret[i] = idxHeap.poll()[0];
+
+        return ret;
+    }
+
 }
