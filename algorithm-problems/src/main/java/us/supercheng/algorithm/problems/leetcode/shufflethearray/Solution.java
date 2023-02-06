@@ -3,15 +3,16 @@ package us.supercheng.algorithm.problems.leetcode.shufflethearray;
 public class Solution {
 
     public int[] shuffle(int[] nums, int n) {
-        int len = nums.length,
-            pointer = 0;
-        int[] ret = new int[len];
+        if (nums == null)
+            return new int[0];
 
-        for (int i=0; i<n; i++)
-            for (int idx = i; idx<len; idx+=n)
-                ret[pointer++] = nums[idx];
+        int[] ret = new int[n * 2];
+        for (int idx = 0, i = 0, ii = n; i < n; i++, ii++) {
+            ret[idx++] = nums[i];
+            ret[idx++] = nums[ii];
+        }
 
-        return  ret;
+        return ret;
     }
 
 }
