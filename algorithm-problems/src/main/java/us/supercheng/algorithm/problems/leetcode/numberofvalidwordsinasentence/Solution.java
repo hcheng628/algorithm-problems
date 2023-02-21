@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.problems.leetcode.numberofvalidwordsinasentence;
 
+import java.util.Arrays;
+
 public class Solution {
 
     public int countValidWords(String sentence) {
@@ -58,6 +60,11 @@ public class Solution {
             return false;
 
         return hasLow || allowed;
+    }
+
+    public int countValidWordsRegEx(String sentence) {
+        return (int) Arrays.stream(sentence.split(" ")).filter(s -> s.trim().length() > 0 &&
+                s.trim().matches("^[a-z]*([a-z]+-[a-z]+)?[.,!]?$")).count();
     }
 
 }
