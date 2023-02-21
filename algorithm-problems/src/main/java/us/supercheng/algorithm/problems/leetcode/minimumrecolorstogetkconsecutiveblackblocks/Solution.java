@@ -2,7 +2,7 @@ package us.supercheng.algorithm.problems.leetcode.minimumrecolorstogetkconsecuti
 
 class Solution {
 
-    public int minimumRecolors(String blocks, int k) {
+    public int minimumRecolorsBF(String blocks, int k) {
         int ret = k;
 
         char[] chars = blocks.toCharArray();
@@ -20,6 +20,23 @@ class Solution {
         for (int idx = i, count = 0; count < k; idx++, count++)
             if (chars[idx] == 'W')
                 ret++;
+
+        return ret;
+    }
+
+    public int minimumRecolors(String blocks, int k) {
+        int ret = k;
+
+        for (int right = 0, modify = 0, len = blocks.length(); right < len; right++) {
+            if (blocks.charAt(right) == 'W')
+                modify++;
+
+            if (right + 1 - k > 0 && blocks.charAt(right - k) == 'W')
+                modify--;
+
+            if (right + 1 - k >= 0)
+                ret = Math.min(modify, ret);
+        }
 
         return ret;
     }
