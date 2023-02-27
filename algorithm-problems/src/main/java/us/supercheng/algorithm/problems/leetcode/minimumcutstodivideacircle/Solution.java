@@ -1,0 +1,9 @@
+package us.supercheng.algorithm.problems.leetcode.minimumcutstodivideacircle;
+
+class Solution {
+
+    public int numberOfCuts(int n) {
+        return n < 2 ? 0 : n % 2 == 0 ? n / 2 : n;
+    }
+
+}
