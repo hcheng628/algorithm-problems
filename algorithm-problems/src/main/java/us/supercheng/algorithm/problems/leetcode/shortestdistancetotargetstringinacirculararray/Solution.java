@@ -3,33 +3,21 @@ package us.supercheng.algorithm.problems.leetcode.shortestdistancetotargetstring
 class Solution {
 
     public int closetTarget(String[] words, String target, int startIndex) {
-        int fSteps = 0;
-        int bSteps = 0;
+        int ret = 0;
         int len = words.length;
 
-        for (int fIdx = startIndex, bIdx = startIndex; (fSteps < len && fIdx != -1) || (bSteps < len && bIdx != -1); ) {
-            if (fIdx != -1)
-                if (words[fIdx].equals(target))
-                    fIdx = -1;
-                else {
-                    fIdx = this.next(len, fIdx, true);
-                    fSteps++;
-                }
-
-            if (bIdx != -1)
-                if (words[bIdx].equals(target))
-                    bIdx = -1;
-                else {
-                    bIdx = this.next(len, bIdx, false);
-                    bSteps++;
-                }
+        for (int fIdx = startIndex, bIdx = startIndex; ret < len; ret++) {
+            if (words[fIdx].equals(target) || words[bIdx].equals(target))
+                return ret;
+            fIdx++;
+            if (fIdx == len)
+                fIdx = 0;
+            bIdx--;
+            if (bIdx == -1)
+                bIdx = len - 1;
         }
 
-        return Math.min(fSteps, bSteps) == len ? -1 : Math.min(fSteps, bSteps);
-    }
-
-    private int next(int len, int idx, boolean forward) {
-        return forward ? idx + 1 < len ? idx + 1 : 0 : idx - 1 > -1 ? idx - 1 : len - 1;
+        return ret == len ? -1 : ret;
     }
 
 }
