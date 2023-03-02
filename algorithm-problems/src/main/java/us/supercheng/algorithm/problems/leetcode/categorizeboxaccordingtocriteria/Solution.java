@@ -1,7 +1,5 @@
 package us.supercheng.algorithm.problems.leetcode.categorizeboxaccordingtocriteria;
 
-import java.util.Arrays;
-
 class Solution {
 
     public String categorizeBox(int length, int width, int height, int mass) {
