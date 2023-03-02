@@ -1,14 +1,16 @@
-class Solution(object):
-    def captureForts(self, forts):
-        """
-        :type forts: List[int]
-        :rtype: int
-        """
+class Solution:
+    def captureForts(self, forts: List[int]) -> int:
         ret = 0
-        pos = [idx for idx, val in enumerate(forts) if val != 0]
+        count = 0
+        prev = 13
 
-        for i in range(len(pos) - 1):
-            if forts[pos[i]] != forts[pos[i + 1]] and ret < pos[i + 1] - pos[i] - 1:
-                ret = pos[i + 1] - pos[i] - 1
+        for i in range(len(forts)):
+            if forts[i] == 0:
+                count += 1
+            else:
+                if prev != 13 and prev != forts[i]:
+                    ret = max(count, ret)
+                prev = forts[i]
+                count = 0
 
         return ret
