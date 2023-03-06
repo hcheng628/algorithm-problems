@@ -1,5 +1,7 @@
 package us.supercheng.algorithm.problems.leetcode.splitwithminimumsum;
 
+import java.util.Arrays;
+
 class Solution {
 
     public int splitNum(int num) {
