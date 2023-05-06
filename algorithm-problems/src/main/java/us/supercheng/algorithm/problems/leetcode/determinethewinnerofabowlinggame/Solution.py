@@ -4,6 +4,11 @@ class Solution:
         p2 = self.score(player2)
         return 0 if p1 == p2 else 1 if p1 > p2 else 2
 
+
+
+
+
+
     def score(self, arr: List[int]) -> int:
         ret = 0
 
